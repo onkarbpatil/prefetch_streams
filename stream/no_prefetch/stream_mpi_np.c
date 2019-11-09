@@ -482,18 +482,8 @@ main()
         tuned_STREAM_Copy();
 #else
 #pragma omp parallel for
-		for (j=0; j<dist; j++){
-					__builtin_prefetch (&a[j], 0, 0);
-					__builtin_prefetch (&c[j], 1, 0);
-		}
-#pragma omp parallel for
-		for (j=0; j<array_elements - dist; j++){
-					__builtin_prefetch (&a[j+dist], 0, 0);
-					__builtin_prefetch (&c[j+dist], 1, 0);
+		for (j=0; j<array_elements; j++)
 			c[j] = a[j];
-		}
-#pragma omp parallel for
-		for (j=(array_elements - dist);j < array_elements; j++){
 #endif
 		MPI_Barrier(MPI_COMM_WORLD);
 		t1 = MPI_Wtime();
@@ -506,18 +496,7 @@ main()
         tuned_STREAM_Scale(scalar);
 #else
 #pragma omp parallel for
-		for (j=0; j<dist; j++){
-					__builtin_prefetch (&c[j], 0, 0);
-					__builtin_prefetch (&b[j], 1, 0);
-		}
-#pragma omp parallel for
-		for (j=0; j<array_elements - dist; j++){
-					__builtin_prefetch (&c[j+dist], 0, 0);
-					__builtin_prefetch (&b[j+dist], 1, 0);
-			b[j] = scalar*c[j];
-		}
-#pragma omp parallel for
-		for (j=(array_elements - dist); j<array_elements; j++)
+		for (j=0; j<array_elements; j++)
 			b[j] = scalar*c[j];
 #endif
 		MPI_Barrier(MPI_COMM_WORLD);
@@ -531,20 +510,7 @@ main()
         tuned_STREAM_Add();
 #else
 #pragma omp parallel for
-		for (j=0; j<dist; j++){
-					__builtin_prefetch (&a[j], 0, 0);
-					__builtin_prefetch (&b[j], 0, 0);
-					__builtin_prefetch (&c[j], 1, 0);
-		}
-#pragma omp parallel for
-		for (j=0; j<array_elements-dist; j++){
-					__builtin_prefetch (&a[j+dist], 0, 0);
-					__builtin_prefetch (&b[j+dist], 0, 0);
-					__builtin_prefetch (&c[j+dist], 1, 0);
-			c[j] = a[j]+b[j];
-		}
-#pragma omp parallel for
-		for (j=(array_elements - dist); j<array_elements; j++)
+		for (j=0; j<array_elements; j++)
 			c[j] = a[j]+b[j];
 #endif
 		MPI_Barrier(MPI_COMM_WORLD);
@@ -558,20 +524,7 @@ main()
         tuned_STREAM_Triad(scalar);
 #else
 #pragma omp parallel for
-		for (j=0; j<dist; j++){
-					__builtin_prefetch (&c[j], 0, 0);
-					__builtin_prefetch (&b[j], 0, 0);
-					__builtin_prefetch (&a[j], 1, 0);
-		}
-#pragma omp parallel for
-		for (j=0; j<array_elements-dist; j++){
-					__builtin_prefetch (&c[j+dist], 0, 0);
-					__builtin_prefetch (&b[j+dist], 0, 0);
-					__builtin_prefetch (&a[j+dist], 1, 0);
-			a[j] = b[j]+scalar*c[j];
-		}
-#pragma omp parallel for
-		for (j=(array_elements - dist); j<array_elements; j++)
+		for (j=0; j<array_elements; j++)
 			a[j] = b[j]+scalar*c[j];
 #endif
 		MPI_Barrier(MPI_COMM_WORLD);

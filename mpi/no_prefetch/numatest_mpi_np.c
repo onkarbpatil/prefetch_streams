@@ -261,35 +261,7 @@ redo1:
 			MPI_Barrier(MPI_COMM_WORLD);
 			clock_gettime( CLOCK_MONOTONIC, &begin);
 //#pragma omp parallel for
-			for(j = 0;j < dist;j++){
-					__builtin_prefetch (&a[j], 1, 0);
-					__builtin_prefetch (&b[j], 1, 0);
-					__builtin_prefetch (&c[j], 1, 0);
-					__builtin_prefetch (&d[j], 1, 0);
-					__builtin_prefetch (&e[j], 1, 0);
-					__builtin_prefetch (&f[j], 1, 0);
-					__builtin_prefetch (&g[j], 1, 0);
-					__builtin_prefetch (&h[j], 1, 0);
-			}
-			for(j = 0;j < ((size/sizeof(double)) - dist);j++){
-					__builtin_prefetch (&a[j+dist], 1, 0);
-					__builtin_prefetch (&b[j+dist], 1, 0);
-					__builtin_prefetch (&c[j+dist], 1, 0);
-					__builtin_prefetch (&d[j+dist], 1, 0);
-					__builtin_prefetch (&e[j+dist], 1, 0);
-					__builtin_prefetch (&f[j+dist], 1, 0);
-					__builtin_prefetch (&g[j+dist], 1, 0);
-					__builtin_prefetch (&h[j+dist], 1, 0);
-				a[j] = 1.0;
-				b[j] = 2.0;
-				c[j] = 3.0;
-				d[j] = 4.0;
-				e[j] = 5.0;
-				f[j] = 6.0;
-				g[j] = 7.0;
-				h[j] = 8.0;
-			}
-			for(j = ((size/sizeof(double)) - dist); j < (size/sizeof(double)); j++){
+			for(j = 0;j < ((size/sizeof(double)));j++){
 				a[j] = 1.0;
 				b[j] = 2.0;
 				c[j] = 3.0;
@@ -360,24 +332,9 @@ redo5:
 			MPI_Barrier(MPI_COMM_WORLD);
 			clock_gettime( CLOCK_MONOTONIC, &begin);
 //#pragma omp parallel for
-			for(j =0; j < dist; j++){
-					__builtin_prefetch (&a[j], 1, 0);
-					__builtin_prefetch (&b[j], 0, 0);
-					__builtin_prefetch (&c[j], 0, 0);
-					__builtin_prefetch (&d[j], 0, 0);
-					__builtin_prefetch (&e[j], 0, 0);
-			}
-			for(j =0; j < ((size/sizeof(double))-dist); j++){
-					__builtin_prefetch (&a[j+dist], 1, 0);
-					__builtin_prefetch (&b[j+dist], 0, 0);
-					__builtin_prefetch (&c[j+dist], 0, 0);
-					__builtin_prefetch (&d[j+dist], 0, 0);
-					__builtin_prefetch (&e[j+dist], 0, 0);
+			for(j =0; j < (size/sizeof(double)); j++){
                             a[j] = c[j] + d[j] + e[j] + b[j];
-            }
-			for(j = ((size/sizeof(double))-dist);j <(size/sizeof(double));j++){
-					a[j] = c[j] + d[j] + e[j] + b[j];
-			}
+                        }
 			MPI_Barrier(MPI_COMM_WORLD);
 			clock_gettime( CLOCK_MONOTONIC, &stop);
 			if(rank == 0){
@@ -584,27 +541,10 @@ redo18:
 			MPI_Barrier(MPI_COMM_WORLD);
 			clock_gettime( CLOCK_MONOTONIC, &begin);
 //#pragma omp parallel for
-                        for(j =0; j < dist; j++){
-					__builtin_prefetch (&a[stride%(size/sizeof(double))], 1, 0);
-					__builtin_prefetch (&b[stride%(size/sizeof(double))], 0, 0);
-					__builtin_prefetch (&c[stride%(size/sizeof(double))], 0, 0);
-					__builtin_prefetch (&d[stride%(size/sizeof(double))], 0, 0);
-					__builtin_prefetch (&e[stride%(size/sizeof(double))], 0, 0);
-					stride +=3;
-						}
-                        for(j =0; j < ((size/sizeof(double)) - dist); j++){
-					__builtin_prefetch (&a[stride%(size/sizeof(double))+dist], 1, 0);
-					__builtin_prefetch (&b[stride%(size/sizeof(double))+dist], 0, 0);
-					__builtin_prefetch (&c[stride%(size/sizeof(double))+dist], 0, 0);
-					__builtin_prefetch (&d[stride%(size/sizeof(double))+dist], 0, 0);
-					__builtin_prefetch (&e[stride%(size/sizeof(double))+dist], 0, 0);
-								a[stride%(size/sizeof(double))] = c[stride%(size/sizeof(double))] + d[stride%(size/sizeof(double))] + b[stride%(size/sizeof(double))] + e[stride%(size/sizeof(double))];
+                        for(j =0; j < (size/sizeof(double)); j++){
+                            a[stride%(size/sizeof(double))] = c[stride%(size/sizeof(double))] + d[stride%(size/sizeof(double))] + b[stride%(size/sizeof(double))] + e[stride%(size/sizeof(double))];
 			    stride +=3;
                         }
-                        for(j = ((size/sizeof(double)) - dist); j < (size/sizeof(double)) j++){
-								a[stride%(size/sizeof(double))] = c[stride%(size/sizeof(double))] + d[stride%(size/sizeof(double))] + b[stride%(size/sizeof(double))] + e[stride%(size/sizeof(double))];
-                 stride +=3;
-						}
 			MPI_Barrier(MPI_COMM_WORLD);
                         clock_gettime( CLOCK_MONOTONIC, &stop);
 			if(rank == 0){
@@ -619,35 +559,7 @@ redo19:
 			MPI_Barrier(MPI_COMM_WORLD);
                         clock_gettime( CLOCK_MONOTONIC, &begin);
 //#pragma omp parallel for
-                        for(j =0; j < dist; j++){
-					__builtin_prefetch (&rand_tab[j+dist], 1, 0);
-						}
-                        for(j =0; j < dist; j++){
-					__builtin_prefetch (&rand_tab[j+2*dist], 0, 0);
-					__builtin_prefetch (&a[rand_tab[j]], 1, 0);
-					__builtin_prefetch (&b[rand_tab[j]], 0, 0);
-					__builtin_prefetch (&c[rand_tab[j]], 0, 0);
-					__builtin_prefetch (&d[rand_tab[j]], 0, 0);
-					__builtin_prefetch (&e[rand_tab[j]], 0, 0);
-						}
-                        for(j =0; j < ((size/sizeof(double)) - 2*dist); j++){
-					__builtin_prefetch (&rand_tab[j+2*dist], 0, 0);
-					__builtin_prefetch (&a[rand_tab[j+dist]], 1, 0);
-					__builtin_prefetch (&b[rand_tab[j+dist]], 0, 0);
-					__builtin_prefetch (&c[rand_tab[j+dist]], 0, 0);
-					__builtin_prefetch (&d[rand_tab[j+dist]], 0, 0);
-					__builtin_prefetch (&e[rand_tab[j+dist]], 0, 0);
-			  a[rand_tab[j]] = b[rand_tab[j]] + c[rand_tab[j]] + d[rand_tab[j]] + e[rand_tab[j]];
-                        }
-                        for(j = ((size/sizeof(double)) - 2*dist);j < ((size/sizeof(double)) - dist); j++){
-					__builtin_prefetch (&a[rand_tab[j+dist]], 1, 0);
-					__builtin_prefetch (&b[rand_tab[j+dist]], 0, 0);
-					__builtin_prefetch (&c[rand_tab[j+dist]], 0, 0);
-					__builtin_prefetch (&d[rand_tab[j+dist]], 0, 0);
-					__builtin_prefetch (&e[rand_tab[j+dist]], 0, 0);
-			  a[rand_tab[j]] = b[rand_tab[j]] + c[rand_tab[j]] + d[rand_tab[j]] + e[rand_tab[j]];
-                        }
-                        for(j = ((size/sizeof(double)) - dist);j < (size/sizeof(double)); j++){
+                        for(j =0; j < (size/sizeof(double)); j++){
 			  a[rand_tab[j]] = b[rand_tab[j]] + c[rand_tab[j]] + d[rand_tab[j]] + e[rand_tab[j]];
                         }
 			MPI_Barrier(MPI_COMM_WORLD);
@@ -683,19 +595,8 @@ redo21:
 			clock_gettime( CLOCK_MONOTONIC, &begin);
 //#pragma omp parallel for
             for(j = 0; j < (r_size/sizeof(double*)); j++){
-				for(k = 0; k < dist; k++){
-					__builtin_prefetch (&aa[j][k], 1, 0);
-					__builtin_prefetch (&bb[j][k], 0, 0);
-					__builtin_prefetch (&cc[j][k], 0, 0);
-				}
-				for(k = 0; k < (c_size/sizeof(double)) - dist; k++){
-					__builtin_prefetch (&aa[j][k+dist], 1, 0);
-					__builtin_prefetch (&bb[j][k+dist], 0, 0);
-					__builtin_prefetch (&cc[j][k+dist], 0, 0);
-                            		aa[j][k] = bb[j][k]*cc[j][k];
-				}
-				for(k = (c_size/sizeof(double)) - dist; k < (c_size/sizeof(double)); k++){
-						aa[j][k] = bb[j][k]*cc[j][k];
+				for(k = 0; k < (c_size/sizeof(double)); k++){
+                     aa[j][k] = bb[j][k]*cc[j][k];
 				}
             }
 			MPI_Barrier(MPI_COMM_WORLD);
@@ -706,26 +607,15 @@ redo21:
 				goto redo21;
 			}
 			row_avg += ((long double)(3*(long)r_size*c_size*1.0E-06)/(long double)(accum - empty2));
-			}	
+			}
 redo22:
 			MPI_Barrier(MPI_COMM_WORLD);
 			clock_gettime( CLOCK_MONOTONIC, &begin);
 //#pragma omp parallel for
             for(j =0; j < (r_size/sizeof(double*)); j++){
-				for(k = 0; k < dist; k++){
-					__builtin_prefetch (&aa[k][j], 1, 0);
-					__builtin_prefetch (&bb[k][j], 0, 0);
-					__builtin_prefetch (&cc[k][j], 0, 0);
-				}
-				for(k = 0; k < (c_size/sizeof(double)) - dist; k++){
-					__builtin_prefetch (&aa[k+dist][j], 1, 0);
-					__builtin_prefetch (&bb[k+dist][j], 0, 0);
-					__builtin_prefetch (&cc[k+dist][j], 0, 0);
+				for(k = 0; k < (c_size/sizeof(double)); k++){
                             		aa[k][j] = bb[k][j]*cc[k][j];
                 }
-				for(k = (c_size/sizeof(double)) - dist; k < (c_size/sizeof(double)); k++){
-						aa[k][j] = bb[k][j]*cc[k][j];
-				}
 			}
 			MPI_Barrier(MPI_COMM_WORLD);
 			clock_gettime( CLOCK_MONOTONIC, &stop);
@@ -741,20 +631,9 @@ redo23:
 			clock_gettime( CLOCK_MONOTONIC, &begin);
 //#pragma omp parallel for
             for(j = 0; j < (r_size/sizeof(double*)); j++){
-				for(k = 0; k < dist; k++){
-					__builtin_prefetch (&aa[j][k], 1, 0);
-					__builtin_prefetch (&bb[j][k], 0, 0);
-					__builtin_prefetch (&cc[k][j], 0, 0);
-				}
 				for(k = 0; k < (c_size/sizeof(double)); k++){
-					__builtin_prefetch (&aa[j][k+dist], 1, 0);
-					__builtin_prefetch (&bb[j][k+dist], 0, 0);
-					__builtin_prefetch (&cc[k+dist][j], 0, 0);
                             		aa[j][k] = bb[j][k]*cc[k][j];
                         }
-				for(k = 0; k < (c_size/sizeof(double)); k++){
-						aa[j][k] = bb[j][k]*cc[k][j];
-				}
 			}
 			MPI_Barrier(MPI_COMM_WORLD);
 			clock_gettime( CLOCK_MONOTONIC, &stop);
@@ -848,27 +727,10 @@ redo26:
 
 //#pragma omp parallel for
                         for(j =1; j < (r_size/sizeof(double*)) -1; j++){
-					__builtin_prefetch (&aa[j-1][k-1], 1, 2);
-					__builtin_prefetch (&aa[j-1][k], 1, 2);
-					__builtin_prefetch (&aa[j][k-1], 1, 2);
-					__builtin_prefetch (&aa[j][k], 1, 2);
-					__builtin_prefetch (&aa[j+1][k-1], 1, 2);
-					__builtin_prefetch (&aa[j+1][k], 1, 2);
-                                for(k = 1; k < dist; k++){
-					__builtin_prefetch (&aa[j-1][k+1], 1, 2);
-					__builtin_prefetch (&aa[j][k+1], 1, 2);
-					__builtin_prefetch (&aa[j+1][k+1], 1, 2);
-								}
-                                for(k = 1; k < (c_size/sizeof(double))- dist; k++){
+                                for(k = 1; k < (c_size/sizeof(double))-1; k++){
                                       //  if((k!=0)&&(k!=((c_size/sizeof(double))-1))&&(j!=0)&&(j!=((r_size/sizeof(double*))-1)))
-					__builtin_prefetch (&aa[j-1][k+1+dist], 1, 2);
-					__builtin_prefetch (&aa[j][k+1+dist], 1, 2);
-					__builtin_prefetch (&aa[j+1][k+1+dist], 1, 2);
                                                 aa[j][k] = aa[j][k-1]+aa[j][k+1] + aa[j-1][k] + aa[j+1][k] + aa[j-1][k-1] + aa[j-1][k+1] + aa[j+1][k-1] + aa[j+1][k+1];
                         }
-                                for(k = ((c_size/sizeof(double))- dist); (c_size/sizeof(double))- 1; k++){
-                                                aa[j][k] = aa[j][k-1]+aa[j][k+1] + aa[j-1][k] + aa[j+1][k] + aa[j-1][k-1] + aa[j-1][k+1] + aa[j+1][k-1] + aa[j+1][k+1];
-								}
 						}
 			MPI_Barrier(MPI_COMM_WORLD);
                         clock_gettime( CLOCK_MONOTONIC, &stop);
@@ -884,33 +746,13 @@ redo27:
 			MPI_Barrier(MPI_COMM_WORLD);
                         clock_gettime( CLOCK_MONOTONIC, &begin);
 //#pragma omp parallel for
-                        for(j =0; j < dist; j++){
-					__builtin_prefetch (&a[stride%(size/sizeof(double))], 1, 0);
-					__builtin_prefetch (&b[stride%(size/sizeof(double))], 0, 0);
-					__builtin_prefetch (&c[stride%(size/sizeof(double))], 0, 0);
-					__builtin_prefetch (&d[stride%(size/sizeof(double))], 0, 0);
-					__builtin_prefetch (&e[stride%(size/sizeof(double))], 0, 0);
-					stride +=3;
-						}
-                        for(j =0; j < (size/sizeof(double)) - dist; j++){
-					__builtin_prefetch (&a[stride%(size/sizeof(double)) + dist], 1, 0);
-					__builtin_prefetch (&b[stride%(size/sizeof(double)) + dist], 0, 0);
-					__builtin_prefetch (&c[stride%(size/sizeof(double)) + dist], 0, 0);
-					__builtin_prefetch (&d[stride%(size/sizeof(double)) + dist], 0, 0);
-					__builtin_prefetch (&e[stride%(size/sizeof(double)) + dist], 0, 0);
+                        for(j =0; j < (size/sizeof(double)); j++){
                             a[stride%(size/sizeof(double))] = b[stride%(size/sizeof(double))] + c[stride%(size/sizeof(double))] + h[stride%(size/sizeof(double))];
 			    if((j%8 == 0)&&(j != 0))
 				stride = j*4757914; //65536 for KNL
 			    else
 				stride++;
                         }
-                        for(j = ((size/sizeof(double)) - dist); j < (size/sizeof(double)) j++){
-                            a[stride%(size/sizeof(double))] = b[stride%(size/sizeof(double))] + c[stride%(size/sizeof(double))] + h[stride%(size/sizeof(double))];
-			    if((j%8 == 0)&&(j != 0))
-				stride = j*4757914; //65536 for KNL
-			    else
-				stride++;
-						}
 			MPI_Barrier(MPI_COMM_WORLD);
                         clock_gettime( CLOCK_MONOTONIC, &stop);
 			if(rank == 0){
