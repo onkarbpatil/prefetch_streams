@@ -152,8 +152,6 @@ void numatest(int argc, char ** argv, int rank, int procs){
         }
 		MPI_Request reqs[32768]; 
 		MPI_Status stat[32768];
-		printf("HEre: %d\n", rank);
-		fflush(NULL);
 	unsigned long size = (1<<30)/procs;
 	int mbs = size/sizeof(double);
 	int r_size = 32768;
@@ -189,6 +187,7 @@ void numatest(int argc, char ** argv, int rank, int procs){
 	}
 	for(i=0; i< size/sizeof(double); i++)
 		rand_tab[i]=rand()%(size/sizeof(double));
+
 //#ifdef _OPENMP
 //#pragma omp parallel private(numt)
     {
@@ -757,6 +756,8 @@ redo21:
 			}
 			row_avg += ((long double)(3*(long)r_size*c_size*1.0E-06)/(long double)(accum - empty2));
 			}	
+		printf("HEre: %d\n", rank);
+		fflush(NULL);
 redo22:
 			MPI_Barrier(MPI_COMM_WORLD);
 			clock_gettime( CLOCK_MONOTONIC, &begin);
