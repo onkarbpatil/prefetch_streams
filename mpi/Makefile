@@ -1,5 +1,5 @@
 CC = mpicc
-LDFLAGS = -O2 -fopenmp -lnuma -lm
+LDFLAGS = -O1 -fopenmp -lnuma -lm
 
 numatest_mpi: test3.c numatest_mpi.c numatest_mpi.h
 		$(CC) -o $@ $^ $(LDFLAGS)

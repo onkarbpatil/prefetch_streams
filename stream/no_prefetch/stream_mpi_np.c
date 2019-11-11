@@ -257,6 +257,7 @@ main()
 	STREAM_TYPE	AvgError[3] = {0.0,0.0,0.0};
 	STREAM_TYPE *AvgErrByRank;
 
+	int dist = 2048/sizeof(double);
 	int max_node;
 	int total_numa_nodes = 0;
 	int * numa_node_ids;
@@ -291,7 +292,7 @@ main()
     array_alignment = 64;						// Can be modified -- provides partial support for adjusting relative alignment
 
 	n = 0;
-	while(n < total_numa_nodes){
+	while(n <= total_numa_nodes){
 			if(myrank == 0){
 	printf(HLINE);
 	printf("NUMA ID: %d\n", n);
@@ -318,9 +319,15 @@ main()
         exit(1);
     }
 */
-	a = (double *)numa_alloc_onnode(array_bytes, numa_node_ids[n]);
-	b = (double *)numa_alloc_onnode(array_bytes, numa_node_ids[n]);
-	c = (double *)numa_alloc_onnode(array_bytes, numa_node_ids[n]);
+	if(n < total_numa_nodes){
+		a = (double *)numa_alloc_onnode(array_bytes, numa_node_ids[n]);
+		b = (double *)numa_alloc_onnode(array_bytes, numa_node_ids[n]);
+		c = (double *)numa_alloc_onnode(array_bytes, numa_node_ids[n]);
+	}else{
+		a = (double *)numa_alloc_onnode(array_bytes, numa_node_ids[2]);
+		b = (double *)numa_alloc_onnode(array_bytes, numa_node_ids[2]);
+		c = (double *)numa_alloc_onnode(array_bytes, numa_node_ids[0]);
+	}
 	// Initial informational printouts -- rank 0 handles all the output
 	if (myrank == 0) {
 		printf(HLINE);
@@ -497,7 +504,7 @@ main()
 #else
 #pragma omp parallel for
 		for (j=0; j<array_elements; j++)
-			b[j] = scalar*c[j];
+			c[j] = scalar*b[j];
 #endif
 		MPI_Barrier(MPI_COMM_WORLD);
 		t1 = MPI_Wtime();
@@ -511,7 +518,7 @@ main()
 #else
 #pragma omp parallel for
 		for (j=0; j<array_elements; j++)
-			c[j] = a[j]+b[j];
+			b[j] = a[j]+c[j];
 #endif
 		MPI_Barrier(MPI_COMM_WORLD);
 		t1 = MPI_Wtime();
@@ -525,7 +532,7 @@ main()
 #else
 #pragma omp parallel for
 		for (j=0; j<array_elements; j++)
-			a[j] = b[j]+scalar*c[j];
+			c[j] = b[j]+scalar*a[j];
 #endif
 		MPI_Barrier(MPI_COMM_WORLD);
 		t1 = MPI_Wtime();
@@ -684,9 +691,9 @@ void computeSTREAMerrors(STREAM_TYPE *aAvgErr, STREAM_TYPE *bAvgErr, STREAM_TYPE
 	for (k=0; k<NTIMES; k++)
         {
             cj = aj;
-            bj = scalar*cj;
+            cj = scalar*bj;
             cj = aj+bj;
-            aj = bj+scalar*cj;
+            cj = bj+scalar*aj;
         }
 
     /* accumulate deltas between observed and expected results */
@@ -726,9 +733,9 @@ void checkSTREAMresults (STREAM_TYPE *AvgErrByRank, int numranks)
 	for (k=0; k<NTIMES; k++)
         {
             cj = aj;
-            bj = scalar*cj;
+            cj = scalar*bj;
             cj = aj+bj;
-            aj = bj+scalar*cj;
+            cj = bj+scalar*aj;
         }
 
 	// Compute the average of the average errors contributed by each MPI rank
@@ -838,7 +845,7 @@ void tuned_STREAM_Scale(STREAM_TYPE scalar)
 	ssize_t j;
 #pragma omp parallel for
 	for (j=0; j<array_elements; j++)
-	    b[j] = scalar*c[j];
+	    c[j] = scalar*b[j];
 }
 
 void tuned_STREAM_Add()
@@ -854,7 +861,7 @@ void tuned_STREAM_Triad(STREAM_TYPE scalar)
 	ssize_t j;
 #pragma omp parallel for
 	for (j=0; j<array_elements; j++)
-	    a[j] = b[j]+scalar*c[j];
+	    c[j] = b[j]+scalar*a[j];
 }
 /* end of stubs for the "tuned" versions of the kernels */
 #endif

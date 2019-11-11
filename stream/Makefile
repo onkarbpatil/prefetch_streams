@@ -1,5 +1,5 @@
 CC = mpicc
-LDFLAGS = -O2 -fopenmp -lnuma -lm
+LDFLAGS = -O1 -fopenmp -lnuma -lm
 
 stream_mpi: stream_mpi.c
 		$(CC) -o $@ $^ $(LDFLAGS)

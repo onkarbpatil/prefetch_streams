@@ -162,7 +162,8 @@ void numatest(int argc, char ** argv, int rank, int procs){
 	}
 	int rs = 0;
 	int z = 0;
-	int dist = 2048/sizeof(double);
+	int dist = 0;
+	int rd_dist, wr_dist;
 	int * rand_tab;
 	rand_tab = (int*)malloc(mbs*sizeof(int));
 	double *a, *b, *c, *d, *e, *f, *g, *h;
@@ -193,9 +194,33 @@ void numatest(int argc, char ** argv, int rank, int procs){
     }
 //#endif
   	i = 0;
-	while(i < total_numa_nodes){
-			if(i>1)
-					dist = 32768/sizeof(double);
+	while(i <= total_numa_nodes){
+			if(i <= 1){
+				rd_dist = 8192/sizeof(double);
+				wr_dist = 2048/sizeof(double);
+				dist = rd_dist;
+				if(procs > 48){
+					rd_dist = 0;
+					wr_dist = 0;
+					dist = 0;
+				}
+			}
+			if((i > 1)&&(i < total_numa_nodes)){
+				rd_dist = 8192/sizeof(double);
+				wr_dist = 32768/sizeof(double);
+				dist = wr_dist;
+				if(procs > 48){
+					rd_dist = 0;
+					wr_dist = 32768/sizeof(double);
+				dist = wr_dist;
+				}
+			}
+			if((i == total_numa_nodes)){
+				rd_dist = 8192/sizeof(double);
+				wr_dist = 2048/sizeof(double);
+				dist = rd_dist;
+			}
+	// Dynamically allocate the three arrays using "posix_memalign()"
 		int iters = 0;
 		int stride;
 		long double wr_only_avg=0.0;
@@ -230,25 +255,48 @@ void numatest(int argc, char ** argv, int rank, int procs){
 		{
 			int j = 0;
 			int k = 0;
-			a = (double*)numa_alloc_onnode(size, numa_node_ids[i]);
-			b = (double*)numa_alloc_onnode(size, numa_node_ids[i]);
-			c = (double*)numa_alloc_onnode(size, numa_node_ids[i]);
-			d = (double*)numa_alloc_onnode(size, numa_node_ids[i]);
-			e = (double*)numa_alloc_onnode(size, numa_node_ids[i]);
-			f = (double*)numa_alloc_onnode(size, numa_node_ids[i]);
-			g = (double*)numa_alloc_onnode(size, numa_node_ids[i]);
-			h = (double*)numa_alloc_onnode(size, numa_node_ids[i]);
-			aa = (double**)numa_alloc_onnode(r_size, numa_node_ids[i]);
-			for(j = 0; j < r_size/sizeof(double*); j++){
-				aa[j] = (double*)numa_alloc_onnode(c_size, numa_node_ids[i]);
-			}
-			bb = (double**)numa_alloc_onnode(r_size, numa_node_ids[i]);
-			for(j = 0; j < r_size/sizeof(double*); j++){
-				bb[j] = (double*)numa_alloc_onnode(c_size, numa_node_ids[i]);
-			}
-			cc = (double**)numa_alloc_onnode(r_size, numa_node_ids[i]);
-			for(j = 0; j < r_size/sizeof(double*); j++){
-				cc[j] = (double*)numa_alloc_onnode(c_size, numa_node_ids[i]);
+			if(i == total_numa_nodes){
+				a = (double*)numa_alloc_onnode(size, numa_node_ids[0]);
+				b = (double*)numa_alloc_onnode(size, numa_node_ids[2]);
+				c = (double*)numa_alloc_onnode(size, numa_node_ids[2]);
+				d = (double*)numa_alloc_onnode(size, numa_node_ids[2]);
+				e = (double*)numa_alloc_onnode(size, numa_node_ids[2]);
+				f = (double*)numa_alloc_onnode(size, numa_node_ids[2]);
+				g = (double*)numa_alloc_onnode(size, numa_node_ids[2]);
+				h = (double*)numa_alloc_onnode(size, numa_node_ids[2]);
+				aa = (double**)numa_alloc_onnode(r_size, numa_node_ids[0]);
+				for(j = 0; j < r_size/sizeof(double*); j++){
+					aa[j] = (double*)numa_alloc_onnode(c_size, numa_node_ids[0]);
+				}
+				bb = (double**)numa_alloc_onnode(r_size, numa_node_ids[2]);
+				for(j = 0; j < r_size/sizeof(double*); j++){
+					bb[j] = (double*)numa_alloc_onnode(c_size, numa_node_ids[2]);
+				}
+				cc = (double**)numa_alloc_onnode(r_size, numa_node_ids[2]);
+				for(j = 0; j < r_size/sizeof(double*); j++){
+					cc[j] = (double*)numa_alloc_onnode(c_size, numa_node_ids[2]);
+				}
+			}else{
+				a = (double*)numa_alloc_onnode(size, numa_node_ids[i]);
+				b = (double*)numa_alloc_onnode(size, numa_node_ids[i]);
+				c = (double*)numa_alloc_onnode(size, numa_node_ids[i]);
+				d = (double*)numa_alloc_onnode(size, numa_node_ids[i]);
+				e = (double*)numa_alloc_onnode(size, numa_node_ids[i]);
+				f = (double*)numa_alloc_onnode(size, numa_node_ids[i]);
+				g = (double*)numa_alloc_onnode(size, numa_node_ids[i]);
+				h = (double*)numa_alloc_onnode(size, numa_node_ids[i]);
+				aa = (double**)numa_alloc_onnode(r_size, numa_node_ids[i]);
+				for(j = 0; j < r_size/sizeof(double*); j++){
+					aa[j] = (double*)numa_alloc_onnode(c_size, numa_node_ids[i]);
+				}
+				bb = (double**)numa_alloc_onnode(r_size, numa_node_ids[i]);
+				for(j = 0; j < r_size/sizeof(double*); j++){
+					bb[j] = (double*)numa_alloc_onnode(c_size, numa_node_ids[i]);
+				}
+				cc = (double**)numa_alloc_onnode(r_size, numa_node_ids[i]);
+				for(j = 0; j < r_size/sizeof(double*); j++){
+					cc[j] = (double*)numa_alloc_onnode(c_size, numa_node_ids[i]);
+				}
 			}
 			long double empty=0.0;
 			long double empty2=0.0;
@@ -272,14 +320,14 @@ redo1:
 					__builtin_prefetch (&h[j], 1, 0);
 			}
 			for(j = 0;j < ((size/sizeof(double)) - dist);j++){
-					__builtin_prefetch (&a[j+dist], 1, 0);
-					__builtin_prefetch (&b[j+dist], 1, 0);
-					__builtin_prefetch (&c[j+dist], 1, 0);
-					__builtin_prefetch (&d[j+dist], 1, 0);
-					__builtin_prefetch (&e[j+dist], 1, 0);
-					__builtin_prefetch (&f[j+dist], 1, 0);
-					__builtin_prefetch (&g[j+dist], 1, 0);
-					__builtin_prefetch (&h[j+dist], 1, 0);
+					__builtin_prefetch (&a[j+wr_dist], 1, 0);
+					__builtin_prefetch (&b[j+wr_dist], 1, 0);
+					__builtin_prefetch (&c[j+wr_dist], 1, 0);
+					__builtin_prefetch (&d[j+wr_dist], 1, 0);
+					__builtin_prefetch (&e[j+wr_dist], 1, 0);
+					__builtin_prefetch (&f[j+wr_dist], 1, 0);
+					__builtin_prefetch (&g[j+wr_dist], 1, 0);
+					__builtin_prefetch (&h[j+wr_dist], 1, 0);
 				a[j] = 1.0;
 				b[j] = 2.0;
 				c[j] = 3.0;
@@ -368,11 +416,11 @@ redo5:
 					__builtin_prefetch (&e[j], 0, 0);
 			}
 			for(j =0; j < ((size/sizeof(double))-dist); j++){
-					__builtin_prefetch (&a[j+dist], 1, 0);
-					__builtin_prefetch (&b[j+dist], 0, 0);
-					__builtin_prefetch (&c[j+dist], 0, 0);
-					__builtin_prefetch (&d[j+dist], 0, 0);
-					__builtin_prefetch (&e[j+dist], 0, 0);
+					__builtin_prefetch (&a[j+wr_dist], 1, 0);
+					__builtin_prefetch (&b[j+rd_dist], 0, 0);
+					__builtin_prefetch (&c[j+rd_dist], 0, 0);
+					__builtin_prefetch (&d[j+rd_dist], 0, 0);
+					__builtin_prefetch (&e[j+rd_dist], 0, 0);
                             a[j] = c[j] + d[j] + e[j] + b[j];
             }
 			for(j = ((size/sizeof(double))-dist);j <(size/sizeof(double));j++){
@@ -593,11 +641,11 @@ redo18:
 					stride +=3;
 						}
                         for(j =0; j < ((size/sizeof(double)) - dist); j++){
-					__builtin_prefetch (&a[stride%(size/sizeof(double))+dist], 1, 0);
-					__builtin_prefetch (&b[stride%(size/sizeof(double))+dist], 0, 0);
-					__builtin_prefetch (&c[stride%(size/sizeof(double))+dist], 0, 0);
-					__builtin_prefetch (&d[stride%(size/sizeof(double))+dist], 0, 0);
-					__builtin_prefetch (&e[stride%(size/sizeof(double))+dist], 0, 0);
+					__builtin_prefetch (&a[stride%(size/sizeof(double))+wr_dist], 1, 0);
+					__builtin_prefetch (&b[stride%(size/sizeof(double))+rd_dist], 0, 0);
+					__builtin_prefetch (&c[stride%(size/sizeof(double))+rd_dist], 0, 0);
+					__builtin_prefetch (&d[stride%(size/sizeof(double))+rd_dist], 0, 0);
+					__builtin_prefetch (&e[stride%(size/sizeof(double))+rd_dist], 0, 0);
 								a[stride%(size/sizeof(double))] = c[stride%(size/sizeof(double))] + d[stride%(size/sizeof(double))] + b[stride%(size/sizeof(double))] + e[stride%(size/sizeof(double))];
 			    stride +=3;
                         }
@@ -619,35 +667,35 @@ redo19:
 			MPI_Barrier(MPI_COMM_WORLD);
                         clock_gettime( CLOCK_MONOTONIC, &begin);
 //#pragma omp parallel for
-                        for(j =0; j < dist; j++){
-					__builtin_prefetch (&rand_tab[j+dist], 1, 0);
+                        for(j =0; j < rd_dist; j++){
+					__builtin_prefetch (&rand_tab[j], 0, 0);
 						}
-                        for(j =0; j < dist; j++){
-					__builtin_prefetch (&rand_tab[j+2*dist], 0, 0);
+                        for(j =0; j < rd_dist; j++){
+					__builtin_prefetch (&rand_tab[j+rd_dist], 0, 0);
 					__builtin_prefetch (&a[rand_tab[j]], 1, 0);
 					__builtin_prefetch (&b[rand_tab[j]], 0, 0);
 					__builtin_prefetch (&c[rand_tab[j]], 0, 0);
 					__builtin_prefetch (&d[rand_tab[j]], 0, 0);
 					__builtin_prefetch (&e[rand_tab[j]], 0, 0);
 						}
-                        for(j =0; j < ((size/sizeof(double)) - 2*dist); j++){
-					__builtin_prefetch (&rand_tab[j+2*dist], 0, 0);
-					__builtin_prefetch (&a[rand_tab[j+dist]], 1, 0);
-					__builtin_prefetch (&b[rand_tab[j+dist]], 0, 0);
-					__builtin_prefetch (&c[rand_tab[j+dist]], 0, 0);
-					__builtin_prefetch (&d[rand_tab[j+dist]], 0, 0);
-					__builtin_prefetch (&e[rand_tab[j+dist]], 0, 0);
+                        for(j =0; j < ((size/sizeof(double)) - (2*rd_dist)); j++){
+					__builtin_prefetch (&rand_tab[j+2*rd_dist], 0, 0);
+					__builtin_prefetch (&a[rand_tab[j+rd_dist]], 1, 0);
+					__builtin_prefetch (&b[rand_tab[j+rd_dist]], 0, 0);
+					__builtin_prefetch (&c[rand_tab[j+rd_dist]], 0, 0);
+					__builtin_prefetch (&d[rand_tab[j+rd_dist]], 0, 0);
+					__builtin_prefetch (&e[rand_tab[j+rd_dist]], 0, 0);
 			  a[rand_tab[j]] = b[rand_tab[j]] + c[rand_tab[j]] + d[rand_tab[j]] + e[rand_tab[j]];
                         }
-                        for(j = ((size/sizeof(double)) - 2*dist);j < ((size/sizeof(double)) - dist); j++){
-					__builtin_prefetch (&a[rand_tab[j+dist]], 1, 0);
-					__builtin_prefetch (&b[rand_tab[j+dist]], 0, 0);
-					__builtin_prefetch (&c[rand_tab[j+dist]], 0, 0);
-					__builtin_prefetch (&d[rand_tab[j+dist]], 0, 0);
-					__builtin_prefetch (&e[rand_tab[j+dist]], 0, 0);
+                        for(j = ((size/sizeof(double)) - (2*rd_dist));j < ((size/sizeof(double)) - rd_dist); j++){
+					__builtin_prefetch (&a[rand_tab[j+rd_dist]], 1, 0);
+					__builtin_prefetch (&b[rand_tab[j+rd_dist]], 0, 0);
+					__builtin_prefetch (&c[rand_tab[j+rd_dist]], 0, 0);
+					__builtin_prefetch (&d[rand_tab[j+rd_dist]], 0, 0);
+					__builtin_prefetch (&e[rand_tab[j+rd_dist]], 0, 0);
 			  a[rand_tab[j]] = b[rand_tab[j]] + c[rand_tab[j]] + d[rand_tab[j]] + e[rand_tab[j]];
                         }
-                        for(j = ((size/sizeof(double)) - dist);j < (size/sizeof(double)); j++){
+                        for(j = ((size/sizeof(double)) - rd_dist);j < (size/sizeof(double)); j++){
 			  a[rand_tab[j]] = b[rand_tab[j]] + c[rand_tab[j]] + d[rand_tab[j]] + e[rand_tab[j]];
                         }
 			MPI_Barrier(MPI_COMM_WORLD);
@@ -689,9 +737,9 @@ redo21:
 					__builtin_prefetch (&cc[j][k], 0, 0);
 				}
 				for(k = 0; k < (c_size/sizeof(double)) - dist; k++){
-					__builtin_prefetch (&aa[j][k+dist], 1, 0);
-					__builtin_prefetch (&bb[j][k+dist], 0, 0);
-					__builtin_prefetch (&cc[j][k+dist], 0, 0);
+					__builtin_prefetch (&aa[j][k+wr_dist], 1, 0);
+					__builtin_prefetch (&bb[j][k+rd_dist], 0, 0);
+					__builtin_prefetch (&cc[j][k+rd_dist], 0, 0);
                             		aa[j][k] = bb[j][k]*cc[j][k];
 				}
 				for(k = (c_size/sizeof(double)) - dist; k < (c_size/sizeof(double)); k++){
@@ -718,9 +766,9 @@ redo22:
 					__builtin_prefetch (&cc[k][j], 0, 0);
 				}
 				for(k = 0; k < (c_size/sizeof(double)) - dist; k++){
-					__builtin_prefetch (&aa[k+dist][j], 1, 0);
-					__builtin_prefetch (&bb[k+dist][j], 0, 0);
-					__builtin_prefetch (&cc[k+dist][j], 0, 0);
+					__builtin_prefetch (&aa[k+wr_dist][j], 1, 0);
+					__builtin_prefetch (&bb[k+rd_dist][j], 0, 0);
+					__builtin_prefetch (&cc[k+rd_dist][j], 0, 0);
                             		aa[k][j] = bb[k][j]*cc[k][j];
                 }
 				for(k = (c_size/sizeof(double)) - dist; k < (c_size/sizeof(double)); k++){
@@ -746,13 +794,13 @@ redo23:
 					__builtin_prefetch (&bb[j][k], 0, 0);
 					__builtin_prefetch (&cc[k][j], 0, 0);
 				}
-				for(k = 0; k < (c_size/sizeof(double)); k++){
-					__builtin_prefetch (&aa[j][k+dist], 1, 0);
-					__builtin_prefetch (&bb[j][k+dist], 0, 0);
-					__builtin_prefetch (&cc[k+dist][j], 0, 0);
+				for(k = 0; k < (c_size/sizeof(double)) - dist; k++){
+					__builtin_prefetch (&aa[j][k+wr_dist], 1, 0);
+					__builtin_prefetch (&bb[j][k+rd_dist], 0, 0);
+					__builtin_prefetch (&cc[k+rd_dist][j], 0, 0);
                             		aa[j][k] = bb[j][k]*cc[k][j];
                         }
-				for(k = 0; k < (c_size/sizeof(double)); k++){
+				for(k = (c_size/sizeof(double)) - dist; k< (c_size/sizeof(double)); k++){
 						aa[j][k] = bb[j][k]*cc[k][j];
 				}
 			}
@@ -848,22 +896,22 @@ redo26:
 
 //#pragma omp parallel for
                         for(j =1; j < (r_size/sizeof(double*)) -1; j++){
-					__builtin_prefetch (&aa[j-1][k-1], 1, 2);
-					__builtin_prefetch (&aa[j-1][k], 1, 2);
+					__builtin_prefetch (&aa[j-1][k-1], 0, 2);
+					__builtin_prefetch (&aa[j-1][k], 0, 2);
 					__builtin_prefetch (&aa[j][k-1], 1, 2);
 					__builtin_prefetch (&aa[j][k], 1, 2);
 					__builtin_prefetch (&aa[j+1][k-1], 1, 2);
 					__builtin_prefetch (&aa[j+1][k], 1, 2);
                                 for(k = 1; k < dist; k++){
-					__builtin_prefetch (&aa[j-1][k+1], 1, 2);
+					__builtin_prefetch (&aa[j-1][k+1], 0, 2);
 					__builtin_prefetch (&aa[j][k+1], 1, 2);
 					__builtin_prefetch (&aa[j+1][k+1], 1, 2);
 								}
                                 for(k = 1; k < (c_size/sizeof(double))- dist; k++){
                                       //  if((k!=0)&&(k!=((c_size/sizeof(double))-1))&&(j!=0)&&(j!=((r_size/sizeof(double*))-1)))
-					__builtin_prefetch (&aa[j-1][k+1+dist], 1, 2);
-					__builtin_prefetch (&aa[j][k+1+dist], 1, 2);
-					__builtin_prefetch (&aa[j+1][k+1+dist], 1, 2);
+					__builtin_prefetch (&aa[j-1][k+1+rd_dist], 0, 2);
+					__builtin_prefetch (&aa[j][k+1+wr_dist], 1, 2);
+					__builtin_prefetch (&aa[j+1][k+1+wr_dist], 1, 2);
                                                 aa[j][k] = aa[j][k-1]+aa[j][k+1] + aa[j-1][k] + aa[j+1][k] + aa[j-1][k-1] + aa[j-1][k+1] + aa[j+1][k-1] + aa[j+1][k+1];
                         }
                                 for(k = ((c_size/sizeof(double))- dist); (c_size/sizeof(double))- 1; k++){
@@ -890,22 +938,25 @@ redo27:
 					__builtin_prefetch (&c[stride%(size/sizeof(double))], 0, 0);
 					__builtin_prefetch (&d[stride%(size/sizeof(double))], 0, 0);
 					__builtin_prefetch (&e[stride%(size/sizeof(double))], 0, 0);
-					stride +=3;
+			    if((j%8 == 0)&&(j != 0))
+				stride = j*4757914; //65536 for KNL
+			    else
+				stride++;
 						}
                         for(j =0; j < (size/sizeof(double)) - dist; j++){
-					__builtin_prefetch (&a[stride%(size/sizeof(double)) + dist], 1, 0);
-					__builtin_prefetch (&b[stride%(size/sizeof(double)) + dist], 0, 0);
-					__builtin_prefetch (&c[stride%(size/sizeof(double)) + dist], 0, 0);
-					__builtin_prefetch (&d[stride%(size/sizeof(double)) + dist], 0, 0);
-					__builtin_prefetch (&e[stride%(size/sizeof(double)) + dist], 0, 0);
-                            a[stride%(size/sizeof(double))] = b[stride%(size/sizeof(double))] + c[stride%(size/sizeof(double))] + h[stride%(size/sizeof(double))];
+					__builtin_prefetch (&a[stride%(size/sizeof(double)) + wr_dist], 1, 0);
+					__builtin_prefetch (&b[stride%(size/sizeof(double)) + rd_dist], 0, 0);
+					__builtin_prefetch (&c[stride%(size/sizeof(double)) + rd_dist], 0, 0);
+					__builtin_prefetch (&d[stride%(size/sizeof(double)) + rd_dist], 0, 0);
+					__builtin_prefetch (&e[stride%(size/sizeof(double)) + rd_dist], 0, 0);
+                            a[stride%(size/sizeof(double))] = b[stride%(size/sizeof(double))] + c[stride%(size/sizeof(double))] + d[stride%(size/sizeof(double))] + e[stride%(size/sizeof(double))];
 			    if((j%8 == 0)&&(j != 0))
 				stride = j*4757914; //65536 for KNL
 			    else
 				stride++;
                         }
                         for(j = ((size/sizeof(double)) - dist); j < (size/sizeof(double)) j++){
-                            a[stride%(size/sizeof(double))] = b[stride%(size/sizeof(double))] + c[stride%(size/sizeof(double))] + h[stride%(size/sizeof(double))];
+                            a[stride%(size/sizeof(double))] = b[stride%(size/sizeof(double))] + c[stride%(size/sizeof(double))] + d[stride%(size/sizeof(double))] + e[stride%(size/sizeof(double))];
 			    if((j%8 == 0)&&(j != 0))
 				stride = j*4757914; //65536 for KNL
 			    else
@@ -918,7 +969,7 @@ redo27:
                         if(accum <= empty){
                                 goto redo27;
                         }
-                        l2cache_avg += ((2*size*1.0E-06)/(long double)(accum - empty));
+                        l2cache_avg += ((5*size*1.0E-06)/(long double)(accum - empty));
 			}
 			numa_free(a, size);
 			numa_free(b, size);

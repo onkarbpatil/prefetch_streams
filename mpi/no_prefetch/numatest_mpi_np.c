@@ -747,7 +747,7 @@ redo27:
                         clock_gettime( CLOCK_MONOTONIC, &begin);
 //#pragma omp parallel for
                         for(j =0; j < (size/sizeof(double)); j++){
-                            a[stride%(size/sizeof(double))] = b[stride%(size/sizeof(double))] + c[stride%(size/sizeof(double))] + h[stride%(size/sizeof(double))];
+                            a[stride%(size/sizeof(double))] = b[stride%(size/sizeof(double))] + c[stride%(size/sizeof(double))] + d[stride%(size/sizeof(double))] + e[stride%(size/sizeof(double))];
 			    if((j%8 == 0)&&(j != 0))
 				stride = j*4757914; //65536 for KNL
 			    else
@@ -760,7 +760,7 @@ redo27:
                         if(accum <= empty){
                                 goto redo27;
                         }
-                        l2cache_avg += ((2*size*1.0E-06)/(long double)(accum - empty));
+                        l2cache_avg += ((5*size*1.0E-06)/(long double)(accum - empty));
 			}
 			numa_free(a, size);
 			numa_free(b, size);
