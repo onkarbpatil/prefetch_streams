@@ -850,6 +850,7 @@ redo25:
 			t_sten_avg += 3*((long double)(((long)r_size)*(c_size)*1.0E-06)/(long double)(accum - empty2));
 			}*/
 redo26:
+			rs = 0;
 			MPI_Barrier(MPI_COMM_WORLD);
 			clock_gettime( CLOCK_MONOTONIC, &begin);
 			if(rank >= 12){
