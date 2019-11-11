@@ -754,7 +754,7 @@ redo21:
 			if(accum <= empty2){
 				goto redo21;
 			}
-			row_avg += ((long double)(3*(long)r_size*c_size*1.0E-06)/(long double)(accum - empty2));
+			row_avg += ((long double)(3*(long)(r_size-2)*(c_size-2)*1.0E-06)/(long double)(accum - empty2));
 			}	
 redo22:
 			MPI_Barrier(MPI_COMM_WORLD);
@@ -770,7 +770,7 @@ redo22:
 					__builtin_prefetch (&aa[k+wr_dist][j], 1, 0);
 					__builtin_prefetch (&bb[k+rd_dist][j], 0, 0);
 					__builtin_prefetch (&cc[k+rd_dist][j], 0, 0);
-                            		aa[k][j] = bb[k][j]*cc[k][j];
+                    aa[k][j] = bb[k][j]*cc[k][j];
                 }
 				for(k = (r_size/sizeof(double*)) - dist - 1; k < (r_size/sizeof(double*)) - 1; k++){
 						aa[k][j] = bb[k][j]*cc[k][j];
@@ -783,7 +783,7 @@ redo22:
 			if(accum <= empty2){
 				goto redo22;
 			}
-			col_avg += ((long double)(3*(long)r_size*c_size*1.0E-06)/(long double)(accum - empty2));
+			col_avg += ((long double)(3*(long)(r_size-2)*(c_size-2)*1.0E-06)/(long double)(accum - empty2));
 			}
 		printf("HEre: %d\n", rank);
 		fflush(NULL);
@@ -814,7 +814,7 @@ redo23:
 			if(accum <= empty2){
 				goto redo23;
 			}
-			rc_avg += ((long double)(3*(long)r_size*c_size*1.0E-06)/(long double)(accum - empty2));
+			rc_avg += ((long double)(3*(long)(r_size-2)*(c_size-2)*1.0E-06)/(long double)(accum - empty2));
 			}
 /*redo24:
 			MPI_Barrier(MPI_COMM_WORLD);
@@ -929,7 +929,7 @@ redo26:
 			if(accum <= empty2){
 				goto redo26;
 			}
-			n_sten_avg += 9*((long double)(((long)r_size-1)*((long)c_size-1)*1.0E-06)/(long double)(accum - empty2));
+			n_sten_avg += 9*((long double)(((long)r_size)*((long)c_size)*1.0E-06)/(long double)(accum - empty2));
 			}
 redo27:
 			stride = 0;
