@@ -756,8 +756,6 @@ redo21:
 			}
 			row_avg += ((long double)(3*(long)r_size*c_size*1.0E-06)/(long double)(accum - empty2));
 			}	
-		printf("HEre: %d\n", rank);
-		fflush(NULL);
 redo22:
 			MPI_Barrier(MPI_COMM_WORLD);
 			clock_gettime( CLOCK_MONOTONIC, &begin);
@@ -787,6 +785,8 @@ redo22:
 			}
 			col_avg += ((long double)(3*(long)r_size*c_size*1.0E-06)/(long double)(accum - empty2));
 			}
+		printf("HEre: %d\n", rank);
+		fflush(NULL);
 redo23:
 			MPI_Barrier(MPI_COMM_WORLD);
 			clock_gettime( CLOCK_MONOTONIC, &begin);
