@@ -594,8 +594,8 @@ redo21:
 			MPI_Barrier(MPI_COMM_WORLD);
 			clock_gettime( CLOCK_MONOTONIC, &begin);
 //#pragma omp parallel for
-            for(j = 0; j < (r_size/sizeof(double*)); j++){
-				for(k = 0; k < (c_size/sizeof(double)); k++){
+            for(j = 1; j < (r_size/sizeof(double*)) - 1; j++){
+				for(k = 1; k < (c_size/sizeof(double)) - 1; k++){
                      aa[j][k] = bb[j][k]*cc[j][k];
 				}
             }
@@ -612,8 +612,8 @@ redo22:
 			MPI_Barrier(MPI_COMM_WORLD);
 			clock_gettime( CLOCK_MONOTONIC, &begin);
 //#pragma omp parallel for
-            for(j =0; j < (r_size/sizeof(double*)); j++){
-				for(k = 0; k < (c_size/sizeof(double)); k++){
+            for(j =1; j < (r_size/sizeof(double*)) - 1; j++){
+				for(k = 1; k < (c_size/sizeof(double)) - 1; k++){
                             		aa[k][j] = bb[k][j]*cc[k][j];
                 }
 			}
@@ -630,8 +630,8 @@ redo23:
 			MPI_Barrier(MPI_COMM_WORLD);
 			clock_gettime( CLOCK_MONOTONIC, &begin);
 //#pragma omp parallel for
-            for(j = 0; j < (r_size/sizeof(double*)); j++){
-				for(k = 0; k < (c_size/sizeof(double)); k++){
+            for(j = 1; j < (r_size/sizeof(double*)) - 1; j++){
+				for(k = 1; k < (c_size/sizeof(double)) - 1; k++){
                             		aa[j][k] = bb[j][k]*cc[k][j];
                         }
 			}
