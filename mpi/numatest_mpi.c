@@ -730,19 +730,19 @@ redo21:
 			MPI_Barrier(MPI_COMM_WORLD);
 			clock_gettime( CLOCK_MONOTONIC, &begin);
 //#pragma omp parallel for
-            for(j = 0; j < (r_size/sizeof(double*)); j++){
-				for(k = 0; k < dist; k++){
+            for(j = 1; j < (r_size/sizeof(double*)) - 1; j++){
+				for(k = 1; k < dist; k++){
 					__builtin_prefetch (&aa[j][k], 1, 0);
 					__builtin_prefetch (&bb[j][k], 0, 0);
 					__builtin_prefetch (&cc[j][k], 0, 0);
 				}
-				for(k = 0; k < (c_size/sizeof(double)) - dist; k++){
+				for(k = 1; k < (c_size/sizeof(double)) - dist - 1; k++){
 					__builtin_prefetch (&aa[j][k+wr_dist], 1, 0);
 					__builtin_prefetch (&bb[j][k+rd_dist], 0, 0);
 					__builtin_prefetch (&cc[j][k+rd_dist], 0, 0);
                             		aa[j][k] = bb[j][k]*cc[j][k];
 				}
-				for(k = (c_size/sizeof(double)) - dist; k < (c_size/sizeof(double)); k++){
+				for(k = (c_size/sizeof(double)) - dist - 1; k < (c_size/sizeof(double)) - 1; k++){
 						aa[j][k] = bb[j][k]*cc[j][k];
 				}
             }
@@ -759,19 +759,19 @@ redo22:
 			MPI_Barrier(MPI_COMM_WORLD);
 			clock_gettime( CLOCK_MONOTONIC, &begin);
 //#pragma omp parallel for
-            for(j =0; j < (r_size/sizeof(double*)); j++){
-				for(k = 0; k < dist; k++){
+            for(j =1; j < (r_size/sizeof(double*)) - 1; j++){
+				for(k = 1; k < dist; k++){
 					__builtin_prefetch (&aa[k][j], 1, 0);
 					__builtin_prefetch (&bb[k][j], 0, 0);
 					__builtin_prefetch (&cc[k][j], 0, 0);
 				}
-				for(k = 0; k < (c_size/sizeof(double)) - dist; k++){
+				for(k = 1; k < (c_size/sizeof(double)) - dist - 1; k++){
 					__builtin_prefetch (&aa[k+wr_dist][j], 1, 0);
 					__builtin_prefetch (&bb[k+rd_dist][j], 0, 0);
 					__builtin_prefetch (&cc[k+rd_dist][j], 0, 0);
                             		aa[k][j] = bb[k][j]*cc[k][j];
                 }
-				for(k = (c_size/sizeof(double)) - dist; k < (c_size/sizeof(double)); k++){
+				for(k = (c_size/sizeof(double)) - dist - 1; k < (c_size/sizeof(double)) - 1; k++){
 						aa[k][j] = bb[k][j]*cc[k][j];
 				}
 			}
@@ -788,19 +788,19 @@ redo23:
 			MPI_Barrier(MPI_COMM_WORLD);
 			clock_gettime( CLOCK_MONOTONIC, &begin);
 //#pragma omp parallel for
-            for(j = 0; j < (r_size/sizeof(double*)); j++){
-				for(k = 0; k < dist; k++){
+            for(j = 1; j < (r_size/sizeof(double*)) - 1; j++){
+				for(k = 1; k < dist; k++){
 					__builtin_prefetch (&aa[j][k], 1, 0);
 					__builtin_prefetch (&bb[j][k], 0, 0);
 					__builtin_prefetch (&cc[k][j], 0, 0);
 				}
-				for(k = 0; k < (c_size/sizeof(double)) - dist; k++){
+				for(k = 1; k < (c_size/sizeof(double)) - dist - 1; k++){
 					__builtin_prefetch (&aa[j][k+wr_dist], 1, 0);
 					__builtin_prefetch (&bb[j][k+rd_dist], 0, 0);
 					__builtin_prefetch (&cc[k+rd_dist][j], 0, 0);
                             		aa[j][k] = bb[j][k]*cc[k][j];
                         }
-				for(k = (c_size/sizeof(double)) - dist; k< (c_size/sizeof(double)); k++){
+				for(k = (c_size/sizeof(double)) - dist - 1; k< (c_size/sizeof(double)) - 1; k++){
 						aa[j][k] = bb[j][k]*cc[k][j];
 				}
 			}
@@ -907,14 +907,14 @@ redo26:
 					__builtin_prefetch (&aa[j][k+1], 1, 2);
 					__builtin_prefetch (&aa[j+1][k+1], 1, 2);
 								}
-                                for(k = 1; k < (c_size/sizeof(double))- dist; k++){
+                                for(k = 1; k < (c_size/sizeof(double))- dist - 1; k++){
                                       //  if((k!=0)&&(k!=((c_size/sizeof(double))-1))&&(j!=0)&&(j!=((r_size/sizeof(double*))-1)))
 					__builtin_prefetch (&aa[j-1][k+1+rd_dist], 0, 2);
 					__builtin_prefetch (&aa[j][k+1+wr_dist], 1, 2);
 					__builtin_prefetch (&aa[j+1][k+1+wr_dist], 1, 2);
                                                 aa[j][k] = aa[j][k-1]+aa[j][k+1] + aa[j-1][k] + aa[j+1][k] + aa[j-1][k-1] + aa[j-1][k+1] + aa[j+1][k-1] + aa[j+1][k+1];
                         }
-                                for(k = ((c_size/sizeof(double))- dist); (c_size/sizeof(double))- 1; k++){
+                                for(k = ((c_size/sizeof(double))- dist - 1); k < (c_size/sizeof(double))- 1; k++){
                                                 aa[j][k] = aa[j][k-1]+aa[j][k+1] + aa[j-1][k] + aa[j+1][k] + aa[j-1][k-1] + aa[j-1][k+1] + aa[j+1][k-1] + aa[j+1][k+1];
 								}
 						}
