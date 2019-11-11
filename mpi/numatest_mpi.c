@@ -762,19 +762,19 @@ redo22:
 			MPI_Barrier(MPI_COMM_WORLD);
 			clock_gettime( CLOCK_MONOTONIC, &begin);
 //#pragma omp parallel for
-            for(j =1; j < (r_size/sizeof(double*)) - 1; j++){
+            for(j = 1; j < (c_size/sizeof(double)) - 1; j++){
 				for(k = 1; k < dist; k++){
 					__builtin_prefetch (&aa[k][j], 1, 0);
 					__builtin_prefetch (&bb[k][j], 0, 0);
 					__builtin_prefetch (&cc[k][j], 0, 0);
 				}
-				for(k = 1; k < (c_size/sizeof(double)) - dist - 1; k++){
+				for(k = 1; k < (r_size/sizeof(double*)) - dist - 1; k++){
 					__builtin_prefetch (&aa[k+wr_dist][j], 1, 0);
 					__builtin_prefetch (&bb[k+rd_dist][j], 0, 0);
 					__builtin_prefetch (&cc[k+rd_dist][j], 0, 0);
                             		aa[k][j] = bb[k][j]*cc[k][j];
                 }
-				for(k = (c_size/sizeof(double)) - dist - 1; k < (c_size/sizeof(double)) - 1; k++){
+				for(k = (r_size/sizeof(double*)) - dist - 1; k < (r_size/sizeof(double*)) - 1; k++){
 						aa[k][j] = bb[k][j]*cc[k][j];
 				}
 			}
