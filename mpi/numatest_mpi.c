@@ -152,13 +152,13 @@ void numatest(int argc, char ** argv, int rank, int procs){
         }
 		MPI_Request reqs[32768]; 
 		MPI_Status stat[32768];
-	unsigned long size = (1<<30)/procs;
+	unsigned long size = ((1<<30)*16)/procs;
 	int mbs = size/sizeof(double);
-	int r_size = 32768;
-	int c_size = 32768;
+	int r_size = 32768*4;
+	int c_size = 32768*4;
 	if(procs != 1){
-		r_size = (32768)/(12) + 2*sizeof(double);
-		c_size = (32768)/(procs/12) + 2*sizeof(double);
+		r_size = (32768*4)/(12) + 2*sizeof(double);
+		c_size = (32768*4)/(procs/12) + 2*sizeof(double);
 	}
 	int rs = 0;
 	int z = 0;
@@ -771,8 +771,6 @@ redo22:
 					__builtin_prefetch (&bb[k+rd_dist][j], 0, 0);
 					__builtin_prefetch (&cc[k+rd_dist][j], 0, 0);
                     aa[k][j] = bb[k][j]*cc[k][j];
-		printf("HEre: %d %d %d\n", rank, k, ((r_size/sizeof(double*))));
-		fflush(NULL);
                 }
 				for(k = (r_size/sizeof(double*)) - dist - 1; k < (r_size/sizeof(double*)) - 1; k++){
 						aa[k][j] = bb[k][j]*cc[k][j];
@@ -787,6 +785,8 @@ redo22:
 			}
 			col_avg += ((long double)(3*(long)(r_size-2)*(c_size-2)*1.0E-06)/(long double)(accum - empty2));
 			}
+		printf("HEre: %d %d %d\n", rank, k, ((r_size/sizeof(double*))));
+		fflush(NULL);
 redo23:
 			MPI_Barrier(MPI_COMM_WORLD);
 			clock_gettime( CLOCK_MONOTONIC, &begin);
