@@ -151,7 +151,9 @@ void numatest(int argc, char ** argv, int rank, int procs){
                 i++;
         }
 		MPI_Request reqs[32768]; 
-		MPI_Status stat[32768]; 
+		MPI_Status stat[32768];
+		printf("HEre: %d\n", rank);
+		fflush(NULL);
 	unsigned long size = (1<<30)/procs;
 	int mbs = size/sizeof(double);
 	int r_size = 32768;
