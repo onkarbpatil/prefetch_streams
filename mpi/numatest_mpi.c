@@ -649,7 +649,7 @@ redo18:
 								a[stride%(size/sizeof(double))] = c[stride%(size/sizeof(double))] + d[stride%(size/sizeof(double))] + b[stride%(size/sizeof(double))] + e[stride%(size/sizeof(double))];
 			    stride +=3;
                         }
-                        for(j = ((size/sizeof(double)) - dist); j < (size/sizeof(double)) j++){
+                        for(j = ((size/sizeof(double)) - dist); j < (size/sizeof(double)); j++){
 								a[stride%(size/sizeof(double))] = c[stride%(size/sizeof(double))] + d[stride%(size/sizeof(double))] + b[stride%(size/sizeof(double))] + e[stride%(size/sizeof(double))];
                  stride +=3;
 						}
@@ -955,7 +955,7 @@ redo27:
 			    else
 				stride++;
                         }
-                        for(j = ((size/sizeof(double)) - dist); j < (size/sizeof(double)) j++){
+                        for(j = ((size/sizeof(double)) - dist); j < (size/sizeof(double)); j++){
                             a[stride%(size/sizeof(double))] = b[stride%(size/sizeof(double))] + c[stride%(size/sizeof(double))] + d[stride%(size/sizeof(double))] + e[stride%(size/sizeof(double))];
 			    if((j%8 == 0)&&(j != 0))
 				stride = j*4757914; //65536 for KNL
