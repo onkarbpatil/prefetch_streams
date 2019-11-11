@@ -302,7 +302,7 @@ main()
 				rd_dist = 8192/sizeof(double);
 				wr_dist = 2048/sizeof(double);
 				dist = rd_dist;
-				if(procs > 48){
+				if(numranks > 48){
 					rd_dist = 0;
 					wr_dist = 0;
 					dist = 0;
@@ -312,7 +312,7 @@ main()
 				rd_dist = 8192/sizeof(double);
 				wr_dist = 32768/sizeof(double);
 				dist = wr_dist;
-				if(procs > 48){
+				if(numranks > 48){
 					rd_dist = 0;
 					wr_dist = 32768/sizeof(double);
 				dist = wr_dist;
