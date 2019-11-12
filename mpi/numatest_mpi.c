@@ -302,10 +302,10 @@ void numatest(int argc, char ** argv, int rank, int procs){
 			long double empty=0.0;
 			long double empty2=0.0;
 
-			for(j =0; j < (r_size/sizeof(double*)); j++){
+/*			for(j =0; j < (r_size/sizeof(double*)); j++){
          		for(k = 0; k < (c_size/sizeof(double)); k++)
 					aa[j][k] = (double)rand();
-			}
+			}*/
 redo1:
 			MPI_Barrier(MPI_COMM_WORLD);
 			clock_gettime( CLOCK_MONOTONIC, &begin);
