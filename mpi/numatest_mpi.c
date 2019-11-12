@@ -23,18 +23,26 @@ void calculate_distances(){
 			if(dist < delta){
 				delta = dist;
 				if(strcmp(bw_it->mem_type, mem_tech[i])!=0){
+						printf("Here\n");
+						fflush(NULL);
 					if(((i-1)>=0)&&(strcmp(bw_it->mem_type, mem_tech[i-1])==0)){
 						cluster_sizes[i-1]--;
 						bw_it->mem_type = mem_tech[i];
 						cluster_sizes[i]++;
+						printf("a\n");
+						fflush(NULL);
 					}
 					else if(((i+1)<mem_types)&&(strcmp(bw_it->mem_type, mem_tech[i+1])==0)){
                                                 cluster_sizes[i+1]--;
 						bw_it->mem_type = mem_tech[i];
 						cluster_sizes[i]++;
+						printf("b\n");
+						fflush(NULL);
                     			}
 				}
 			}
+						printf("i %d\n", i);
+						fflush(NULL);
 			i++;
 		}
 	printf("Calculate D %s\n", bw_it->mem_type);
