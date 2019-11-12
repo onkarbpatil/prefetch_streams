@@ -152,7 +152,7 @@ void numatest(int argc, char ** argv, int rank, int procs){
         }
 		MPI_Request reqs[32768]; 
 		MPI_Status stat[32768];
-	unsigned long size = ((1<<30))/procs;
+	unsigned long size = ((1<<30)/procs)*16;
 	int mbs = size/sizeof(double);
 	int r_size = 32768;
 	int c_size = 32768;
@@ -283,9 +283,9 @@ void numatest(int argc, char ** argv, int rank, int procs){
 				c = (double*)numa_alloc_onnode(size, numa_node_ids[i]);
 				d = (double*)numa_alloc_onnode(size, numa_node_ids[i]);
 				e = (double*)numa_alloc_onnode(size, numa_node_ids[i]);
-	//			f = (double*)numa_alloc_onnode(size, numa_node_ids[i]);
-	//			g = (double*)numa_alloc_onnode(size, numa_node_ids[i]);
-	//			h = (double*)numa_alloc_onnode(size, numa_node_ids[i]);
+				//f = (double*)numa_alloc_onnode(size, numa_node_ids[i]);
+				//g = (double*)numa_alloc_onnode(size, numa_node_ids[i]);
+				//h = (double*)numa_alloc_onnode(size, numa_node_ids[i]);
 				aa = (double**)numa_alloc_onnode(r_size, numa_node_ids[i]);
 				for(j = 0; j < r_size/sizeof(double*); j++){
 					aa[j] = (double*)numa_alloc_onnode(c_size, numa_node_ids[i]);
@@ -316,9 +316,9 @@ redo1:
 					__builtin_prefetch (&c[j], 1, 0);
 					__builtin_prefetch (&d[j], 1, 0);
 					__builtin_prefetch (&e[j], 1, 0);
-					__builtin_prefetch (&f[j], 1, 0);
-					__builtin_prefetch (&g[j], 1, 0);
-					__builtin_prefetch (&h[j], 1, 0);
+				//	__builtin_prefetch (&f[j], 1, 0);
+				//	__builtin_prefetch (&g[j], 1, 0);
+				//	__builtin_prefetch (&h[j], 1, 0);
 			}
 			for(j = 0;j < ((size/sizeof(double)) - dist);j++){
 					__builtin_prefetch (&a[j+wr_dist], 1, 0);
@@ -326,17 +326,17 @@ redo1:
 					__builtin_prefetch (&c[j+wr_dist], 1, 0);
 					__builtin_prefetch (&d[j+wr_dist], 1, 0);
 					__builtin_prefetch (&e[j+wr_dist], 1, 0);
-					__builtin_prefetch (&f[j+wr_dist], 1, 0);
-					__builtin_prefetch (&g[j+wr_dist], 1, 0);
-					__builtin_prefetch (&h[j+wr_dist], 1, 0);
+					//__builtin_prefetch (&f[j+wr_dist], 1, 0);
+					//__builtin_prefetch (&g[j+wr_dist], 1, 0);
+					//__builtin_prefetch (&h[j+wr_dist], 1, 0);
 				a[j] = 1.0;
 				b[j] = 2.0;
 				c[j] = 3.0;
 				d[j] = 4.0;
 				e[j] = 5.0;
-				f[j] = 6.0;
-				g[j] = 7.0;
-				h[j] = 8.0;
+			//	f[j] = 6.0;
+			//	g[j] = 7.0;
+			//	h[j] = 8.0;
 			}
 			for(j = ((size/sizeof(double)) - dist); j < (size/sizeof(double)); j++){
 				a[j] = 1.0;
@@ -344,9 +344,9 @@ redo1:
 				c[j] = 3.0;
 				d[j] = 4.0;
 				e[j] = 5.0;
-				f[j] = 6.0;
-				g[j] = 7.0;
-				h[j] = 8.0;
+			//	f[j] = 6.0;
+			//	g[j] = 7.0;
+			//	h[j] = 8.0;
 			}
 			MPI_Barrier(MPI_COMM_WORLD);
 			clock_gettime( CLOCK_MONOTONIC, &stop);
@@ -355,7 +355,7 @@ redo1:
 			if(accum <= empty){
 				goto redo1;
 			}
-			wr_only_avg += ((8*size*1.0E-06)/(long double)(accum - empty));
+			wr_only_avg += ((5*size*1.0E-06)/(long double)(accum - empty));
 			}
 /*redo2:
 			MPI_Barrier(MPI_COMM_WORLD);
@@ -785,8 +785,6 @@ redo22:
 			}
 			col_avg += ((long double)(3*(long)(r_size-2)*(c_size-2)*1.0E-06)/(long double)(accum - empty2));
 			}
-		printf("HEre: %d %d %d\n", rank, k, ((r_size/sizeof(double*))));
-		fflush(NULL);
 redo23:
 			MPI_Barrier(MPI_COMM_WORLD);
 			clock_gettime( CLOCK_MONOTONIC, &begin);
@@ -797,13 +795,15 @@ redo23:
 					__builtin_prefetch (&bb[j][k], 0, 0);
 					__builtin_prefetch (&cc[k][j], 0, 0);
 				}
-				for(k = 1; k < (c_size/sizeof(double)) - dist - 1; k++){
+				for(k = 1; k < ((c_size/sizeof(double)) - dist - 1); k++){
 					__builtin_prefetch (&aa[j][k+wr_dist], 1, 0);
 					__builtin_prefetch (&bb[j][k+rd_dist], 0, 0);
 					__builtin_prefetch (&cc[k+rd_dist][j], 0, 0);
                             		aa[j][k] = bb[j][k]*cc[k][j];
                         }
-				for(k = (c_size/sizeof(double)) - dist - 1; k< (c_size/sizeof(double)) - 1; k++){
+		printf("HEre: %d %d %d\n", rank, k, dist);
+		fflush(NULL);
+				for(k = ((c_size/sizeof(double)) - dist - 1); k < (c_size/sizeof(double)) - 1; k++){
 						aa[j][k] = bb[j][k]*cc[k][j];
 				}
 			}
