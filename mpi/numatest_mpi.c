@@ -152,13 +152,13 @@ void numatest(int argc, char ** argv, int rank, int procs){
         }
 		MPI_Request reqs[32768]; 
 		MPI_Status stat[32768];
-	unsigned long size = ((1<<30)*16)/procs;
+	unsigned long size = ((1<<30))/procs;
 	int mbs = size/sizeof(double);
-	int r_size = 32768*4;
-	int c_size = 32768*4;
+	int r_size = 32768;
+	int c_size = 32768;
 	if(procs != 1){
-		r_size = (32768*4)/(12) + 2*sizeof(double);
-		c_size = (32768*4)/(procs/12) + 2*sizeof(double);
+		r_size = (32768)/(12) + 2*sizeof(double);
+		c_size = (32768)/(procs/12) + 2*sizeof(double);
 	}
 	int rs = 0;
 	int z = 0;
@@ -262,9 +262,9 @@ void numatest(int argc, char ** argv, int rank, int procs){
 				c = (double*)numa_alloc_onnode(size, numa_node_ids[2]);
 				d = (double*)numa_alloc_onnode(size, numa_node_ids[2]);
 				e = (double*)numa_alloc_onnode(size, numa_node_ids[2]);
-				f = (double*)numa_alloc_onnode(size, numa_node_ids[2]);
-				g = (double*)numa_alloc_onnode(size, numa_node_ids[2]);
-				h = (double*)numa_alloc_onnode(size, numa_node_ids[2]);
+				//f = (double*)numa_alloc_onnode(size, numa_node_ids[2]);
+				//g = (double*)numa_alloc_onnode(size, numa_node_ids[2]);
+				//h = (double*)numa_alloc_onnode(size, numa_node_ids[2]);
 				aa = (double**)numa_alloc_onnode(r_size, numa_node_ids[0]);
 				for(j = 0; j < r_size/sizeof(double*); j++){
 					aa[j] = (double*)numa_alloc_onnode(c_size, numa_node_ids[0]);
@@ -283,9 +283,9 @@ void numatest(int argc, char ** argv, int rank, int procs){
 				c = (double*)numa_alloc_onnode(size, numa_node_ids[i]);
 				d = (double*)numa_alloc_onnode(size, numa_node_ids[i]);
 				e = (double*)numa_alloc_onnode(size, numa_node_ids[i]);
-				f = (double*)numa_alloc_onnode(size, numa_node_ids[i]);
-				g = (double*)numa_alloc_onnode(size, numa_node_ids[i]);
-				h = (double*)numa_alloc_onnode(size, numa_node_ids[i]);
+	//			f = (double*)numa_alloc_onnode(size, numa_node_ids[i]);
+	//			g = (double*)numa_alloc_onnode(size, numa_node_ids[i]);
+	//			h = (double*)numa_alloc_onnode(size, numa_node_ids[i]);
 				aa = (double**)numa_alloc_onnode(r_size, numa_node_ids[i]);
 				for(j = 0; j < r_size/sizeof(double*); j++){
 					aa[j] = (double*)numa_alloc_onnode(c_size, numa_node_ids[i]);
@@ -980,9 +980,9 @@ redo27:
 			numa_free(c, size);
 			numa_free(d, size);
 			numa_free(e, size);
-			numa_free(f, size);
-			numa_free(g, size);
-			numa_free(h, size);
+			//numa_free(f, size);
+			//numa_free(g, size);
+			//numa_free(h, size);
 			for(j = 0; j < r_size/sizeof(double*); j++){
 				numa_free(aa[j], c_size);
 			}
