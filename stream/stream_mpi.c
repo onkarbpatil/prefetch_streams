@@ -114,7 +114,7 @@
 //    cache size matter.
 //
 #ifndef STREAM_ARRAY_SIZE
-#   define STREAM_ARRAY_SIZE	268435456
+#   define STREAM_ARRAY_SIZE	4294967296
 #endif
 
 /*  2) STREAM runs each kernel "NTIMES" times and reports the *best* result
@@ -654,12 +654,13 @@ main()
 		}
     
 		// note that "bytes[j]" is the aggregate array size, so no "numranks" is needed here
-		printf("Function    Best Rate MB/s  Avg time     Min time     Max time\n");
+		printf("Function    Best Rate MB/s  Avg Rate MB/s   Avg time     Min time     Max time\n");
 		for (j=0; j<4; j++) {
 			avgtime[j] = avgtime[j]/(double)(NTIMES-1);
 
-			printf("%s%11.1f  %11.6f  %11.6f  %11.6f\n", label[j],
+			printf("%s%11.1f  %11.1f  %11.6f  %11.6f  %11.6f\n", label[j],
 			   1.0E-06 * bytes[j]/mintime[j],
+			   1.0E-06 * bytes[j]/avgtime[j],
 			   avgtime[j],
 			   mintime[j],
 			   maxtime[j]);

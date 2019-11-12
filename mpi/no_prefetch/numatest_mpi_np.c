@@ -152,13 +152,13 @@ void numatest(int argc, char ** argv, int rank, int procs){
         }
 		MPI_Request reqs[32768]; 
 		MPI_Status stat[32768]; 
-	unsigned long size = (1<<30)/procs;
+	unsigned long size = ((1<<30)/procs)*16;
 	int mbs = size/sizeof(double);
-	int r_size = 32768;
-	int c_size = 32768;
+	int r_size = 32768*4;
+	int c_size = 32768*4;
 	if(procs != 1){
-		r_size = (32768)/(12) + 2*sizeof(double);
-		c_size = (32768)/(procs/12) + 2*sizeof(double);
+		r_size = (32768*4)/(12) + 2*sizeof(double);
+		c_size = (32768*4)/(procs/12) + 2*sizeof(double);
 	}
 	int rs = 0;
 	int z = 0;
@@ -608,6 +608,7 @@ redo21:
 			}
 			row_avg += ((long double)(3*(long)r_size*c_size*1.0E-06)/(long double)(accum - empty2));
 			}
+			/*
 redo22:
 			MPI_Barrier(MPI_COMM_WORLD);
 			clock_gettime( CLOCK_MONOTONIC, &begin);
@@ -644,7 +645,7 @@ redo23:
 			}
 			rc_avg += ((long double)(3*(long)r_size*c_size*1.0E-06)/(long double)(accum - empty2));
 			}
-/*redo24:
+redo24:
 			MPI_Barrier(MPI_COMM_WORLD);
 			clock_gettime( CLOCK_MONOTONIC, &begin);
 //#pragma omp parallel for
