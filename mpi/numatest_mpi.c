@@ -858,7 +858,7 @@ redo26:
 			MPI_Barrier(MPI_COMM_WORLD);
 			clock_gettime( CLOCK_MONOTONIC, &begin);
 			if(rank >= 12){
-				MPI_Isend(aa[1], (c_size/sizeof(double)), MPI_DOUBLE, (rank - 12), MPI_ANY_TAG, MPI_COMM_WORLD, &reqs[rs]);
+				MPI_Isend(aa[1], (c_size/sizeof(double)), MPI_DOUBLE, (rank - 12), rs, MPI_COMM_WORLD, &reqs[rs]);
 				rs++;
 			}
 			if(rank < (procs - 12)){
@@ -866,16 +866,16 @@ redo26:
 				rs++;
 			}
 			if(rank < (procs - 12)){
-				MPI_Isend(aa[(c_size/sizeof(double))-2], (c_size/sizeof(double)), MPI_DOUBLE, (rank + 12), MPI_ANY_TAG, MPI_COMM_WORLD, &reqs[rs]);
+				MPI_Isend(aa[(c_size/sizeof(double))-2], (c_size/sizeof(double)), MPI_DOUBLE, (rank + 12), rs, MPI_COMM_WORLD, &reqs[rs]);
 				rs++;
 			}
 			if(rank >= 12){
-				MPI_Irecv(aa[0], (c_size/sizeof(double)), MPI_DOUBLE, (rank - 12), MPI_ANY_TAG, MPI_COMM_WORLD, &reqs[rs]);
+				MPI_Irecv(aa[0], (c_size/sizeof(double)), MPI_DOUBLE, (rank - 12), MP_ANY_TAG, MPI_COMM_WORLD, &reqs[rs]);
 				rs++;
 			}
 			if((rank%12 < 11)){
 					for(z=1; z<(c_size/sizeof(double))-2; z++) {
-						MPI_Isend(&aa[z][(r_size/sizeof(double*)) - 2], 1, MPI_DOUBLE, (rank + 1), MPI_ANY_TAG, MPI_COMM_WORLD, &reqs[rs]);
+						MPI_Isend(&aa[z][(r_size/sizeof(double*)) - 2], 1, MPI_DOUBLE, (rank + 1), rs, MPI_COMM_WORLD, &reqs[rs]);
 						rs++;
 					}
 			}
@@ -887,7 +887,7 @@ redo26:
 			}
 			if((rank%12 != 0)){
 					for(z=1; z<(c_size/sizeof(double))-2; z++) {
-						MPI_Isend(&aa[z][1], 1, MPI_DOUBLE, (rank - 1), MPI_ANY_TAG, MPI_COMM_WORLD, &reqs[rs]);
+						MPI_Isend(&aa[z][1], 1, MPI_DOUBLE, (rank - 1), rs, MPI_COMM_WORLD, &reqs[rs]);
 						rs++;
 					}
 			}
