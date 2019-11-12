@@ -160,6 +160,7 @@ void numatest(int argc, char ** argv, int rank, int procs){
                 }
                 i++;
         }
+		total_numa_nodes++;
 		MPI_Request reqs[32768]; 
 		MPI_Status stat[32768];
 	unsigned long size = ((1<<20)/procs)*256;
@@ -205,7 +206,7 @@ void numatest(int argc, char ** argv, int rank, int procs){
     }
 //#endif
   	i = 0;
-	while(i <= total_numa_nodes){
+	while(i < total_numa_nodes){
 			if(i <= 1){
 				rd_dist = 8192/sizeof(double);
 				wr_dist = 2048/sizeof(double);
@@ -216,7 +217,7 @@ void numatest(int argc, char ** argv, int rank, int procs){
 					dist = 0;
 				}
 			}
-			if((i > 1)&&(i < total_numa_nodes)){
+			if((i > 1)&&(i < (total_numa_nodes-1))){
 				rd_dist = 8192/sizeof(double);
 				wr_dist = 32768/sizeof(double);
 				dist = wr_dist;
@@ -226,7 +227,7 @@ void numatest(int argc, char ** argv, int rank, int procs){
 				dist = wr_dist;
 				}
 			}
-			if((i == total_numa_nodes)){
+			if(i == (total_numa_nodes - 1)){
 				rd_dist = 8192/sizeof(double);
 				wr_dist = 2048/sizeof(double);
 				dist = rd_dist;
@@ -266,7 +267,7 @@ void numatest(int argc, char ** argv, int rank, int procs){
 		{
 			int j = 0;
 			int k = 0;
-			if(i == total_numa_nodes){
+			if(i == (total_numa_nodes-1)){
 				a = (double*)numa_alloc_onnode(size, numa_node_ids[0]);
 				b = (double*)numa_alloc_onnode(size, numa_node_ids[2]);
 				c = (double*)numa_alloc_onnode(size, numa_node_ids[2]);
