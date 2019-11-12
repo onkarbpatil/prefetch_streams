@@ -265,7 +265,7 @@ void numatest(int argc, char ** argv, int rank, int procs){
 				//f = (double*)numa_alloc_onnode(size, numa_node_ids[2]);
 				//g = (double*)numa_alloc_onnode(size, numa_node_ids[2]);
 				//h = (double*)numa_alloc_onnode(size, numa_node_ids[2]);
-				aa = (double**)numa_alloc_onnode(r_size, numa_node_ids[0]);
+			/*	aa = (double**)numa_alloc_onnode(r_size, numa_node_ids[0]);
 				for(j = 0; j < r_size/sizeof(double*); j++){
 					aa[j] = (double*)numa_alloc_onnode(c_size, numa_node_ids[0]);
 				}
@@ -276,7 +276,7 @@ void numatest(int argc, char ** argv, int rank, int procs){
 				cc = (double**)numa_alloc_onnode(r_size, numa_node_ids[2]);
 				for(j = 0; j < r_size/sizeof(double*); j++){
 					cc[j] = (double*)numa_alloc_onnode(c_size, numa_node_ids[2]);
-				}
+				}*/
 			}else{
 				a = (double*)numa_alloc_onnode(size, numa_node_ids[i]);
 				b = (double*)numa_alloc_onnode(size, numa_node_ids[i]);
@@ -286,7 +286,7 @@ void numatest(int argc, char ** argv, int rank, int procs){
 				//f = (double*)numa_alloc_onnode(size, numa_node_ids[i]);
 				//g = (double*)numa_alloc_onnode(size, numa_node_ids[i]);
 				//h = (double*)numa_alloc_onnode(size, numa_node_ids[i]);
-				aa = (double**)numa_alloc_onnode(r_size, numa_node_ids[i]);
+				/*aa = (double**)numa_alloc_onnode(r_size, numa_node_ids[i]);
 				for(j = 0; j < r_size/sizeof(double*); j++){
 					aa[j] = (double*)numa_alloc_onnode(c_size, numa_node_ids[i]);
 				}
@@ -297,7 +297,7 @@ void numatest(int argc, char ** argv, int rank, int procs){
 				cc = (double**)numa_alloc_onnode(r_size, numa_node_ids[i]);
 				for(j = 0; j < r_size/sizeof(double*); j++){
 					cc[j] = (double*)numa_alloc_onnode(c_size, numa_node_ids[i]);
-				}
+				}*/
 			}
 			long double empty=0.0;
 			long double empty2=0.0;
@@ -726,7 +726,7 @@ redo19:
 				goto redo20;
 			}
 			diff_avg += ((8*size*1.0E-06)/(long double)(accum - empty));
-			}*/
+			}
 redo21:
 			MPI_Barrier(MPI_COMM_WORLD);
 			clock_gettime( CLOCK_MONOTONIC, &begin);
@@ -756,7 +756,7 @@ redo21:
 			}
 			row_avg += ((long double)(3*(long)(r_size-2)*(c_size-2)*1.0E-06)/(long double)(accum - empty2));
 			}	
-		/*	
+			
 redo22:
 			MPI_Barrier(MPI_COMM_WORLD);
 			clock_gettime( CLOCK_MONOTONIC, &begin);
@@ -852,52 +852,54 @@ redo25:
 				goto redo25;
 			}
 			t_sten_avg += 3*((long double)(((long)r_size)*(c_size)*1.0E-06)/(long double)(accum - empty2));
-			}*/
+			}
 redo26:
 			rs = 0;
 			MPI_Barrier(MPI_COMM_WORLD);
 			clock_gettime( CLOCK_MONOTONIC, &begin);
 			if(rank >= 12){
-				MPI_Isend(aa[1], (c_size/sizeof(double)), MPI_DOUBLE, (rank - 12), rs, MPI_COMM_WORLD, &reqs[rs]);
+				MPI_Isend(&aa[1], (c_size/sizeof(double)), MPI_DOUBLE, (rank - 12), rs, MPI_COMM_WORLD, &reqs[rs]);
 				rs++;
 			}
 			if(rank < (procs - 12)){
-				MPI_Irecv(aa[(c_size/sizeof(double))-1], (c_size/sizeof(double)), MPI_DOUBLE, (rank + 12), MPI_ANY_TAG, MPI_COMM_WORLD, &reqs[rs]);
+				MPI_Irecv(&aa[(r_size/sizeof(double*))-1], (c_size/sizeof(double)), MPI_DOUBLE, (rank + 12), MPI_ANY_TAG, MPI_COMM_WORLD, &reqs[rs]);
 				rs++;
 			}
 			if(rank < (procs - 12)){
-				MPI_Isend(aa[(c_size/sizeof(double))-2], (c_size/sizeof(double)), MPI_DOUBLE, (rank + 12), rs, MPI_COMM_WORLD, &reqs[rs]);
+				MPI_Isend(&aa[(r_size/sizeof(double*))-2], (c_size/sizeof(double)), MPI_DOUBLE, (rank + 12), rs, MPI_COMM_WORLD, &reqs[rs]);
 				rs++;
 			}
 			if(rank >= 12){
-				MPI_Irecv(aa[0], (c_size/sizeof(double)), MPI_DOUBLE, (rank - 12), MP_ANY_TAG, MPI_COMM_WORLD, &reqs[rs]);
+				MPI_Irecv(&aa[0], (c_size/sizeof(double)), MPI_DOUBLE, (rank - 12), MPI_ANY_TAG , MPI_COMM_WORLD, &reqs[rs]);
 				rs++;
 			}
 			if((rank%12 < 11)){
-					for(z=1; z<(c_size/sizeof(double))-2; z++) {
-						MPI_Isend(&aa[z][(r_size/sizeof(double*)) - 2], 1, MPI_DOUBLE, (rank + 1), rs, MPI_COMM_WORLD, &reqs[rs]);
+					for(z=1; z<(r_size/sizeof(double*))-2; z++) {
+						MPI_Isend(&aa[z][(c_size/sizeof(double)) - 2], 1, MPI_DOUBLE, (rank + 1), rs, MPI_COMM_WORLD, &reqs[rs]);
 						rs++;
 					}
 			}
 			if((rank%12 != 0)){
-					for(z=1; z<(c_size/sizeof(double))-2; z++) {
+					for(z=1; z<(r_size/sizeof(double*))-2; z++) {
 						MPI_Irecv(&aa[z][0], 1, MPI_DOUBLE, (rank - 1), MPI_ANY_TAG, MPI_COMM_WORLD, &reqs[rs]);
 						rs++;
 					}
 			}
 			if((rank%12 != 0)){
-					for(z=1; z<(c_size/sizeof(double))-2; z++) {
+					for(z=1; z<(r_size/sizeof(double*))-2; z++) {
 						MPI_Isend(&aa[z][1], 1, MPI_DOUBLE, (rank - 1), rs, MPI_COMM_WORLD, &reqs[rs]);
 						rs++;
 					}
 			}
 			if((rank%12 < 11)){
-					for(z=1; z<(c_size/sizeof(double))-2; z++) {
-						MPI_Irecv(&aa[z][(r_size/sizeof(double*)) - 1], 1, MPI_DOUBLE, (rank + 1), MPI_ANY_TAG, MPI_COMM_WORLD, &reqs[rs]);
+					for(z=1; z<(r_size/sizeof(double*))-2; z++) {
+						MPI_Irecv(&aa[z][(c_size/sizeof(double)) - 1], 1, MPI_DOUBLE, (rank + 1), MPI_ANY_TAG, MPI_COMM_WORLD, &reqs[rs]);
 						rs++;
 					}
 			}
 			MPI_Waitall (rs , reqs , stat );
+			//printf("Here %d\n", rank);
+			//fflush(NULL);
 
 //#pragma omp parallel for
                         for(j =1; j < (r_size/sizeof(double*)) -1; j++){
@@ -931,7 +933,7 @@ redo26:
 				goto redo26;
 			}
 			n_sten_avg += 9*((long double)(((long)r_size)*((long)c_size)*1.0E-06)/(long double)(accum - empty2));
-			}
+			}*/
 redo27:
 			stride = 0;
 			MPI_Barrier(MPI_COMM_WORLD);
@@ -984,7 +986,7 @@ redo27:
 			//numa_free(f, size);
 			//numa_free(g, size);
 			//numa_free(h, size);
-			for(j = 0; j < r_size/sizeof(double*); j++){
+			/*for(j = 0; j < r_size/sizeof(double*); j++){
 				numa_free(aa[j], c_size);
 			}
 			for(j = 0; j < r_size/sizeof(double*); j++){
@@ -995,7 +997,7 @@ redo27:
 			}
 			numa_free(aa, r_size);
 			numa_free(bb, r_size);
-			numa_free(cc, r_size);
+			numa_free(cc, r_size);*/
 		}
 		if(rank == 0){
 		struct numa_node_bw * node_bw = (struct numa_node_bw *)malloc(sizeof(struct numa_node_bw));
