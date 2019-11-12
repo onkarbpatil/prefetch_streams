@@ -62,4 +62,4 @@ void calculate_mean();
 void classify();
 void sort_list(struct numa_node_bw * new_node);
 void write_config_file();
-void numatest(int argc, char ** argv, int rank, int procs);
+void numatest(int argc, char ** argv, int rank, int procs, unsigned long bytes);

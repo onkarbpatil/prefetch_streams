@@ -139,7 +139,7 @@ void write_config_file(){
 	fclose(conf);
 }
 
-void numatest(int argc, char ** argv, int rank, int procs){
+void numatest(int argc, char ** argv, int rank, int procs, unsigned long bytes){
 	max_node = numa_max_node() + 1;
 	int cpu_count = numa_num_possible_cpus();
 	numa_node_ids = (int*)malloc(sizeof(int)*max_node);
@@ -155,7 +155,7 @@ void numatest(int argc, char ** argv, int rank, int procs){
 		total_numa_nodes++;
 		MPI_Request reqs[32768]; 
 		MPI_Status stat[32768];
-	unsigned long size = ((1<<20)/procs)*256;
+	unsigned long size = bytes/procs;
 	int mbs = size/sizeof(double);
 	int r_size = 32768;
 	int c_size = 32768;
