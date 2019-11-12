@@ -19,7 +19,7 @@ void calculate_distances(){
 		i = 0;
 		long double delta = 9999999.9999;
 		while(i < mem_types){
-			long double dist = abs(sqrt(abs((means[i] - bw_it->owtr_avg))*abs((means[i] - bw_it->owtr_avg))));
+			long double dist = abs(sqrt(abs((means[i] - bw_it->owfr_avg))*abs((means[i] - bw_it->owfr_avg))));
 			if(dist < delta){
 				delta = dist;
 				if(strcmp(bw_it->mem_type, mem_tech[i])!=0){
@@ -37,6 +37,8 @@ void calculate_distances(){
 			}
 			i++;
 		}
+	printf("Calculate D %s\n", bw_it->mem_type);
+		fflush(NULL);
 		bw_it = bw_it->next;
 	}
 }
@@ -48,7 +50,7 @@ void calculate_mean(){
 		int j = 0;
 		means[i] = 0.0;
 		while(j < cluster_sizes[i]){
-			means[i] += bw_it->owtr_avg;
+			means[i] += bw_it->owfr_avg;
 			j++;
 			bw_it = bw_it->next;
 		}
@@ -152,13 +154,13 @@ void numatest(int argc, char ** argv, int rank, int procs){
         }
 		MPI_Request reqs[32768]; 
 		MPI_Status stat[32768];
-	unsigned long size = ((1<<30)/procs)*16;
+	unsigned long size = ((1<<20)/procs)*256;
 	int mbs = size/sizeof(double);
-	int r_size = 32768*4;
-	int c_size = 32768*4;
+	int r_size = 32768;
+	int c_size = 32768;
 	if(procs != 1){
-		r_size = (32768*4)/(12) + 2*sizeof(double);
-		c_size = (32768*4)/(procs/12) + 2*sizeof(double);
+		r_size = (32768)/(12) + 2*sizeof(double);
+		c_size = (32768)/(procs/12) + 2*sizeof(double);
 	}
 	int rs = 0;
 	int z = 0;
