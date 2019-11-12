@@ -3,8 +3,9 @@
 int main(int argc, char ** argv){
 		int rank, size;
 		unsigned long bytes;
+		char * ptr;
 	MPI_Init(&argc, &argv);
-		unsigned long bytes = argv[1];
+		bytes = strtoul(argv[1], &ptr, 10);
 	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 	MPI_Comm_size(MPI_COMM_WORLD, &size);
 	char *labels[] = {"NVME","DRAM"};
