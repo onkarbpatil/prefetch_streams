@@ -3,6 +3,7 @@
 int main(int argc, char ** argv){
 		int rank, size;
 		unsigned long bytes;
+		char *ptr;
 	MPI_Init(&argc, &argv);
 		bytes = strtoul(argv[1], &ptr, 10);
 	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
