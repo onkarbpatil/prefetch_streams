@@ -114,7 +114,7 @@
 //    cache size matter.
 //
 #ifndef STREAM_ARRAY_SIZE
-#   define STREAM_ARRAY_SIZE	4294967296
+#   define STREAM_ARRAY_SIZE	134217728
 #endif
 
 /*  2) STREAM runs each kernel "NTIMES" times and reports the *best* result
@@ -245,6 +245,7 @@ extern int omp_get_num_threads();
 int
 main()
     {
+
     int			quantum, checktick();
     int			BytesPerWord;
     int			i,k;
@@ -277,7 +278,7 @@ main()
 	int dist;
     /* --- SETUP --- call MPI_Init() before anything else! --- */
 
-    rc = MPI_Init(NULL, NULL);
+    rc = MPI_Init(NULL,NULL);
 	t0 = MPI_Wtime();
     if (rc != MPI_SUCCESS) {
        printf("ERROR: MPI Initialization failed with return code %d\n",rc);
