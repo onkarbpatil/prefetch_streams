@@ -129,10 +129,10 @@ void write_config_file(){
 	strcat(fname, thr);
 	conf = fopen(fname, "w");
 	struct numa_node_bw * bw_it = numa_list_head;
-		printf("#NUMA id WR-only avg bw 1W4R avg bw Str avg bw Rand avg bw LLC avg bw\n");
+		printf("#NUMA id WR-only_avg_bw 1W4R_avg_bw Str_avg_bw Rand_avg_bw LLC_avg_bw WR-only_pk_bw 1W4R_pk_bw Str_pk_bw Rand_pk_bw LLC_pk_bw WR-only_avg_lat 1W4R_avg_lat Str_avg_lat Rand_avg_lat LLC_avg_lat WR-only_min 1W4R_min Str_min Rand_min LLC_min\n");
 	while(bw_it != NULL){	
 		fprintf(conf, "%d %s %Lf %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF\n", bw_it->numa_id, bw_it->mem_type, bw_it->wr_only_avg, bw_it->owor_avg, bw_it->owtr_avg, bw_it->owthr_avg, bw_it->owfr_avg, bw_it->twor_avg, bw_it->twtr_avg, bw_it->twthr_avg, bw_it->twfr_avg, bw_it->thwor_avg, bw_it->thwtr_avg, bw_it->thwthr_avg, bw_it->thwfr_avg, bw_it->fwor_avg, bw_it->fwtr_avg, bw_it->fwthr_avg, bw_it->fwfr_avg, bw_it->str_avg, bw_it->rand_avg, bw_it->diff_avg, bw_it->row_avg, bw_it->col_avg, bw_it->rc_avg, bw_it->t_sten_avg, bw_it->f_sten_avg, bw_it->n_sten_avg, bw_it->l2cache_avg);
-		printf("%d %LF %LF %LF %LF %LF\n", bw_it->numa_id, bw_it->wr_only_avg, bw_it->owfr_avg, bw_it->str_avg, bw_it->rand_avg, bw_it->l2cache_avg);
+		printf("%d %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF\n", bw_it->numa_id, bw_it->wr_only_avg, bw_it->owfr_avg, bw_it->str_avg, bw_it->rand_avg, bw_it->l2cache_avg, bw_it->wr_only_min, bw_it->owfr_min, bw_it->str_min, bw_it->rand_min, bw_it->l2cache_min, bw_it->wr_only_t, bw_it->owfr_t, bw_it->str_t, bw_it->rand_t, bw_it->l2cache_t, bw_it->wr_only_tmin, bw_it->owfr_tmin, bw_it->str_tmin, bw_it->rand_tmin, bw_it->l2cache_tmin);
 		//printf("%d %s %Lf %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF\n", bw_it->numa_id, bw_it->mem_type, bw_it->wr_only_avg, bw_it->owor_avg, bw_it->owtr_avg, bw_it->owthr_avg, bw_it->owfr_avg, bw_it->twor_avg, bw_it->twtr_avg, bw_it->twthr_avg, bw_it->twfr_avg, bw_it->thwor_avg, bw_it->thwtr_avg, bw_it->thwthr_avg, bw_it->thwfr_avg, bw_it->fwor_avg, bw_it->fwtr_avg, bw_it->fwthr_avg, bw_it->fwfr_avg, bw_it->str_avg, bw_it->rand_avg, bw_it->diff_avg, bw_it->row_avg, bw_it->col_avg, bw_it->rc_avg, bw_it->t_sten_avg, bw_it->f_sten_avg, bw_it->n_sten_avg, bw_it->l2cache_avg);
 		bw_it = bw_it->next;
 	}
@@ -254,6 +254,21 @@ void numatest(int argc, char ** argv, int rank, int procs, unsigned long bytes){
 		long double t_sten_avg = 0.0;
 		long double f_sten_avg = 0.0;
 		long double n_sten_avg = 0.0;
+		long double wr_only_t = 0.0;
+		long double owfr_t = 0.0;
+		long double l2cache_t = 0.0;
+		long double str_t = 0.0;
+		long double rand_t = 0.0;
+		long double wr_only_tmin = 999999.9999;
+		long double owfr_tmin = 999999.9999;
+		long double l2cache_tmin = 999999.9999;
+		long double str_tmin = 999999.9999;
+		long double rand_tmin = 999999.9999;
+		long double wr_only_min = 0.0;
+		long double owfr_min = 0.0;
+		long double l2cache_min = 0.0;
+		long double str_min = 0.0;
+		long double rand_min = 0.0;
 		long double accum;
 		for( iters = 0; iters < 10; iters++)
 		{
@@ -355,6 +370,9 @@ redo1:
 			clock_gettime( CLOCK_MONOTONIC, &stop);
 			if(rank == 0){
 			accum = ( stop.tv_sec - begin.tv_sec ) + (long double)( stop.tv_nsec - begin.tv_nsec ) / (long double)BILLION;
+			wr_only_t += accum;
+			if(accum < wr_only_tmin)
+					wr_only_tmin = accum;
 			if(accum <= empty){
 				goto redo1;
 			}
@@ -434,6 +452,9 @@ redo5:
 			clock_gettime( CLOCK_MONOTONIC, &stop);
 			if(rank == 0){
 			accum = ( stop.tv_sec - begin.tv_sec ) + (long double)( stop.tv_nsec - begin.tv_nsec ) / (long double)BILLION;
+			owfr_t += accum;
+			if(accum < owfr_tmin)
+					owfr_tmin = accum;
 			if(accum <= empty){
 				goto redo5;
 			}
@@ -661,6 +682,9 @@ redo18:
                         clock_gettime( CLOCK_MONOTONIC, &stop);
 			if(rank == 0){
                         accum = ( stop.tv_sec - begin.tv_sec ) + (long double)( stop.tv_nsec - begin.tv_nsec ) / (long double)BILLION;
+			str_t += accum;
+			if(accum < str_tmin)
+					str_tmin = accum;
 			if(accum <= empty){
 				goto redo18;
 			}
@@ -706,6 +730,9 @@ redo19:
                         clock_gettime( CLOCK_MONOTONIC, &stop);
 			if(rank == 0){
                         accum = ( stop.tv_sec - begin.tv_sec ) + (long double)( stop.tv_nsec - begin.tv_nsec ) / (long double)BILLION;
+			rand_t += accum;
+			if(accum < rand_tmin)
+					rand_tmin = accum;
 			if(accum <= empty){
 				goto redo19;
 			}
@@ -976,6 +1003,9 @@ redo27:
                         clock_gettime( CLOCK_MONOTONIC, &stop);
 			if(rank == 0){
                         accum = ( stop.tv_sec - begin.tv_sec ) + (long double)( stop.tv_nsec - begin.tv_nsec ) / (long double)BILLION;
+			l2cache_t += accum;
+			if(accum < l2cache_tmin)
+					l2cache_tmin = accum;
                         if(accum <= empty){
                                 goto redo27;
                         }
@@ -1032,6 +1062,21 @@ redo27:
 		node_bw->t_sten_avg = t_sten_avg/10;
 		node_bw->f_sten_avg = f_sten_avg/10;
 		node_bw->n_sten_avg = n_sten_avg/10;
+		node_bw->wr_only_t = wr_only_t/10;
+		node_bw->l2cache_t = l2cache_t/10;
+		node_bw->rand_t = rand_t/10;
+		node_bw->str_t = str_t/10;
+		node_bw->owfr_t = owfr_t/10;
+		node_bw->wr_only_tmin = wr_only_tmin;
+		node_bw->l2cache_tmin = l2cache_tmin;
+		node_bw->rand_tmin = rand_tmin;
+		node_bw->str_tmin = str_tmin;
+		node_bw->owfr_tmin = owfr_tmin;
+		node_bw->wr_only_min = ((5*size*1.0E-06)/(long double)wr_only_tmin);
+		node_bw->l2cache_min = ((5*size*1.0E-06)/(long double)l2cache_tmin);
+		node_bw->rand_min = ((5*size*1.0E-06)/(long double)rand_tmin);
+		node_bw->str_min = ((5*size*1.0E-06)/(long double)str_tmin);
+		node_bw->owfr_min = ((5*size*1.0E-06)/(long double)owfr_tmin);
 		node_bw->next = NULL;
 		if(numa_node_list == NULL){
 			numa_node_list = node_bw;
