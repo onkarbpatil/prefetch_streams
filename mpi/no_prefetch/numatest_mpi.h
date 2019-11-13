@@ -42,6 +42,21 @@ struct numa_node_bw{
         long double t_sten_avg;
         long double f_sten_avg;
         long double n_sten_avg;
+		long double wr_only_t;
+		long double l2cache_t;
+		long double rand_t;
+		long double str_t;
+		long double owfr_t;
+		long double wr_only_tmin;
+		long double l2cache_tmin;
+		long double rand_tmin;
+		long double str_tmin;
+		long double owfr_tmin;
+		long double wr_only_min;
+		long double l2cache_min;
+		long double rand_min;
+		long double str_min;
+		long double owfr_min;
 	struct numa_node_bw * next;
 };
 
