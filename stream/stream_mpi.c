@@ -357,25 +357,25 @@ main()
 	}
 	// Initial informational printouts -- rank 0 handles all the output
 	if (myrank == 0) {
-		printf(HLINE);
-		printf("STREAM version $Revision: 1.8 $\n");
-		printf(HLINE);
+//		printf(HLINE);
+//		printf("STREAM version $Revision: 1.8 $\n");
+//		printf(HLINE);
 		BytesPerWord = sizeof(STREAM_TYPE);
-		printf("This system uses %d bytes per array element.\n",
-		BytesPerWord);
+//		printf("This system uses %d bytes per array element.\n",
+//		BytesPerWord);
 
 		printf(HLINE);
 #ifdef N
-		printf("*****  WARNING: ******\n");
-		printf("      It appears that you set the preprocessor variable N when compiling this code.\n");
-		printf("      This version of the code uses the preprocesor variable STREAM_ARRAY_SIZE to control the array size\n");
-		printf("      Reverting to default value of STREAM_ARRAY_SIZE=%llu\n",(unsigned long long) STREAM_ARRAY_SIZE);
-		printf("*****  WARNING: ******\n");
+//		printf("*****  WARNING: ******\n");
+//		printf("      It appears that you set the preprocessor variable N when compiling this code.\n");
+//		printf("      This version of the code uses the preprocesor variable STREAM_ARRAY_SIZE to control the array size\n");
+//		printf("      Reverting to default value of STREAM_ARRAY_SIZE=%llu\n",(unsigned long long) STREAM_ARRAY_SIZE);
+//		printf("*****  WARNING: ******\n");
 #endif
 		if (OFFSET != 0) {
-			printf("*****  WARNING: ******\n");
-			printf("   This version ignores the OFFSET parameter.\n");
-			printf("*****  WARNING: ******\n");
+//			printf("*****  WARNING: ******\n");
+//			printf("   This version ignores the OFFSET parameter.\n");
+//			printf("*****  WARNING: ******\n");
 		}
 
 		printf("Total Aggregate Array size = %llu (elements)\n" , (unsigned long long) STREAM_ARRAY_SIZE);
@@ -394,11 +394,11 @@ main()
 			(3.0 * BytesPerWord) * ( (double) array_elements / 1024.0/1024.),
 			(3.0 * BytesPerWord) * ( (double) array_elements / 1024.0/1024./1024.));
 
-		printf(HLINE);
-		printf("Each kernel will be executed %d times.\n", NTIMES);
-		printf(" The *best* time for each kernel (excluding the first iteration)\n"); 
-		printf(" will be used to compute the reported bandwidth.\n");
-		printf("The SCALAR value used for this run is %f\n",SCALAR);
+//		printf(HLINE);
+//		printf("Each kernel will be executed %d times.\n", NTIMES);
+//		printf(" The *best* time for each kernel (excluding the first iteration)\n"); 
+//		printf(" will be used to compute the reported bandwidth.\n");
+//		printf("The SCALAR value used for this run is %f\n",SCALAR);
 
 #ifdef _OPENMP
 		printf(HLINE);
@@ -478,22 +478,22 @@ main()
     t = 1.0E6 * (MPI_Wtime() - t);
 
 	if (myrank == 0) {
-		printf("Each test below will take on the order"
-		" of %d microseconds.\n", (int) t  );
-		printf("   (= %d timer ticks)\n", (int) (t/quantum) );
-		printf("Increase the size of the arrays if this shows that\n");
-		printf("you are not getting at least 20 timer ticks per test.\n");
+//		printf("Each test below will take on the order"
+//		" of %d microseconds.\n", (int) t  );
+//		printf("   (= %d timer ticks)\n", (int) (t/quantum) );
+//		printf("Increase the size of the arrays if this shows that\n");
+//		printf("you are not getting at least 20 timer ticks per test.\n");
 
-		printf(HLINE);
+//		printf(HLINE);
 
-		printf("WARNING -- The above is only a rough guideline.\n");
-		printf("For best results, please be sure you know the\n");
-		printf("precision of your system timer.\n");
-		printf(HLINE);
+//		printf("WARNING -- The above is only a rough guideline.\n");
+//		printf("For best results, please be sure you know the\n");
+//		printf("precision of your system timer.\n");
+//		printf(HLINE);
 #ifdef VERBOSE
 		t1 = MPI_Wtime();
-		printf("VERBOSE: total setup time for rank 0 = %f seconds\n",t1-t0);
-		printf(HLINE);
+//		printf("VERBOSE: total setup time for rank 0 = %f seconds\n",t1-t0);
+//		printf(HLINE);
 #endif
 	}
     
