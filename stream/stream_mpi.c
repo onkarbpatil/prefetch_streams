@@ -220,6 +220,8 @@ double * restrict a, * restrict b, * restrict c;
 size_t		array_elements, array_bytes, array_alignment;
 static double	avgtime[4] = {0}, maxtime[4] = {0},
 		mintime[4] = {FLT_MAX,FLT_MAX,FLT_MAX,FLT_MAX};
+static double	oavgtime[4] = {0}, omaxtime[4] = {0},
+		omintime[4] = {FLT_MAX,FLT_MAX,FLT_MAX,FLT_MAX};
 
 static char	*label[4] = {"Copy:      ", "Scale:     ",
     "Add:       ", "Triad:     "};
@@ -251,8 +253,9 @@ main()
     int			i,k;
     ssize_t		j;
     STREAM_TYPE		scalar;
-    double		t, times[4][NTIMES];
+    double		t, times[4][NTIMES], ovr[4][NTIMES];
 	double		*TimesByRank;
+	double		*OTimesByRank;
 	double		t0,t1,tmin;
 	int         rc, numranks, myrank;
 	STREAM_TYPE	AvgError[3] = {0.0,0.0,0.0};
@@ -448,11 +451,13 @@ main()
 
 		// There are 4*NTIMES timing values for each rank (always doubles)
 		TimesByRank = (double *) malloc(4 * NTIMES * sizeof(double) * numranks);
+		OTimesByRank = (double *) malloc(4 * NTIMES * sizeof(double) * numranks);
 		if (TimesByRank == NULL) {
 			printf("Ooops -- allocation of arrays to collect timing data on MPI rank 0 failed\n");
 			MPI_Abort(MPI_COMM_WORLD, 3);
 		}
 		memset(TimesByRank,0,4*NTIMES*sizeof(double)*numranks);
+		memset(OTimesByRank,0,4*NTIMES*sizeof(double)*numranks);
 	}
 
 	// Simple check for granularity of the timer being used
@@ -520,6 +525,11 @@ main()
 					__builtin_prefetch (&c[j], 1, 0);
 					__builtin_prefetch (&a[j], 0, 0);
 		}
+		MPI_Barrier(MPI_COMM_WORLD);
+		t1 = MPI_Wtime();
+		ovr[0][k] = t1 - t0;
+		t0 = MPI_Wtime();
+		MPI_Barrier(MPI_COMM_WORLD);
 #pragma omp parallel for
 		for (j=0; j<array_elements - dist; j++){
 					__builtin_prefetch (&c[j+wr_dist], 1, 0);
@@ -546,6 +556,11 @@ main()
 					__builtin_prefetch (&c[j], 1, 0);
 					__builtin_prefetch (&b[j], 0, 0);
 		}
+		MPI_Barrier(MPI_COMM_WORLD);
+		t1 = MPI_Wtime();
+		ovr[1][k] = t1 - t0;
+		t0 = MPI_Wtime();
+		MPI_Barrier(MPI_COMM_WORLD);
 #pragma omp parallel for
 		for (j=0; j<array_elements - dist; j++){
 					__builtin_prefetch (&c[j+wr_dist], 1, 0);
@@ -572,6 +587,11 @@ main()
 					__builtin_prefetch (&a[j], 0, 0);
 					__builtin_prefetch (&b[j], 0, 0);
 		}
+		MPI_Barrier(MPI_COMM_WORLD);
+		t1 = MPI_Wtime();
+		ovr[2][k] = t1 - t0;
+		t0 = MPI_Wtime();
+		MPI_Barrier(MPI_COMM_WORLD);
 #pragma omp parallel for
 		for (j=0; j<array_elements-dist; j++){
 					__builtin_prefetch (&c[j+wr_dist], 1, 0);
@@ -599,6 +619,11 @@ main()
 					__builtin_prefetch (&b[j], 0, 0);
 					__builtin_prefetch (&a[j], 0, 0);
 		}
+		MPI_Barrier(MPI_COMM_WORLD);
+		t1 = MPI_Wtime();
+		ovr[3][k] = t1 - t0;
+		t0 = MPI_Wtime();
+		MPI_Barrier(MPI_COMM_WORLD);
 #pragma omp parallel for
 		for (j=0; j<array_elements-dist; j++){
 					__builtin_prefetch (&c[j+wr_dist], 1, 0);
@@ -625,6 +650,7 @@ main()
 
 	// Gather all timing data to MPI rank 0
 	MPI_Gather(times, 4*NTIMES, MPI_DOUBLE, TimesByRank, 4*NTIMES, MPI_DOUBLE, 0, MPI_COMM_WORLD);
+	MPI_Gather(ovr, 4*NTIMES, MPI_DOUBLE, OTimesByRank, 4*NTIMES, MPI_DOUBLE, 0, MPI_COMM_WORLD);
 
 	// Rank 0 processes all timing data
 	if (myrank == 0) {
@@ -642,6 +668,17 @@ main()
 				times[j][k] = tmin;
 			}
 		}
+		for (k=0; k<NTIMES; k++) {
+			for (j=0; j<4; j++) {
+				tmin = 1.0e36;
+				for (i=0; i<numranks; i++) {
+					// printf("DEBUG: Timing: iter %d, kernel %lu, rank %d, tmin %f, TbyRank %f\n",k,j,i,tmin,TimesByRank[4*NTIMES*i+j*NTIMES+k]);
+					tmin = MIN(tmin, OTimesByRank[4*NTIMES*i+j*NTIMES+k]);
+				}
+				// printf("DEBUG: Final Timing: iter %d, kernel %lu, final tmin %f\n",k,j,tmin);
+				ovr[j][k] = tmin;
+			}
+		}
 
 	// Back to the original code, but now using the minimum global timing across all ranks
 		for (k=1; k<NTIMES; k++) /* note -- skip first iteration */
@@ -653,18 +690,31 @@ main()
 			maxtime[j] = MAX(maxtime[j], times[j][k]);
 			}
 		}
+		for (k=1; k<NTIMES; k++) /* note -- skip first iteration */
+		{
+		for (j=0; j<4; j++)
+			{
+			oavgtime[j] = oavgtime[j] + ovr[j][k];
+			omintime[j] = MIN(omintime[j], ovr[j][k]);
+			omaxtime[j] = MAX(omaxtime[j], ovr[j][k]);
+			}
+		}
     
 		// note that "bytes[j]" is the aggregate array size, so no "numranks" is needed here
-		printf("Function    Best Rate MB/s  Avg Rate MB/s   Avg time     Min time     Max time\n");
+		printf("Function    Best Rate MB/s    Avg Rate MB/s    Avg time     Min time     Max time      Avg ovr     Min ovr     Max ovr\n");
 		for (j=0; j<4; j++) {
 			avgtime[j] = avgtime[j]/(double)(NTIMES-1);
+			oavgtime[j] = oavgtime[j]/(double)(NTIMES-1);
 
 			printf("%s%11.1f  %11.1f  %11.6f  %11.6f  %11.6f\n", label[j],
 			   1.0E-06 * bytes[j]/mintime[j],
 			   1.0E-06 * bytes[j]/avgtime[j],
 			   avgtime[j],
 			   mintime[j],
-			   maxtime[j]);
+			   maxtime[j],
+			   oavgtime[j],
+			   omintime[j],
+			   omaxtime[j]);
 		}
 		printf(HLINE);
 	}

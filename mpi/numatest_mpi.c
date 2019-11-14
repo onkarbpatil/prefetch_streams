@@ -129,10 +129,10 @@ void write_config_file(){
 	strcat(fname, thr);
 	conf = fopen(fname, "w");
 	struct numa_node_bw * bw_it = numa_list_head;
-		printf("#NUMA id WR-only_avg_bw 1W4R_avg_bw Str_avg_bw Rand_avg_bw LLC_avg_bw WR-only_pk_bw 1W4R_pk_bw Str_pk_bw Rand_pk_bw LLC_pk_bw WR-only_avg_lat 1W4R_avg_lat Str_avg_lat Rand_avg_lat LLC_avg_lat WR-only_min 1W4R_min Str_min Rand_min LLC_min\n");
+		printf("#NUMA id WR-only_avg_bw 1W4R_avg_bw Str_avg_bw Rand_avg_bw LLC_avg_bw WR-only_pk_bw 1W4R_pk_bw Str_pk_bw Rand_pk_bw LLC_pk_bw WR-only_avg_lat 1W4R_avg_lat Str_avg_lat Rand_avg_lat LLC_avg_lat WR-only_min 1W4R_min Str_min Rand_min LLC_min WR-only_avg_ovr 1W4R_avg_ovr Str_avg_ovr Rand_avg_ovr LLC_avg_ovr WR-only_omin 1W4R_omin Str_omin Rand_omin LLC_omin\n");
 	while(bw_it != NULL){	
 		fprintf(conf, "%d %s %Lf %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF\n", bw_it->numa_id, bw_it->mem_type, bw_it->wr_only_avg, bw_it->owor_avg, bw_it->owtr_avg, bw_it->owthr_avg, bw_it->owfr_avg, bw_it->twor_avg, bw_it->twtr_avg, bw_it->twthr_avg, bw_it->twfr_avg, bw_it->thwor_avg, bw_it->thwtr_avg, bw_it->thwthr_avg, bw_it->thwfr_avg, bw_it->fwor_avg, bw_it->fwtr_avg, bw_it->fwthr_avg, bw_it->fwfr_avg, bw_it->str_avg, bw_it->rand_avg, bw_it->diff_avg, bw_it->row_avg, bw_it->col_avg, bw_it->rc_avg, bw_it->t_sten_avg, bw_it->f_sten_avg, bw_it->n_sten_avg, bw_it->l2cache_avg);
-		printf("%d %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF\n", bw_it->numa_id, bw_it->wr_only_avg, bw_it->owfr_avg, bw_it->str_avg, bw_it->rand_avg, bw_it->l2cache_avg, bw_it->wr_only_min, bw_it->owfr_min, bw_it->str_min, bw_it->rand_min, bw_it->l2cache_min, bw_it->wr_only_t, bw_it->owfr_t, bw_it->str_t, bw_it->rand_t, bw_it->l2cache_t, bw_it->wr_only_tmin, bw_it->owfr_tmin, bw_it->str_tmin, bw_it->rand_tmin, bw_it->l2cache_tmin);
+		printf("%d %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF\n", bw_it->numa_id, bw_it->wr_only_avg, bw_it->owfr_avg, bw_it->str_avg, bw_it->rand_avg, bw_it->l2cache_avg, bw_it->wr_only_min, bw_it->owfr_min, bw_it->str_min, bw_it->rand_min, bw_it->l2cache_min, bw_it->wr_only_t, bw_it->owfr_t, bw_it->str_t, bw_it->rand_t, bw_it->l2cache_t, bw_it->wr_only_tmin, bw_it->owfr_tmin, bw_it->str_tmin, bw_it->rand_tmin, bw_it->l2cache_tmin, bw_it->wr_only_o, bw_it->owfr_o, bw_it->str_o, bw_it->rand_o, bw_it->l2cache_o, bw_it->wr_only_omin, bw_it->owfr_omin, bw_it->str_omin, bw_it->rand_omin, bw_it->l2cache_omin);
 		//printf("%d %s %Lf %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF\n", bw_it->numa_id, bw_it->mem_type, bw_it->wr_only_avg, bw_it->owor_avg, bw_it->owtr_avg, bw_it->owthr_avg, bw_it->owfr_avg, bw_it->twor_avg, bw_it->twtr_avg, bw_it->twthr_avg, bw_it->twfr_avg, bw_it->thwor_avg, bw_it->thwtr_avg, bw_it->thwthr_avg, bw_it->thwfr_avg, bw_it->fwor_avg, bw_it->fwtr_avg, bw_it->fwthr_avg, bw_it->fwfr_avg, bw_it->str_avg, bw_it->rand_avg, bw_it->diff_avg, bw_it->row_avg, bw_it->col_avg, bw_it->rc_avg, bw_it->t_sten_avg, bw_it->f_sten_avg, bw_it->n_sten_avg, bw_it->l2cache_avg);
 		bw_it = bw_it->next;
 	}
@@ -172,7 +172,7 @@ void numatest(int argc, char ** argv, int rank, int procs, unsigned long bytes){
 	double *a, *b, *c, *d, *e, *f, *g, *h;
 	double **aa, **bb, **cc;
 	clock_t start, end;
-	struct timespec begin, stop;
+	struct timespec begin, stop, obegin, ostop;
 	srand(10725);
 	//sleep(10);
 	if(argc == 0){
@@ -269,6 +269,16 @@ void numatest(int argc, char ** argv, int rank, int procs, unsigned long bytes){
 		long double l2cache_min = 0.0;
 		long double str_min = 0.0;
 		long double rand_min = 0.0;
+		long double wr_only_o = 0.0;
+		long double owfr_o = 0.0;
+		long double l2cache_o = 0.0;
+		long double str_o = 0.0;
+		long double rand_o = 0.0;
+		long double wr_only_omin = 999999.9999;
+		long double owfr_omin = 999999.9999;
+		long double l2cache_omin = 999999.9999;
+		long double str_omin = 999999.9999;
+		long double rand_omin = 999999.9999;
 		long double accum;
 		for( iters = 0; iters < 10; iters++)
 		{
@@ -326,7 +336,7 @@ void numatest(int argc, char ** argv, int rank, int procs, unsigned long bytes){
 			}*/
 redo1:
 			MPI_Barrier(MPI_COMM_WORLD);
-			clock_gettime( CLOCK_MONOTONIC, &begin);
+			clock_gettime( CLOCK_MONOTONIC, &obegin);
 //#pragma omp parallel for
 			for(j = 0;j < dist;j++){
 					__builtin_prefetch (&a[j], 1, 0);
@@ -338,6 +348,16 @@ redo1:
 				//	__builtin_prefetch (&g[j], 1, 0);
 				//	__builtin_prefetch (&h[j], 1, 0);
 			}
+			MPI_Barrier(MPI_COMM_WORLD);
+			clock_gettime( CLOCK_MONOTONIC, &ostop);
+			if(rank == 0){
+			accum = ( ostop.tv_sec - obegin.tv_sec ) + (long double)( ostop.tv_nsec - obegin.tv_nsec ) / (long double)BILLION;
+			wr_only_o += accum;
+			if(accum < wr_only_omin)
+					wr_only_omin = accum;
+			}
+			MPI_Barrier(MPI_COMM_WORLD);
+			clock_gettime( CLOCK_MONOTONIC, &begin);
 			for(j = 0;j < ((size/sizeof(double)) - dist);j++){
 					__builtin_prefetch (&a[j+wr_dist], 1, 0);
 					__builtin_prefetch (&b[j+wr_dist], 1, 0);
@@ -428,7 +448,7 @@ redo4:
 			}*/
 redo5:
 			MPI_Barrier(MPI_COMM_WORLD);
-			clock_gettime( CLOCK_MONOTONIC, &begin);
+			clock_gettime( CLOCK_MONOTONIC, &obegin);
 //#pragma omp parallel for
 			for(j =0; j < dist; j++){
 					__builtin_prefetch (&a[j], 1, 0);
@@ -437,6 +457,16 @@ redo5:
 					__builtin_prefetch (&d[j], 0, 0);
 					__builtin_prefetch (&e[j], 0, 0);
 			}
+			MPI_Barrier(MPI_COMM_WORLD);
+			clock_gettime( CLOCK_MONOTONIC, &ostop);
+			if(rank == 0){
+			accum = ( ostop.tv_sec - obegin.tv_sec ) + (long double)( ostop.tv_nsec - obegin.tv_nsec ) / (long double)BILLION;
+			owfr_o += accum;
+			if(accum < owfr_omin)
+					owfr_omin = accum;
+			}
+			MPI_Barrier(MPI_COMM_WORLD);
+			clock_gettime( CLOCK_MONOTONIC, &begin);
 			for(j =0; j < ((size/sizeof(double))-dist); j++){
 					__builtin_prefetch (&a[j+wr_dist], 1, 0);
 					__builtin_prefetch (&b[j+rd_dist], 0, 0);
@@ -655,7 +685,7 @@ redo17:
 redo18:
 			stride = 0;
 			MPI_Barrier(MPI_COMM_WORLD);
-			clock_gettime( CLOCK_MONOTONIC, &begin);
+			clock_gettime( CLOCK_MONOTONIC, &obegin);
 //#pragma omp parallel for
                         for(j =0; j < dist; j++){
 					__builtin_prefetch (&a[stride%(size/sizeof(double))], 1, 0);
@@ -665,6 +695,16 @@ redo18:
 					__builtin_prefetch (&e[stride%(size/sizeof(double))], 0, 0);
 					stride +=3;
 						}
+			MPI_Barrier(MPI_COMM_WORLD);
+			clock_gettime( CLOCK_MONOTONIC, &ostop);
+			if(rank == 0){
+			accum = ( ostop.tv_sec - obegin.tv_sec ) + (long double)( ostop.tv_nsec - obegin.tv_nsec ) / (long double)BILLION;
+			str_o += accum;
+			if(accum < str_omin)
+					str_omin = accum;
+			}
+			MPI_Barrier(MPI_COMM_WORLD);
+			clock_gettime( CLOCK_MONOTONIC, &begin);
                         for(j =0; j < ((size/sizeof(double)) - dist); j++){
 					__builtin_prefetch (&a[stride%(size/sizeof(double))+wr_dist], 1, 0);
 					__builtin_prefetch (&b[stride%(size/sizeof(double))+rd_dist], 0, 0);
@@ -693,7 +733,7 @@ redo18:
 redo19:
 			stride = 0;
 			MPI_Barrier(MPI_COMM_WORLD);
-                        clock_gettime( CLOCK_MONOTONIC, &begin);
+                        clock_gettime( CLOCK_MONOTONIC, &obegin);
 //#pragma omp parallel for
                         for(j =0; j < rd_dist; j++){
 					__builtin_prefetch (&rand_tab[j], 0, 0);
@@ -706,6 +746,16 @@ redo19:
 					__builtin_prefetch (&d[rand_tab[j]], 0, 0);
 					__builtin_prefetch (&e[rand_tab[j]], 0, 0);
 						}
+			MPI_Barrier(MPI_COMM_WORLD);
+			clock_gettime( CLOCK_MONOTONIC, &ostop);
+			if(rank == 0){
+			accum = ( ostop.tv_sec - obegin.tv_sec ) + (long double)( ostop.tv_nsec - obegin.tv_nsec ) / (long double)BILLION;
+			rand_o += accum;
+			if(accum < rand_omin)
+					rand_omin = accum;
+			}
+			MPI_Barrier(MPI_COMM_WORLD);
+			clock_gettime( CLOCK_MONOTONIC, &begin);
                         for(j =0; j < ((size/sizeof(double)) - (2*rd_dist)); j++){
 					__builtin_prefetch (&rand_tab[j+2*rd_dist], 0, 0);
 					__builtin_prefetch (&a[rand_tab[j+rd_dist]], 1, 0);
@@ -967,7 +1017,7 @@ redo26:
 redo27:
 			stride = 0;
 			MPI_Barrier(MPI_COMM_WORLD);
-                        clock_gettime( CLOCK_MONOTONIC, &begin);
+                        clock_gettime( CLOCK_MONOTONIC, &obegin);
 //#pragma omp parallel for
                         for(j =0; j < dist; j++){
 					__builtin_prefetch (&a[stride%(size/sizeof(double))], 1, 0);
@@ -980,6 +1030,16 @@ redo27:
 			    else
 				stride++;
 						}
+			MPI_Barrier(MPI_COMM_WORLD);
+			clock_gettime( CLOCK_MONOTONIC, &ostop);
+			if(rank == 0){
+			accum = ( ostop.tv_sec - obegin.tv_sec ) + (long double)( ostop.tv_nsec - obegin.tv_nsec ) / (long double)BILLION;
+			l2cache_o += accum;
+			if(accum < l2cache_omin)
+					l2cache_omin = accum;
+			}
+			MPI_Barrier(MPI_COMM_WORLD);
+			clock_gettime( CLOCK_MONOTONIC, &begin);
                         for(j =0; j < (size/sizeof(double)) - dist; j++){
 					__builtin_prefetch (&a[stride%(size/sizeof(double)) + wr_dist], 1, 0);
 					__builtin_prefetch (&b[stride%(size/sizeof(double)) + rd_dist], 0, 0);
@@ -1077,6 +1137,16 @@ redo27:
 		node_bw->rand_min = ((5*size*1.0E-06)/(long double)rand_tmin);
 		node_bw->str_min = ((5*size*1.0E-06)/(long double)str_tmin);
 		node_bw->owfr_min = ((5*size*1.0E-06)/(long double)owfr_tmin);
+		node_bw->wr_only_o = wr_only_o/10;
+		node_bw->l2cache_o = l2cache_o/10;
+		node_bw->rand_o = rand_o/10;
+		node_bw->str_o = str_o/10;
+		node_bw->owfr_o = owfr_o/10;
+		node_bw->wr_only_omin = wr_only_omin;
+		node_bw->l2cache_omin = l2cache_omin;
+		node_bw->rand_omin = rand_omin;
+		node_bw->str_omin = str_omin;
+		node_bw->owfr_omin = owfr_omin;
 		node_bw->next = NULL;
 		if(numa_node_list == NULL){
 			numa_node_list = node_bw;

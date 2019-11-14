@@ -57,6 +57,16 @@ struct numa_node_bw{
 		long double rand_min;
 		long double str_min;
 		long double owfr_min;
+		long double wr_only_o;
+		long double l2cache_o;
+		long double rand_o;
+		long double str_o;
+		long double owfr_o;
+		long double wr_only_omin;
+		long double l2cache_omin;
+		long double rand_omin;
+		long double str_omin;
+		long double owfr_omin;
 	struct numa_node_bw * next;
 };
 
