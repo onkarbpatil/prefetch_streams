@@ -293,6 +293,7 @@ main()
 
 	n = 0;
 	while(n <= total_numa_nodes){
+			mintime[4] = {FLT_MAX,FLT_MAX,FLT_MAX,FLT_MAX};
 			if(myrank == 0){
 	printf(HLINE);
 	printf("NUMA ID: %d\n", n);

@@ -297,6 +297,8 @@ main()
 
 	n = 0;
 	while(n <= total_numa_nodes){
+			mintime[4] = {FLT_MAX,FLT_MAX,FLT_MAX,FLT_MAX};
+			omintime[4] = {FLT_MAX,FLT_MAX,FLT_MAX,FLT_MAX};
 			if(myrank == 0){
 	printf(HLINE);
 	printf("NUMA ID: %d\n", n);
@@ -859,7 +861,7 @@ main()
 			avgtime[j] = avgtime[j]/(double)(NTIMES-1);
 			oavgtime[j] = oavgtime[j]/(double)(NTIMES-1);
 
-			printf("%s%11.1f  %11.1f  %11.6f  %11.6f  %11.6f\n", label[j],
+			printf("%s%11.1f  %11.1f  %11.6f  %11.6f  %11.6f  %11.6f  %11.6f  %11.6f\n", label[j],
 			   1.0E-06 * bytes[j]/mintime[j],
 			   1.0E-06 * bytes[j]/avgtime[j],
 			   avgtime[j],
