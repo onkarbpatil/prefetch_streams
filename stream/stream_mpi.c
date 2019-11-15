@@ -329,8 +329,8 @@ main()
 			if((n == total_numa_nodes)){
 				rd_dist = 8192/sizeof(double);
 				wr_dist = 2048/sizeof(double);
-				dist = rd_dist;
-				dist = wr_dist;
+				bdist = rd_dist;
+				sdist = wr_dist;
 				if(numranks > 48){
 					rd_dist = 0;
 					wr_dist = 0;
@@ -690,7 +690,7 @@ main()
 		MPI_Barrier(MPI_COMM_WORLD);
 		t0 = MPI_Wtime();
 #pragma omp parallel for
-		for (j=0; j<array_elements-dist; j++){
+		for (j=0; j<array_elements-bdist; j++){
 					__builtin_prefetch (&c[j+wr_dist], 1, 0);
 					__builtin_prefetch (&a[j+rd_dist], 0, 0);
 					__builtin_prefetch (&b[j+rd_dist], 0, 0);
@@ -759,7 +759,7 @@ main()
 		MPI_Barrier(MPI_COMM_WORLD);
 		t0 = MPI_Wtime();
 #pragma omp parallel for
-		for (j=0; j<array_elements-dist; j++){
+		for (j=0; j<array_elements-bdist; j++){
 					__builtin_prefetch (&c[j+wr_dist], 1, 0);
 					__builtin_prefetch (&b[j+rd_dist], 0, 0);
 					__builtin_prefetch (&a[j+rd_dist], 0, 0);
