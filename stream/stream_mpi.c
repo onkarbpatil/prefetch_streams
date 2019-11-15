@@ -278,7 +278,7 @@ main()
 	}
 	int rd_dist = 8192/sizeof(double);
 	int wr_dist = 2048/sizeof(double);
-	int dist;
+	int bdist,sdist;
     /* --- SETUP --- call MPI_Init() before anything else! --- */
 
     rc = MPI_Init(NULL,NULL);
@@ -305,27 +305,39 @@ main()
 			if(n <= 1){
 				rd_dist = 8192/sizeof(double);
 				wr_dist = 2048/sizeof(double);
-				dist = rd_dist;
+				bdist = rd_dist;
+				sdist = wr_dist;
 				if(numranks > 48){
 					rd_dist = 0;
 					wr_dist = 0;
-					dist = 0;
+					bdist = 0;
+					sdist = 0;
 				}
 			}
 			if((n > 1)&&(n < total_numa_nodes)){
 				rd_dist = 8192/sizeof(double);
 				wr_dist = 32768/sizeof(double);
-				dist = wr_dist;
+				bdist = wr_dist;
+				sdist = rd_dist;
 				if(numranks > 48){
 					rd_dist = 0;
 					wr_dist = 32768/sizeof(double);
-				dist = wr_dist;
+				bdist = wr_dist;
+				sdist = rd_dist;
 				}
 			}
 			if((n == total_numa_nodes)){
 				rd_dist = 8192/sizeof(double);
 				wr_dist = 2048/sizeof(double);
 				dist = rd_dist;
+				dist = wr_dist;
+				if(numranks > 48){
+					rd_dist = 0;
+					wr_dist = 0;
+					bdist = 0;
+					sdist = 0;
+				}
+
 			}
 	// Dynamically allocate the three arrays using "posix_memalign()"
 	// NOTE that the OFFSET parameter is not used in this version of the code!
@@ -515,30 +527,63 @@ main()
     for (k=0; k<NTIMES; k++)
 	{
 		// kernel 1: Copy
-		t0 = MPI_Wtime();
 		MPI_Barrier(MPI_COMM_WORLD);
+		t0 = MPI_Wtime();
 #ifdef TUNED
         tuned_STREAM_Copy();
 #else
+		if(wr_dist >= rd_dist){
 #pragma omp parallel for
-		for (j=0; j<dist; j++){
-					__builtin_prefetch (&c[j], 1, 0);
-					__builtin_prefetch (&a[j], 0, 0);
+			for (j=0; j<(wr_dist -rd_dist);j++){
+						__builtin_prefetch (&c[j], 1, 0);
+			}
+#pragma omp parallel for
+			for (j=(wr_dist -rd_dist);j<wr_dist;j++){
+						__builtin_prefetch (&c[j], 1, 0);
+						__builtin_prefetch (&a[j-(wr_dist -rd_dist)], 0, 0);
+			}
+		}else{
+#pragma omp parallel for
+			for (j=0; j<(rd_dist -wr_dist);j++){
+						__builtin_prefetch (&a[j], 0, 0);
+			}
+#pragma omp parallel for
+			for (j=(rd_dist -wr_dist);j<rd_dist;j++){
+						__builtin_prefetch (&c[j], 1, 0);
+						__builtin_prefetch (&a[j-(rd_dist -wr_dist)], 0, 0);
+			}
 		}
 		MPI_Barrier(MPI_COMM_WORLD);
 		t1 = MPI_Wtime();
 		ovr[0][k] = t1 - t0;
-		t0 = MPI_Wtime();
 		MPI_Barrier(MPI_COMM_WORLD);
+		t0 = MPI_Wtime();
 #pragma omp parallel for
-		for (j=0; j<array_elements - dist; j++){
+		for (j=0; j<array_elements - bdist; j++){
 					__builtin_prefetch (&c[j+wr_dist], 1, 0);
 					__builtin_prefetch (&a[j+rd_dist], 0, 0);
 			c[j] = a[j];
 		}
+		if(wr_dist >= rd_dist){
 #pragma omp parallel for
-		for (j=(array_elements - dist);j < array_elements; j++){
-			c[j] = a[j];
+			for (j=(array_elements - wr_dist);j < (array_elements - rd_dist); j++){
+					__builtin_prefetch (&a[j+rd_dist], 0, 0);
+				c[j] = a[j];
+			}
+#pragma omp parallel for
+			for (j=(array_elements - rd_dist);j < (array_elements); j++){
+				c[j] = a[j];
+			}
+		}else{
+#pragma omp parallel for
+			for (j=(array_elements - rd_dist);j < (array_elements - wr_dist); j++){
+					__builtin_prefetch (&c[j+wr_dist], 1, 0);
+				c[j] = a[j];
+			}
+#pragma omp parallel for
+			for (j=(array_elements - wr_dist);j < (array_elements); j++){
+				c[j] = a[j];
+			}
 		}
 #endif
 		MPI_Barrier(MPI_COMM_WORLD);
@@ -546,52 +591,104 @@ main()
 		times[0][k] = t1 - t0;
 
 		// kernel 2: Scale
-		t0 = MPI_Wtime();
 		MPI_Barrier(MPI_COMM_WORLD);
+		t0 = MPI_Wtime();
 #ifdef TUNED
         tuned_STREAM_Scale(scalar);
 #else
+		if(wr_dist >= rd_dist){
 #pragma omp parallel for
-		for (j=0; j<dist; j++){
-					__builtin_prefetch (&c[j], 1, 0);
-					__builtin_prefetch (&b[j], 0, 0);
+			for (j=0; j<(wr_dist -rd_dist);j++){
+						__builtin_prefetch (&c[j], 1, 0);
+			}
+#pragma omp parallel for
+			for (j=(wr_dist -rd_dist);j<wr_dist;j++){
+						__builtin_prefetch (&c[j], 1, 0);
+						__builtin_prefetch (&b[j-(wr_dist -rd_dist)], 0, 0);
+			}
+		}else{
+#pragma omp parallel for
+			for (j=0; j<(rd_dist -wr_dist);j++){
+						__builtin_prefetch (&b[j], 0, 0);
+			}
+#pragma omp parallel for
+			for (j=(rd_dist -wr_dist);j<rd_dist;j++){
+						__builtin_prefetch (&c[j], 1, 0);
+						__builtin_prefetch (&b[j-(rd_dist -wr_dist)], 0, 0);
+			}
 		}
 		MPI_Barrier(MPI_COMM_WORLD);
 		t1 = MPI_Wtime();
 		ovr[1][k] = t1 - t0;
-		t0 = MPI_Wtime();
 		MPI_Barrier(MPI_COMM_WORLD);
+		t0 = MPI_Wtime();
 #pragma omp parallel for
-		for (j=0; j<array_elements - dist; j++){
+		for (j=0; j<array_elements - bdist; j++){
 					__builtin_prefetch (&c[j+wr_dist], 1, 0);
 					__builtin_prefetch (&b[j+rd_dist], 0, 0);
 			c[j] = scalar*b[j];
 		}
+		if(wr_dist >= rd_dist){
 #pragma omp parallel for
-		for (j=(array_elements - dist); j<array_elements; j++)
+			for (j=(array_elements - wr_dist);j < (array_elements - rd_dist); j++){
+					__builtin_prefetch (&b[j+rd_dist], 0, 0);
 			c[j] = scalar*b[j];
+			}
+#pragma omp parallel for
+			for (j=(array_elements - rd_dist);j < (array_elements); j++){
+			c[j] = scalar*b[j];
+			}
+		}else{
+#pragma omp parallel for
+			for (j=(array_elements - rd_dist);j < (array_elements - wr_dist); j++){
+					__builtin_prefetch (&c[j+wr_dist], 1, 0);
+			c[j] = scalar*b[j];
+			}
+#pragma omp parallel for
+			for (j=(array_elements - wr_dist);j < (array_elements); j++){
+			c[j] = scalar*b[j];
+			}
+		}
 #endif
 		MPI_Barrier(MPI_COMM_WORLD);
 		t1 = MPI_Wtime();
 		times[1][k] = t1-t0;
 	
 		// kernel 3: Add
-		t0 = MPI_Wtime();
 		MPI_Barrier(MPI_COMM_WORLD);
+		t0 = MPI_Wtime();
 #ifdef TUNED
         tuned_STREAM_Add();
 #else
+		if(wr_dist >= rd_dist){
 #pragma omp parallel for
-		for (j=0; j<dist; j++){
-					__builtin_prefetch (&c[j], 1, 0);
-					__builtin_prefetch (&a[j], 0, 0);
-					__builtin_prefetch (&b[j], 0, 0);
+			for (j=0; j<(wr_dist -rd_dist);j++){
+						__builtin_prefetch (&c[j], 1, 0);
+			}
+#pragma omp parallel for
+			for (j=(wr_dist -rd_dist);j<wr_dist;j++){
+						__builtin_prefetch (&c[j], 1, 0);
+						__builtin_prefetch (&a[j-(wr_dist -rd_dist)], 0, 0);
+						__builtin_prefetch (&b[j-(wr_dist -rd_dist)], 0, 0);
+			}
+		}else{
+#pragma omp parallel for
+			for (j=0; j<(rd_dist -wr_dist);j++){
+						__builtin_prefetch (&b[j], 0, 0);
+						__builtin_prefetch (&a[j], 0, 0);
+			}
+#pragma omp parallel for
+			for (j=(rd_dist -wr_dist);j<rd_dist;j++){
+						__builtin_prefetch (&c[j-(rd_dist -wr_dist)], 1, 0);
+						__builtin_prefetch (&b[j], 0, 0);
+						__builtin_prefetch (&a[j], 0, 0);
+			}
 		}
 		MPI_Barrier(MPI_COMM_WORLD);
 		t1 = MPI_Wtime();
 		ovr[2][k] = t1 - t0;
-		t0 = MPI_Wtime();
 		MPI_Barrier(MPI_COMM_WORLD);
+		t0 = MPI_Wtime();
 #pragma omp parallel for
 		for (j=0; j<array_elements-dist; j++){
 					__builtin_prefetch (&c[j+wr_dist], 1, 0);
@@ -599,31 +696,68 @@ main()
 					__builtin_prefetch (&b[j+rd_dist], 0, 0);
 			c[j] = a[j]+b[j];
 		}
+		if(wr_dist >= rd_dist){
 #pragma omp parallel for
-		for (j=(array_elements - dist); j<array_elements; j++)
-			c[j] = a[j]+b[j];
+			for (j=(array_elements - wr_dist);j < (array_elements - rd_dist); j++){
+					__builtin_prefetch (&a[j+rd_dist], 0, 0);
+					__builtin_prefetch (&b[j+rd_dist], 0, 0);
+				c[j] = a[j]+b[j];
+			}
+#pragma omp parallel for
+			for (j=(array_elements - rd_dist);j < (array_elements); j++){
+				c[j] = a[j]+b[j];
+			}
+		}else{
+#pragma omp parallel for
+			for (j=(array_elements - rd_dist);j < (array_elements - wr_dist); j++){
+					__builtin_prefetch (&c[j+wr_dist], 1, 0);
+				c[j] = a[j]+b[j];
+			}
+#pragma omp parallel for
+			for (j=(array_elements - wr_dist);j < (array_elements); j++){
+				c[j] = a[j]+b[j];
+			}
+		}
 #endif
 		MPI_Barrier(MPI_COMM_WORLD);
 		t1 = MPI_Wtime();
 		times[2][k] = t1-t0;
 	
 		// kernel 4: Triad
-		t0 = MPI_Wtime();
 		MPI_Barrier(MPI_COMM_WORLD);
+		t0 = MPI_Wtime();
 #ifdef TUNED
         tuned_STREAM_Triad(scalar);
 #else
+		if(wr_dist >= rd_dist){
 #pragma omp parallel for
-		for (j=0; j<dist; j++){
-					__builtin_prefetch (&c[j], 1, 0);
-					__builtin_prefetch (&b[j], 0, 0);
-					__builtin_prefetch (&a[j], 0, 0);
+			for (j=0; j<(wr_dist -rd_dist);j++){
+						__builtin_prefetch (&c[j], 1, 0);
+			}
+#pragma omp parallel for
+			for (j=(wr_dist -rd_dist);j<wr_dist;j++){
+						__builtin_prefetch (&c[j], 1, 0);
+						__builtin_prefetch (&a[j-(wr_dist -rd_dist)], 0, 0);
+						__builtin_prefetch (&b[j-(wr_dist -rd_dist)], 0, 0);
+			}
+		}else{
+#pragma omp parallel for
+			for (j=0; j<(rd_dist -wr_dist);j++){
+						__builtin_prefetch (&b[j], 0, 0);
+						__builtin_prefetch (&a[j], 0, 0);
+			}
+#pragma omp parallel for
+			for (j=(rd_dist -wr_dist);j<rd_dist;j++){
+						__builtin_prefetch (&c[j-(rd_dist -wr_dist)], 1, 0);
+						__builtin_prefetch (&b[j], 0, 0);
+						__builtin_prefetch (&a[j], 0, 0);
+			}
 		}
 		MPI_Barrier(MPI_COMM_WORLD);
 		t1 = MPI_Wtime();
 		ovr[3][k] = t1 - t0;
-		t0 = MPI_Wtime();
 		MPI_Barrier(MPI_COMM_WORLD);
+		t0 = MPI_Wtime();
 #pragma omp parallel for
 		for (j=0; j<array_elements-dist; j++){
 					__builtin_prefetch (&c[j+wr_dist], 1, 0);
@@ -631,9 +765,28 @@ main()
 					__builtin_prefetch (&a[j+rd_dist], 0, 0);
 			c[j] = b[j]+scalar*a[j];
 		}
+		if(wr_dist >= rd_dist){
 #pragma omp parallel for
-		for (j=(array_elements - dist); j<array_elements; j++)
+			for (j=(array_elements - wr_dist);j < (array_elements - rd_dist); j++){
+					__builtin_prefetch (&a[j+rd_dist], 0, 0);
+					__builtin_prefetch (&b[j+rd_dist], 0, 0);
 			c[j] = b[j]+scalar*a[j];
+			}
+#pragma omp parallel for
+			for (j=(array_elements - rd_dist);j < (array_elements); j++){
+			c[j] = b[j]+scalar*a[j];
+			}
+		}else{
+#pragma omp parallel for
+			for (j=(array_elements - rd_dist);j < (array_elements - wr_dist); j++){
+					__builtin_prefetch (&c[j+wr_dist], 1, 0);
+			c[j] = b[j]+scalar*a[j];
+			}
+#pragma omp parallel for
+			for (j=(array_elements - wr_dist);j < (array_elements); j++){
+			c[j] = b[j]+scalar*a[j];
+			}
+		}
 #endif
 		MPI_Barrier(MPI_COMM_WORLD);
 		t1 = MPI_Wtime();
