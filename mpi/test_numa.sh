@@ -8,6 +8,7 @@ echo "#NUM PROCS $thr"
 mpirun --bind-to-core -np $thr ./numatest_mpi 8589934592
 #cp sicm_numa_config sicm_numa_config_o1
 let size=size*24
+let thr=thr*24
 while [ $thr -lt 49 ]; do
 #	export OMP_NUM_THREADS=$thr
 echo "#NUM PROCS $thr"
@@ -32,6 +33,7 @@ echo "#NUM PROCS $thr"
 mpirun --bind-to-core -np $thr ./numatest_mpi $size
 #cp sicm_numa_config sicm_numa_config_o1
 let size=size*24
+let thr=thr*24
 while [ $thr -lt 49 ]; do
 #	export OMP_NUM_THREADS=$thr
 echo "#NUM PROCS $thr"
