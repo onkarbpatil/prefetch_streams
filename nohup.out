@@ -1,0 +1,1019 @@
+make: 'numatest_mpi' is up to date.
+#Strong scaling
+#NUM PROCS 1
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+#NUM PROCS 24
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+make: *** No targets specified and no makefile found.  Stop.
+#Strong scaling
+#NUM PROCS 1
+#NUM PROCS 24
+#NUM PROCS 48
+#NUM PROCS 72
+#NUM PROCS 96
+#Weak scaling
+#NUM PROCS 1
+#NUM PROCS 24
+#NUM PROCS 48
+#NUM PROCS 72
+#NUM PROCS 96
+make: *** No targets specified and no makefile found.  Stop.
+#Strong scaling
+#NUM PROCS 1
+#NUM PROCS 24
+#NUM PROCS 48
+#NUM PROCS 72
+#NUM PROCS 96
+#Weak scaling
+#NUM PROCS 1
+#NUM PROCS 24
+#NUM PROCS 48
+#NUM PROCS 72
+#NUM PROCS 96
+make: *** No targets specified and no makefile found.  Stop.
+#Strong scaling
+#NUM PROCS 1
+gcc: error: stream_mpi.c: No such file or directory
+#NUM PROCS 24
+gcc: error: stream_mpi.c: No such file or directory
+#NUM PROCS 48
+gcc: error: stream_mpi.c: No such file or directory
+#NUM PROCS 72
+gcc: error: stream_mpi.c: No such file or directory
+#NUM PROCS 96
+gcc: error: stream_mpi.c: No such file or directory
+#Weak scaling
+#NUM PROCS 1
+gcc: error: stream_mpi.c: No such file or directory
+#NUM PROCS 24
+gcc: error: stream_mpi.c: No such file or directory
+#NUM PROCS 48
+gcc: error: stream_mpi.c: No such file or directory
+#NUM PROCS 72
+gcc: error: stream_mpi.c: No such file or directory
+#NUM PROCS 96
+gcc: error: stream_mpi.c: No such file or directory
+make: *** No targets specified and no makefile found.  Stop.
+#Strong scaling
+#NUM PROCS 1
+gcc: error: stream_mpi_np.c: No such file or directory
+#NUM PROCS 24
+gcc: error: stream_mpi_np.c: No such file or directory
+#NUM PROCS 48
+gcc: error: stream_mpi_np.c: No such file or directory
+#NUM PROCS 72
+gcc: error: stream_mpi_np.c: No such file or directory
+#NUM PROCS 96
+gcc: error: stream_mpi_np.c: No such file or directory
+#Weak scaling
+#NUM PROCS 1
+gcc: error: stream_mpi_np.c: No such file or directory
+#NUM PROCS 24
+gcc: error: stream_mpi_np.c: No such file or directory
+#NUM PROCS 48
+gcc: error: stream_mpi_np.c: No such file or directory
+#NUM PROCS 72
+gcc: error: stream_mpi_np.c: No such file or directory
+#NUM PROCS 96
+gcc: error: stream_mpi_np.c: No such file or directory
+mpicc -o numatest_mpi test3.c numatest_mpi_np.c numatest_mpi.h -O1 -fopenmp -lnuma -lm
+numatest_mpi_np.c: In function ‘numatest’:
+numatest_mpi_np.c:197:12: warning: implicit declaration of function ‘omp_get_num_threads’ [-Wimplicit-function-declaration]
+     numt = omp_get_num_threads();
+            ^~~~~~~~~~~~~~~~~~~
+#Strong scaling
+#NUM PROCS 1
+#NUM PROCS 24
+#NUM PROCS 48
+#NUM PROCS 72
+#NUM PROCS 96
+#Weak scaling
+#NUM PROCS 1
+#NUM PROCS 24
+#NUM PROCS 48
+#NUM PROCS 72
+#NUM PROCS 96
+mpicc -o stream_mpi stream_mpi.c -O1 -fopenmp -lnuma -lm
+stream_mpi.c: In function ‘main’:
+stream_mpi.c:300:17: error: expected expression before ‘{’ token
+    mintime[4] = {FLT_MAX,FLT_MAX,FLT_MAX,FLT_MAX};
+                 ^
+stream_mpi.c:301:18: error: expected expression before ‘{’ token
+    omintime[4] = {FLT_MAX,FLT_MAX,FLT_MAX,FLT_MAX};
+                  ^
+make: *** [Makefile:5: stream_mpi] Error 1
+#Strong scaling
+#NUM PROCS 1
+stream_mpi.c: In function ‘main’:
+stream_mpi.c:300:17: error: expected expression before ‘{’ token
+    mintime[4] = {FLT_MAX,FLT_MAX,FLT_MAX,FLT_MAX};
+                 ^
+stream_mpi.c:301:18: error: expected expression before ‘{’ token
+    omintime[4] = {FLT_MAX,FLT_MAX,FLT_MAX,FLT_MAX};
+                  ^
+test.sh: line 7: 60313 Terminated              sh test_numa.sh
+mpicc -o stream_mpi stream_mpi_np.c -O1 -fopenmp -lnuma -lm
+stream_mpi_np.c: In function ‘main’:
+stream_mpi_np.c:296:17: error: expected expression before ‘{’ token
+    mintime[4] = {FLT_MAX,FLT_MAX,FLT_MAX,FLT_MAX};
+                 ^
+stream_mpi_np.c:439:3: error: expected expression before ‘else’
+   else {
+   ^~~~
+make: *** [Makefile:5: stream_mpi] Error 1
+#Strong scaling
+#NUM PROCS 1
+stream_mpi_np.c: In function ‘main’:
+stream_mpi_np.c:296:17: error: expected expression before ‘{’ token
+    mintime[4] = {FLT_MAX,FLT_MAX,FLT_MAX,FLT_MAX};
+                 ^
+stream_mpi_np.c:439:3: error: expected expression before ‘else’
+   else {
+   ^~~~
+#NUM PROCS 24
+stream_mpi_np.c: In function ‘main’:
+stream_mpi_np.c:296:17: error: expected expression before ‘{’ token
+    mintime[4] = {FLT_MAX,FLT_MAX,FLT_MAX,FLT_MAX};
+                 ^
+stream_mpi_np.c:439:3: error: expected expression before ‘else’
+   else {
+   ^~~~
+#NUM PROCS 48
+stream_mpi_np.c: In function ‘main’:
+stream_mpi_np.c:296:17: error: expected expression before ‘{’ token
+    mintime[4] = {FLT_MAX,FLT_MAX,FLT_MAX,FLT_MAX};
+                 ^
+stream_mpi_np.c:439:3: error: expected expression before ‘else’
+   else {
+   ^~~~
+#NUM PROCS 72
+stream_mpi_np.c: In function ‘main’:
+stream_mpi_np.c:296:17: error: expected expression before ‘{’ token
+    mintime[4] = {FLT_MAX,FLT_MAX,FLT_MAX,FLT_MAX};
+                 ^
+stream_mpi_np.c:439:3: error: expected expression before ‘else’
+   else {
+   ^~~~
+#NUM PROCS 96
+stream_mpi_np.c: In function ‘main’:
+stream_mpi_np.c:296:17: error: expected expression before ‘{’ token
+    mintime[4] = {FLT_MAX,FLT_MAX,FLT_MAX,FLT_MAX};
+                 ^
+stream_mpi_np.c:439:3: error: expected expression before ‘else’
+   else {
+   ^~~~
+#Weak scaling
+#NUM PROCS 1
+stream_mpi_np.c: In function ‘main’:
+stream_mpi_np.c:296:17: error: expected expression before ‘{’ token
+    mintime[4] = {FLT_MAX,FLT_MAX,FLT_MAX,FLT_MAX};
+                 ^
+stream_mpi_np.c:439:3: error: expected expression before ‘else’
+   else {
+   ^~~~
+#NUM PROCS 24
+stream_mpi_np.c: In function ‘main’:
+stream_mpi_np.c:296:17: error: expected expression before ‘{’ token
+    mintime[4] = {FLT_MAX,FLT_MAX,FLT_MAX,FLT_MAX};
+                 ^
+stream_mpi_np.c:439:3: error: expected expression before ‘else’
+   else {
+   ^~~~
+#NUM PROCS 48
+stream_mpi_np.c: In function ‘main’:
+stream_mpi_np.c:296:17: error: expected expression before ‘{’ token
+    mintime[4] = {FLT_MAX,FLT_MAX,FLT_MAX,FLT_MAX};
+                 ^
+stream_mpi_np.c:439:3: error: expected expression before ‘else’
+   else {
+   ^~~~
+#NUM PROCS 72
+stream_mpi_np.c: In function ‘main’:
+stream_mpi_np.c:296:17: error: expected expression before ‘{’ token
+    mintime[4] = {FLT_MAX,FLT_MAX,FLT_MAX,FLT_MAX};
+                 ^
+stream_mpi_np.c:439:3: error: expected expression before ‘else’
+   else {
+   ^~~~
+#NUM PROCS 96
+stream_mpi_np.c: In function ‘main’:
+stream_mpi_np.c:296:17: error: expected expression before ‘{’ token
+    mintime[4] = {FLT_MAX,FLT_MAX,FLT_MAX,FLT_MAX};
+                 ^
+stream_mpi_np.c:439:3: error: expected expression before ‘else’
+   else {
+   ^~~~
+test.sh: line 6: cd: ../../stream: No such file or directory
+make: *** No targets specified and no makefile found.  Stop.
+#Strong scaling
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: ./numatest_mpi
+Node: optane
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: ./numatest_mpi
+Node: optane
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: ./numatest_mpi
+Node: optane
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+25 total processes failed to start
+--------------------------------------------------------------------------
+There are not enough slots available in the system to satisfy the 49 slots
+that were requested by the application:
+  ./numatest_mpi
+
+Either request fewer slots for your application, or make more slots available
+for use.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+There are not enough slots available in the system to satisfy the 73 slots
+that were requested by the application:
+  ./numatest_mpi
+
+Either request fewer slots for your application, or make more slots available
+for use.
+--------------------------------------------------------------------------
+#Weak scaling
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: ./numatest_mpi
+Node: optane
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: ./numatest_mpi
+Node: optane
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: ./numatest_mpi
+Node: optane
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+25 total processes failed to start
+--------------------------------------------------------------------------
+There are not enough slots available in the system to satisfy the 49 slots
+that were requested by the application:
+  ./numatest_mpi
+
+Either request fewer slots for your application, or make more slots available
+for use.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+There are not enough slots available in the system to satisfy the 73 slots
+that were requested by the application:
+  ./numatest_mpi
+
+Either request fewer slots for your application, or make more slots available
+for use.
+--------------------------------------------------------------------------
+test.sh: line 8: cd: no_prefetch: No such file or directory
+make: *** No targets specified and no makefile found.  Stop.
+#Strong scaling
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: ./numatest_mpi
+Node: optane
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: ./numatest_mpi
+Node: optane
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: ./numatest_mpi
+Node: optane
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+25 total processes failed to start
+--------------------------------------------------------------------------
+There are not enough slots available in the system to satisfy the 49 slots
+that were requested by the application:
+  ./numatest_mpi
+
+Either request fewer slots for your application, or make more slots available
+for use.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+There are not enough slots available in the system to satisfy the 73 slots
+that were requested by the application:
+  ./numatest_mpi
+
+Either request fewer slots for your application, or make more slots available
+for use.
+--------------------------------------------------------------------------
+#Weak scaling
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: ./numatest_mpi
+Node: optane
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: ./numatest_mpi
+Node: optane
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: ./numatest_mpi
+Node: optane
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+25 total processes failed to start
+--------------------------------------------------------------------------
+There are not enough slots available in the system to satisfy the 49 slots
+that were requested by the application:
+  ./numatest_mpi
+
+Either request fewer slots for your application, or make more slots available
+for use.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+There are not enough slots available in the system to satisfy the 73 slots
+that were requested by the application:
+  ./numatest_mpi
+
+Either request fewer slots for your application, or make more slots available
+for use.
+--------------------------------------------------------------------------
+test.sh: line 6: cd: ../../stream: No such file or directory
+make: *** No targets specified and no makefile found.  Stop.
+#Strong scaling
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: ./numatest_mpi
+Node: optane
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: ./numatest_mpi
+Node: optane
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: ./numatest_mpi
+Node: optane
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+25 total processes failed to start
+--------------------------------------------------------------------------
+There are not enough slots available in the system to satisfy the 49 slots
+that were requested by the application:
+  ./numatest_mpi
+
+Either request fewer slots for your application, or make more slots available
+for use.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+There are not enough slots available in the system to satisfy the 73 slots
+that were requested by the application:
+  ./numatest_mpi
+
+Either request fewer slots for your application, or make more slots available
+for use.
+--------------------------------------------------------------------------
+#Weak scaling
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: ./numatest_mpi
+Node: optane
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: ./numatest_mpi
+Node: optane
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: ./numatest_mpi
+Node: optane
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+25 total processes failed to start
+--------------------------------------------------------------------------
+There are not enough slots available in the system to satisfy the 49 slots
+that were requested by the application:
+  ./numatest_mpi
+
+Either request fewer slots for your application, or make more slots available
+for use.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+There are not enough slots available in the system to satisfy the 73 slots
+that were requested by the application:
+  ./numatest_mpi
+
+Either request fewer slots for your application, or make more slots available
+for use.
+--------------------------------------------------------------------------
+test.sh: line 8: cd: no_prefetch: No such file or directory
+make: *** No targets specified and no makefile found.  Stop.
+#Strong scaling
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: ./numatest_mpi
+Node: optane
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: ./numatest_mpi
+Node: optane
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: ./numatest_mpi
+Node: optane
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+25 total processes failed to start
+--------------------------------------------------------------------------
+There are not enough slots available in the system to satisfy the 49 slots
+that were requested by the application:
+  ./numatest_mpi
+
+Either request fewer slots for your application, or make more slots available
+for use.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+There are not enough slots available in the system to satisfy the 73 slots
+that were requested by the application:
+  ./numatest_mpi
+
+Either request fewer slots for your application, or make more slots available
+for use.
+--------------------------------------------------------------------------
+#Weak scaling
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: ./numatest_mpi
+Node: optane
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: ./numatest_mpi
+Node: optane
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+mpirun was unable to launch the specified application as it could not access
+or execute an executable:
+
+Executable: ./numatest_mpi
+Node: optane
+
+while attempting to start process rank 0.
+--------------------------------------------------------------------------
+25 total processes failed to start
+--------------------------------------------------------------------------
+There are not enough slots available in the system to satisfy the 49 slots
+that were requested by the application:
+  ./numatest_mpi
+
+Either request fewer slots for your application, or make more slots available
+for use.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+There are not enough slots available in the system to satisfy the 73 slots
+that were requested by the application:
+  ./numatest_mpi
+
+Either request fewer slots for your application, or make more slots available
+for use.
+--------------------------------------------------------------------------
+make: 'stream_mpi' is up to date.
+#Strong scaling
+#NUM PROCS 1
+#NUM PROCS 24
+#NUM PROCS 48
+#NUM PROCS 72
+#NUM PROCS 96
+#Weak scaling
+#NUM PROCS 1
+#NUM PROCS 24
+#NUM PROCS 48
+#NUM PROCS 72
+#NUM PROCS 96
+make: 'stream_mpi' is up to date.
+#Strong scaling
+#NUM PROCS 1
+test.sh: line 9: 63592 Terminated              sh test_numa.sh
+make: 'stream_mpi' is up to date.
+#Strong scaling
+#NUM PROCS 1
+#NUM PROCS 24
+#NUM PROCS 48
+#NUM PROCS 72
+#NUM PROCS 96
+#Weak scaling
+#NUM PROCS 1
+#NUM PROCS 24
+#NUM PROCS 48
+#NUM PROCS 72
+#NUM PROCS 96
+mpicc -o stream_mpi stream_mpi_np.c -O1 -fopenmp -lnuma -lm
+#Strong scaling
+#NUM PROCS 1
+#NUM PROCS 24
+#NUM PROCS 48
+#NUM PROCS 72
+#NUM PROCS 96
+#Weak scaling
+#NUM PROCS 1
+#NUM PROCS 24
+#NUM PROCS 48
+#NUM PROCS 72
+#NUM PROCS 96

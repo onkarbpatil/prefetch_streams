@@ -296,9 +296,12 @@ main()
     array_alignment = 64;						// Can be modified -- provides partial support for adjusting relative alignment
 
 	n = 0;
+	int z;
 	while(n <= total_numa_nodes){
-			mintime[4] = {FLT_MAX,FLT_MAX,FLT_MAX,FLT_MAX};
-			omintime[4] = {FLT_MAX,FLT_MAX,FLT_MAX,FLT_MAX};
+		for(z =0; z < 4; z++){
+			mintime[z] = FLT_MAX;
+			omintime[z] = FLT_MAX;
+		}
 			if(myrank == 0){
 	printf(HLINE);
 	printf("NUMA ID: %d\n", n);

@@ -292,8 +292,11 @@ main()
     array_alignment = 64;						// Can be modified -- provides partial support for adjusting relative alignment
 
 	n = 0;
+	int z =0;
 	while(n <= total_numa_nodes){
-			mintime[4] = {FLT_MAX,FLT_MAX,FLT_MAX,FLT_MAX};
+		for(z=0;z<4;z++){
+			mintime[z] = FLT_MAX;
+		}
 			if(myrank == 0){
 	printf(HLINE);
 	printf("NUMA ID: %d\n", n);
@@ -434,11 +437,11 @@ main()
 		printf(HLINE);
 
 		if  ( (quantum = checktick()) >= 1) 
-//		printf("Your timer granularity/precision appears to be "
-//			"%d microseconds.\n", quantum);
+		printf("Your timer granularity/precision appears to be "
+			"%d microseconds.\n", quantum);
 		else {
-//		printf("Your timer granularity appears to be "
-//			"less than one microsecond.\n");
+		printf("Your timer granularity appears to be "
+			"less than one microsecond.\n");
 		quantum = 1;
 		}
 	}
@@ -519,7 +522,7 @@ main()
 #else
 #pragma omp parallel for
 		for (j=0; j<array_elements; j++)
-			b[j] = a[j]+c[j];
+			c[j] = a[j]+b[j];
 #endif
 		MPI_Barrier(MPI_COMM_WORLD);
 		t1 = MPI_Wtime();
