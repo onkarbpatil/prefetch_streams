@@ -169,6 +169,7 @@ void numatest(int argc, char ** argv, int rank, int procs, unsigned long bytes){
 	int sdist = 0;
 	int rd_dist, wr_dist;
 	int * rand_tab;
+	int inner = 0;
 	rand_tab = (int*)malloc(mbs*sizeof(int));
 	double *a, *b, *c, *d, *e, *f, *g, *h;
 	double **aa, **bb, **cc;
@@ -370,7 +371,7 @@ redo1:
 			}
 			MPI_Barrier(MPI_COMM_WORLD);
 			clock_gettime( CLOCK_MONOTONIC, &begin);
-			for(j = 0;j < ((size/sizeof(double)) - wr_dist);j++){
+			for(j = 0;j < ((size/sizeof(double)) - wr_dist);j+=wr_dist){
 					__builtin_prefetch (&a[j+wr_dist], 1, 0);
 					__builtin_prefetch (&b[j+wr_dist], 1, 0);
 					__builtin_prefetch (&c[j+wr_dist], 1, 0);
@@ -379,11 +380,13 @@ redo1:
 					//__builtin_prefetch (&f[j+wr_dist], 1, 0);
 					//__builtin_prefetch (&g[j+wr_dist], 1, 0);
 					//__builtin_prefetch (&h[j+wr_dist], 1, 0);
-				a[j] = 1.0;
-				b[j] = 2.0;
-				c[j] = 3.0;
-				d[j] = 4.0;
-				e[j] = 5.0;
+					for(inner = 0;inner<wr_dist;inner++){
+						a[j+inner] = 1.0;
+						b[j+inner] = 2.0;
+						c[j+inner] = 3.0;
+						d[j+inner] = 4.0;
+						e[j+inner] = 5.0;
+					}
 			//	f[j] = 6.0;
 			//	g[j] = 7.0;
 			//	h[j] = 8.0;
@@ -498,29 +501,32 @@ redo5:
 			}
 			MPI_Barrier(MPI_COMM_WORLD);
 			clock_gettime( CLOCK_MONOTONIC, &begin);
-			for(j =0; j < ((size/sizeof(double))-bdist); j++){
+			for(j =0; j < ((size/sizeof(double))-bdist); j+=bdist){
 					__builtin_prefetch (&a[j+wr_dist], 1, 0);
 					__builtin_prefetch (&b[j+rd_dist], 0, 0);
 					__builtin_prefetch (&c[j+rd_dist], 0, 0);
 					__builtin_prefetch (&d[j+rd_dist], 0, 0);
 					__builtin_prefetch (&e[j+rd_dist], 0, 0);
-                            a[j] = c[j] + d[j] + e[j] + b[j];
+						for(inner=0;inner<bdist;inner++)
+                            a[j+inner] = c[j+inner] + d[j+inner] + e[j+inner] + b[j+inner];
             }
 			if(wr_dist >= rd_dist){
-				for(j = ((size/sizeof(double))-wr_dist);j <((size/sizeof(double))-rd_dist);j++){
+				for(j = ((size/sizeof(double))-wr_dist);j <((size/sizeof(double))-rd_dist);j+=rd_dist){
 						__builtin_prefetch (&b[j+rd_dist], 0, 0);
 						__builtin_prefetch (&c[j+rd_dist], 0, 0);
 						__builtin_prefetch (&d[j+rd_dist], 0, 0);
 						__builtin_prefetch (&e[j+rd_dist], 0, 0);
-						a[j] = c[j] + d[j] + e[j] + b[j];
+						for(inner=0;inner<rd_dist;inner++)
+						a[j+inner] = c[j+inner] + d[j+inner] + e[j+inner] + b[j+inner];
 				}
 				for(j = ((size/sizeof(double))-rd_dist);j <(size/sizeof(double));j++){
 						a[j] = c[j] + d[j] + e[j] + b[j];
 				}
 			}else{
-				for(j = ((size/sizeof(double))-rd_dist);j <((size/sizeof(double))-wr_dist);j++){
+				for(j = ((size/sizeof(double))-rd_dist);j <((size/sizeof(double))-wr_dist);j+=wr_dist){
 						__builtin_prefetch (&a[j+wr_dist], 1, 0);
-						a[j] = c[j] + d[j] + e[j] + b[j];
+						for(inner=0;inner<wr_dist;inner++)
+						a[j+inner] = c[j+inner] + d[j+inner] + e[j+inner] + b[j+inner];
 				}
 				for(j = ((size/sizeof(double))-wr_dist);j <(size/sizeof(double));j++){
 						a[j] = c[j] + d[j] + e[j] + b[j];
@@ -775,33 +781,39 @@ redo18:
 			}
 			MPI_Barrier(MPI_COMM_WORLD);
 			clock_gettime( CLOCK_MONOTONIC, &begin);
-                        for(j =0; j < ((size/sizeof(double)) - bdist); j++){
+                        for(j =0; j < ((size/sizeof(double)) - bdist); j+=bdist){
 					__builtin_prefetch (&a[stride%(size/sizeof(double))+wr_dist], 1, 0);
 					__builtin_prefetch (&b[stride%(size/sizeof(double))+rd_dist], 0, 0);
 					__builtin_prefetch (&c[stride%(size/sizeof(double))+rd_dist], 0, 0);
 					__builtin_prefetch (&d[stride%(size/sizeof(double))+rd_dist], 0, 0);
 					__builtin_prefetch (&e[stride%(size/sizeof(double))+rd_dist], 0, 0);
+						for(inner=0;inner<bdist;inner++){
 								a[stride%(size/sizeof(double))] = c[stride%(size/sizeof(double))] + d[stride%(size/sizeof(double))] + b[stride%(size/sizeof(double))] + e[stride%(size/sizeof(double))];
 			    stride +=3;
+						}
                         }
 						if(wr_dist >= rd_dist){
-                        	for(j = ((size/sizeof(double)) - wr_dist); j < ((size/sizeof(double)) -rd_dist); j++){
+                        	for(j = ((size/sizeof(double)) - wr_dist); j < ((size/sizeof(double)) -rd_dist); j+=rd_dist){
 								__builtin_prefetch (&b[stride%(size/sizeof(double))+rd_dist], 0, 0);
 								__builtin_prefetch (&c[stride%(size/sizeof(double))+rd_dist], 0, 0);
 								__builtin_prefetch (&d[stride%(size/sizeof(double))+rd_dist], 0, 0);
 								__builtin_prefetch (&e[stride%(size/sizeof(double))+rd_dist], 0, 0);
+							for(inner=0;inner<rd_dist;inner++){
 								a[stride%(size/sizeof(double))] = c[stride%(size/sizeof(double))] + d[stride%(size/sizeof(double))] + b[stride%(size/sizeof(double))] + e[stride%(size/sizeof(double))];
                  				stride +=3;
+							}
 							}
 							for(j = ((size/sizeof(double)) - rd_dist); j < (size/sizeof(double)); j++){
 								a[stride%(size/sizeof(double))] = c[stride%(size/sizeof(double))] + d[stride%(size/sizeof(double))] + b[stride%(size/sizeof(double))] + e[stride%(size/sizeof(double))];
                  				stride +=3;
 							}
 						}else{
-                        	for(j = ((size/sizeof(double)) - rd_dist); j < ((size/sizeof(double)) -wr_dist); j++){
+                        	for(j = ((size/sizeof(double)) - rd_dist); j < ((size/sizeof(double)) -wr_dist); j+=wr_dist){
 								__builtin_prefetch (&a[stride%(size/sizeof(double))+wr_dist], 1, 0);
+						for(inner=0;inner<wr_dist;inner++){
 								a[stride%(size/sizeof(double))] = c[stride%(size/sizeof(double))] + d[stride%(size/sizeof(double))] + b[stride%(size/sizeof(double))] + e[stride%(size/sizeof(double))];
                  				stride +=3;
+							}
 							}
 							for(j = ((size/sizeof(double)) - rd_dist); j < (size/sizeof(double)); j++){
 								a[stride%(size/sizeof(double))] = c[stride%(size/sizeof(double))] + d[stride%(size/sizeof(double))] + b[stride%(size/sizeof(double))] + e[stride%(size/sizeof(double))];
@@ -846,22 +858,24 @@ redo19:
 			}
 			MPI_Barrier(MPI_COMM_WORLD);
 			clock_gettime( CLOCK_MONOTONIC, &begin);
-                        for(j =0; j < ((size/sizeof(double)) - (2*rd_dist)); j++){
+                        for(j =0; j < ((size/sizeof(double)) - (2*rd_dist)); j+=rd_dist){
 					__builtin_prefetch (&rand_tab[j+2*rd_dist], 0, 0);
 					__builtin_prefetch (&a[rand_tab[j+rd_dist]], 1, 0);
 					__builtin_prefetch (&b[rand_tab[j+rd_dist]], 0, 0);
 					__builtin_prefetch (&c[rand_tab[j+rd_dist]], 0, 0);
 					__builtin_prefetch (&d[rand_tab[j+rd_dist]], 0, 0);
 					__builtin_prefetch (&e[rand_tab[j+rd_dist]], 0, 0);
-			  a[rand_tab[j]] = b[rand_tab[j]] + c[rand_tab[j]] + d[rand_tab[j]] + e[rand_tab[j]];
+						for(inner=0;inner<rd_dist;inner++)
+			  a[rand_tab[j+inner]] = b[rand_tab[j+inner]] + c[rand_tab[j+inner]] + d[rand_tab[j+inner]] + e[rand_tab[j+inner]];
                         }
-                        for(j = ((size/sizeof(double)) - (2*rd_dist));j < ((size/sizeof(double)) - rd_dist); j++){
+                        for(j = ((size/sizeof(double)) - (2*rd_dist));j < ((size/sizeof(double)) - rd_dist); j+=rd_dist){
 					__builtin_prefetch (&a[rand_tab[j+rd_dist]], 1, 0);
 					__builtin_prefetch (&b[rand_tab[j+rd_dist]], 0, 0);
 					__builtin_prefetch (&c[rand_tab[j+rd_dist]], 0, 0);
 					__builtin_prefetch (&d[rand_tab[j+rd_dist]], 0, 0);
 					__builtin_prefetch (&e[rand_tab[j+rd_dist]], 0, 0);
-			  a[rand_tab[j]] = b[rand_tab[j]] + c[rand_tab[j]] + d[rand_tab[j]] + e[rand_tab[j]];
+						for(inner=0;inner<rd_dist;inner++)
+			  a[rand_tab[j+inner]] = b[rand_tab[j+inner]] + c[rand_tab[j+inner]] + d[rand_tab[j+inner]] + e[rand_tab[j+inner]];
                         }
                         for(j = ((size/sizeof(double)) - rd_dist);j < (size/sizeof(double)); j++){
 			  a[rand_tab[j]] = b[rand_tab[j]] + c[rand_tab[j]] + d[rand_tab[j]] + e[rand_tab[j]];
@@ -1161,29 +1175,33 @@ redo27:
 			}
 			MPI_Barrier(MPI_COMM_WORLD);
 			clock_gettime( CLOCK_MONOTONIC, &begin);
-                        for(j =0; j < (size/sizeof(double)) - bdist; j++){
+                        for(j =0; j < (size/sizeof(double)) - bdist; j+=bdist){
 					__builtin_prefetch (&a[stride%(size/sizeof(double)) + wr_dist], 1, 0);
 					__builtin_prefetch (&b[stride%(size/sizeof(double)) + rd_dist], 0, 0);
 					__builtin_prefetch (&c[stride%(size/sizeof(double)) + rd_dist], 0, 0);
 					__builtin_prefetch (&d[stride%(size/sizeof(double)) + rd_dist], 0, 0);
 					__builtin_prefetch (&e[stride%(size/sizeof(double)) + rd_dist], 0, 0);
+						for(inner=0;inner<bdist;inner++){
                             a[stride%(size/sizeof(double))] = b[stride%(size/sizeof(double))] + c[stride%(size/sizeof(double))] + d[stride%(size/sizeof(double))] + e[stride%(size/sizeof(double))];
 			    if((j%8 == 0)&&(j != 0))
 				stride = j*4757914; //65536 for KNL
 			    else
 				stride++;
                         }
+				}
 						if(wr_dist >= rd_dist){
-                        for(j = ((size/sizeof(double)) - wr_dist); j < (size/sizeof(double)) - rd_dist; j++){
+                        for(j = ((size/sizeof(double)) - wr_dist); j < (size/sizeof(double)) - rd_dist; j+=rd_dist){
 					__builtin_prefetch (&b[stride%(size/sizeof(double)) + rd_dist], 0, 0);
 					__builtin_prefetch (&c[stride%(size/sizeof(double)) + rd_dist], 0, 0);
 					__builtin_prefetch (&d[stride%(size/sizeof(double)) + rd_dist], 0, 0);
 					__builtin_prefetch (&e[stride%(size/sizeof(double)) + rd_dist], 0, 0);
+						for(inner=0;inner<rd_dist;inner++){
                             a[stride%(size/sizeof(double))] = b[stride%(size/sizeof(double))] + c[stride%(size/sizeof(double))] + d[stride%(size/sizeof(double))] + e[stride%(size/sizeof(double))];
 			    if((j%8 == 0)&&(j != 0))
 				stride = j*4757914; //65536 for KNL
 			    else
 				stride++;
+						}
 						}
 						 for(j = (size/sizeof(double))-rd_dist; j < (size/sizeof(double)); j++){
                             a[stride%(size/sizeof(double))] = b[stride%(size/sizeof(double))] + c[stride%(size/sizeof(double))] + d[stride%(size/sizeof(double))] + e[stride%(size/sizeof(double))];
@@ -1193,13 +1211,15 @@ redo27:
 				stride++;
 						}
 						}else{
-                        for(j = ((size/sizeof(double)) - rd_dist); j < (size/sizeof(double)) - wr_dist; j++){
+                        for(j = ((size/sizeof(double)) - rd_dist); j < (size/sizeof(double)) - wr_dist; j+=wr_dist){
 					__builtin_prefetch (&a[stride%(size/sizeof(double)) + wr_dist], 1, 0);
+						for(inner=0;inner<wr_dist;inner++){
                             a[stride%(size/sizeof(double))] = b[stride%(size/sizeof(double))] + c[stride%(size/sizeof(double))] + d[stride%(size/sizeof(double))] + e[stride%(size/sizeof(double))];
 			    if((j%8 == 0)&&(j != 0))
 				stride = j*4757914; //65536 for KNL
 			    else
 				stride++;
+						}
 						}
 						 for(j = (size/sizeof(double))-wr_dist; j < (size/sizeof(double)); j++){
                             a[stride%(size/sizeof(double))] = b[stride%(size/sizeof(double))] + c[stride%(size/sizeof(double))] + d[stride%(size/sizeof(double))] + e[stride%(size/sizeof(double))];
