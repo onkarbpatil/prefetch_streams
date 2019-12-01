@@ -1,3 +1,33 @@
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
 -------------------------------------------------------------
 NUMA ID: 0
 -------------------------------------------------------------
@@ -11,10 +41,10 @@ Data is distributed across 1 MPI ranks
 -------------------------------------------------------------
 Your timer granularity/precision appears to be 1 microseconds.
 Function    Best Rate MB/s    Avg Rate MB/s    Avg time     Min time     Max time      Avg ovr     Min ovr     Max ovr
-Copy:           6256.9       6086.5     0.014701     0.014301     0.015480     0.000001     0.000001     0.000001
-Scale:          6296.1       6111.8     0.014640     0.014212     0.015486     0.000001     0.000001     0.000001
-Add:            4520.4       4491.5     0.029883     0.029692     0.030297     0.000003     0.000003     0.000004
-Triad:          4605.2       4573.5     0.029347     0.029145     0.029675     0.000003     0.000002     0.000003
+Copy:           7074.9       6979.6     0.012820     0.012647     0.013195     0.000001     0.000001     0.000001
+Scale:         12339.7      12280.2     0.007286     0.007251     0.007330     0.000001     0.000001     0.000001
+Add:            4614.7       4607.5     0.029130     0.029085     0.029214     0.000002     0.000002     0.000003
+Triad:          4653.8       4648.9     0.028871     0.028841     0.028917     0.000003     0.000002     0.000003
 -------------------------------------------------------------
 Solution Validates: avg error less than 1.000000e-13 on all three arrays
 -------------------------------------------------------------
@@ -31,10 +61,10 @@ Data is distributed across 1 MPI ranks
 -------------------------------------------------------------
 Your timer granularity/precision appears to be 1 microseconds.
 Function    Best Rate MB/s    Avg Rate MB/s    Avg time     Min time     Max time      Avg ovr     Min ovr     Max ovr
-Copy:           4366.4       3927.0     0.022786     0.020493     0.022337     0.000001     0.000001     0.000001
-Scale:          4400.8       3952.7     0.022637     0.020332     0.022373     0.000002     0.000001     0.000002
-Add:            3103.3       2863.1     0.046879     0.043249     0.044138     0.000005     0.000004     0.000005
-Triad:          3150.8       2906.7     0.046176     0.042599     0.043409     0.000005     0.000004     0.000007
+Copy:           4948.3       4548.9     0.019670     0.018083     0.018678     0.000001     0.000001     0.000001
+Scale:          8610.9       7961.5     0.011239     0.010391     0.010537     0.000001     0.000001     0.000001
+Add:            3377.0       2983.6     0.044986     0.039745     0.042069     0.000003     0.000003     0.000004
+Triad:          3381.9       2994.9     0.044815     0.039688     0.041898     0.000004     0.000003     0.000004
 -------------------------------------------------------------
 Solution Validates: avg error less than 1.000000e-13 on all three arrays
 -------------------------------------------------------------
@@ -51,10 +81,10 @@ Data is distributed across 1 MPI ranks
 -------------------------------------------------------------
 Your timer granularity/precision appears to be 1 microseconds.
 Function    Best Rate MB/s    Avg Rate MB/s    Avg time     Min time     Max time      Avg ovr     Min ovr     Max ovr
-Copy:           2602.0       2335.1     0.038319     0.034389     0.040313     0.000009     0.000008     0.000010
-Scale:          2420.5       2168.4     0.041265     0.036967     0.044736     0.000010     0.000009     0.000011
-Add:            1780.8       1651.5     0.081272     0.075368     0.078067     0.000016     0.000012     0.000017
-Triad:          1875.7       1737.9     0.077232     0.071557     0.073397     0.000013     0.000011     0.000013
+Copy:           2435.4       2164.1     0.041346     0.036741     0.044214     0.000009     0.000006     0.000013
+Scale:          3378.3       3041.8     0.029416     0.026486     0.031481     0.000008     0.000006     0.000012
+Add:            1790.6       1649.3     0.081379     0.074956     0.079052     0.000010     0.000008     0.000012
+Triad:          1801.4       1663.7     0.080676     0.074507     0.077998     0.000010     0.000008     0.000014
 -------------------------------------------------------------
 Solution Validates: avg error less than 1.000000e-13 on all three arrays
 -------------------------------------------------------------
@@ -71,10 +101,10 @@ Data is distributed across 1 MPI ranks
 -------------------------------------------------------------
 Your timer granularity/precision appears to be 1 microseconds.
 Function    Best Rate MB/s    Avg Rate MB/s    Avg time     Min time     Max time      Avg ovr     Min ovr     Max ovr
-Copy:           2061.4       1808.1     0.049487     0.043407     0.050858     0.000019     0.000015     0.000022
-Scale:          1918.0       1669.1     0.053607     0.046652     0.058267     0.000021     0.000018     0.000022
-Add:            1503.8       1350.6     0.099379     0.089250     0.093743     0.000025     0.000019     0.000027
-Triad:          1563.8       1413.1     0.094980     0.085825     0.087932     0.000023     0.000020     0.000025
+Copy:           1840.2       1563.6     0.057227     0.048624     0.061653     0.000011     0.000008     0.000015
+Scale:          2886.3       2488.4     0.035959     0.031001     0.035870     0.000011     0.000007     0.000014
+Add:            1681.1       1360.1     0.098681     0.079841     0.094768     0.000015     0.000011     0.000020
+Triad:          1710.5       1377.3     0.097448     0.078468     0.092886     0.000013     0.000011     0.000016
 -------------------------------------------------------------
 Solution Validates: avg error less than 1.000000e-13 on all three arrays
 -------------------------------------------------------------
@@ -91,10 +121,10 @@ Data is distributed across 1 MPI ranks
 -------------------------------------------------------------
 Your timer granularity/precision appears to be 1 microseconds.
 Function    Best Rate MB/s    Avg Rate MB/s    Avg time     Min time     Max time      Avg ovr     Min ovr     Max ovr
-Copy:           3367.4       2742.0     0.032632     0.026572     0.050858     0.000004     0.000002     0.000022
-Scale:          3414.4       2737.0     0.032693     0.026206     0.058267     0.000005     0.000002     0.000022
-Add:            2187.1       1847.5     0.072647     0.061367     0.093743     0.000008     0.000004     0.000027
-Triad:          2222.0       1889.6     0.071028     0.060404     0.087932     0.000008     0.000005     0.000025
+Copy:           5163.7       3425.7     0.026120     0.017329     0.061653     0.000003     0.000002     0.000015
+Scale:          5722.9       4535.2     0.019730     0.015635     0.035870     0.000004     0.000002     0.000014
+Add:            2154.2       1819.7     0.073757     0.062305     0.094768     0.000008     0.000005     0.000020
+Triad:          2164.3       1821.4     0.073690     0.062016     0.092886     0.000008     0.000005     0.000016
 -------------------------------------------------------------
 Solution Validates: avg error less than 1.000000e-13 on all three arrays
 -------------------------------------------------------------

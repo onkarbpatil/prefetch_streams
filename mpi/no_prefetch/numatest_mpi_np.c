@@ -323,7 +323,7 @@ redo1:
 			if(accum <= empty){
 				goto redo1;
 			}
-			wr_only_avg += ((5*size*1.0E-06)/(long double)(accum - empty));
+			wr_only_avg += ((5*size*procs*1.0E-06)/(long double)(accum - empty));
 			}
 /*redo2:
 			MPI_Barrier(MPI_COMM_WORLD);
@@ -390,7 +390,7 @@ redo5:
 			if(accum <= empty){
 				goto redo5;
 			}
-			owfr_avg += ((5*size*1.0E-06)/(long double)(accum - empty));
+			owfr_avg += ((5*size*procs*1.0E-06)/(long double)(accum - empty));
 			}
 /*redo6:
 			MPI_Barrier(MPI_COMM_WORLD);
@@ -603,7 +603,7 @@ redo18:
 			if(accum <= empty){
 				goto redo18;
 			}
-			str_avg += ((5*size*1.0E-06)/(long double)(accum - empty));
+			str_avg += ((5*size*procs*1.0E-06)/(long double)(accum - empty));
 			}
 redo19:
 			stride = 0;
@@ -623,7 +623,7 @@ redo19:
 			if(accum <= empty){
 				goto redo19;
 			}
-			rand_avg += ((5*size*1.0E-06)/(long double)(accum - empty));
+			rand_avg += ((5*size*procs*1.0E-06)/(long double)(accum - empty));
 			}
 /*redo20:
 			MPI_Barrier(MPI_COMM_WORLD);
@@ -873,7 +873,7 @@ redo27:
                         if(accum <= empty){
                                 goto redo27;
                         }
-                        l2cache_avg += ((5*size*1.0E-06)/(long double)(accum - empty));
+                        l2cache_avg += ((5*size*procs*1.0E-06)/(long double)(accum - empty));
 			}
 			numa_free(a, size);
 			numa_free(b, size);
@@ -936,11 +936,11 @@ redo27:
 		node_bw->rand_tmin = rand_tmin;
 		node_bw->str_tmin = str_tmin;
 		node_bw->owfr_tmin = owfr_tmin;
-		node_bw->wr_only_min = ((5*size*1.0E-06)/(long double)wr_only_tmin);
-		node_bw->l2cache_min = ((5*size*1.0E-06)/(long double)l2cache_tmin);
-		node_bw->rand_min = ((5*size*1.0E-06)/(long double)rand_tmin);
-		node_bw->str_min = ((5*size*1.0E-06)/(long double)str_tmin);
-		node_bw->owfr_min = ((5*size*1.0E-06)/(long double)owfr_tmin);
+		node_bw->wr_only_min = ((5*size*procs*1.0E-06)/(long double)wr_only_tmin);
+		node_bw->l2cache_min = ((5*size*procs*1.0E-06)/(long double)l2cache_tmin);
+		node_bw->rand_min = ((5*size*procs*1.0E-06)/(long double)rand_tmin);
+		node_bw->str_min = ((5*size*procs*1.0E-06)/(long double)str_tmin);
+		node_bw->owfr_min = ((5*size*procs*1.0E-06)/(long double)owfr_tmin);
 		node_bw->next = NULL;
 		if(numa_node_list == NULL){
 			numa_node_list = node_bw;

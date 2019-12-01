@@ -1017,3 +1017,252 @@ mpicc -o stream_mpi stream_mpi_np.c -O1 -fopenmp -lnuma -lm
 #NUM PROCS 48
 #NUM PROCS 72
 #NUM PROCS 96
+make: 'numatest_mpi' is up to date.
+#Strong scaling
+#NUM PROCS 1
+#NUM PROCS 24
+#NUM PROCS 48
+#NUM PROCS 72
+#NUM PROCS 96
+make: Warning: File 'numatest_mpi.c' has modification time 124 s in the future
+mpicc -o numatest_mpi test3.c numatest_mpi.c numatest_mpi.h -O1 -fopenmp -lnuma -lm
+numatest_mpi.c: In function ‘numatest’:
+numatest_mpi.c:199:12: warning: implicit declaration of function ‘omp_get_num_threads’ [-Wimplicit-function-declaration]
+     numt = omp_get_num_threads();
+            ^~~~~~~~~~~~~~~~~~~
+make: warning:  Clock skew detected.  Your build may be incomplete.
+#Strong scaling
+#NUM PROCS 1
+#NUM PROCS 24
+#NUM PROCS 48
+#NUM PROCS 72
+#NUM PROCS 96
+#Weak scaling
+#NUM PROCS 1
+#NUM PROCS 24
+#NUM PROCS 48
+#NUM PROCS 72
+#NUM PROCS 96
+make: 'numatest_mpi' is up to date.
+#Strong scaling
+#NUM PROCS 1
+#NUM PROCS 24
+#NUM PROCS 48
+#NUM PROCS 72
+#NUM PROCS 96
+#Weak scaling
+#NUM PROCS 1
+#NUM PROCS 24
+#NUM PROCS 48
+#NUM PROCS 72
+#NUM PROCS 96
+mpicc -o stream_mpi stream_mpi.c -O1 -fopenmp -lnuma -lm
+#Strong scaling
+#NUM PROCS 1
+#NUM PROCS 24
+#NUM PROCS 48
+#NUM PROCS 72
+#NUM PROCS 96
+#Weak scaling
+#NUM PROCS 1
+#NUM PROCS 24
+#NUM PROCS 48
+#NUM PROCS 72
+#NUM PROCS 96
+make: 'stream_mpi' is up to date.
+#Strong scaling
+#NUM PROCS 1
+#NUM PROCS 24
+#NUM PROCS 48
+#NUM PROCS 72
+#NUM PROCS 96
+#Weak scaling
+#NUM PROCS 1
+#NUM PROCS 24
+#NUM PROCS 48
+#NUM PROCS 72
+#NUM PROCS 96
+mpicc -o numatest_mpi test3.c numatest_mpi.c numatest_mpi.h -O1 -fopenmp -lnuma -lm
+numatest_mpi.c: In function ‘numatest’:
+numatest_mpi.c:199:12: warning: implicit declaration of function ‘omp_get_num_threads’ [-Wimplicit-function-declaration]
+     numt = omp_get_num_threads();
+            ^~~~~~~~~~~~~~~~~~~
+#Strong scaling
+#NUM PROCS 1
+#NUM PROCS 24
+#NUM PROCS 48
+#NUM PROCS 72
+#NUM PROCS 96
+#Weak scaling
+#NUM PROCS 1
+#NUM PROCS 24
+#NUM PROCS 48
+#NUM PROCS 72
+#NUM PROCS 96
+make: 'numatest_mpi' is up to date.
+#Strong scaling
+#NUM PROCS 1
+#NUM PROCS 24
+#NUM PROCS 48
+#NUM PROCS 72
+#NUM PROCS 96
+#Weak scaling
+#NUM PROCS 1
+#NUM PROCS 24
+#NUM PROCS 48
+#NUM PROCS 72
+#NUM PROCS 96
+mpicc -o stream_mpi stream_mpi.c -O1 -fopenmp -lnuma -lm
+#Strong scaling
+#NUM PROCS 1
+#NUM PROCS 24
+#NUM PROCS 48
+#NUM PROCS 72
+#NUM PROCS 96
+#Weak scaling
+#NUM PROCS 1
+#NUM PROCS 24
+#NUM PROCS 48
+#NUM PROCS 72
+#NUM PROCS 96
+make: 'stream_mpi' is up to date.
+#Strong scaling
+#NUM PROCS 1
+#NUM PROCS 24
+#NUM PROCS 48
+#NUM PROCS 72
+#NUM PROCS 96
+#Weak scaling
+#NUM PROCS 1
+#NUM PROCS 24
+#NUM PROCS 48
+#NUM PROCS 72
+#NUM PROCS 96
+mpicc -o numatest_mpi test3.c numatest_mpi.c numatest_mpi.h -O1 -fopenmp -lnuma -lm
+numatest_mpi.c: In function ‘numatest’:
+numatest_mpi.c:199:12: warning: implicit declaration of function ‘omp_get_num_threads’ [-Wimplicit-function-declaration]
+     numt = omp_get_num_threads();
+            ^~~~~~~~~~~~~~~~~~~
+#Strong scaling
+#NUM PROCS 1
+#NUM PROCS 24
+#NUM PROCS 48
+#NUM PROCS 72
+make: Warning: File 'numatest_mpi.c' has modification time 167 s in the future
+mpicc -o numatest_mpi test3.c numatest_mpi.c numatest_mpi.h -O1 -fopenmp -lnuma -lm
+numatest_mpi.c: In function ‘numatest’:
+numatest_mpi.c:199:12: warning: implicit declaration of function ‘omp_get_num_threads’ [-Wimplicit-function-declaration]
+     numt = omp_get_num_threads();
+            ^~~~~~~~~~~~~~~~~~~
+make: warning:  Clock skew detected.  Your build may be incomplete.
+#Strong scaling
+#NUM PROCS 1
+#NUM PROCS 24
+#NUM PROCS 48
+#NUM PROCS 72
+#NUM PROCS 96
+#Weak scaling
+#NUM PROCS 1
+#NUM PROCS 24
+#NUM PROCS 48
+#NUM PROCS 72
+#NUM PROCS 96
+mpicc -o numatest_mpi test3.c numatest_mpi_np.c numatest_mpi.h -O1 -fopenmp -lnuma -lm
+numatest_mpi_np.c: In function ‘numatest’:
+numatest_mpi_np.c:197:12: warning: implicit declaration of function ‘omp_get_num_threads’ [-Wimplicit-function-declaration]
+     numt = omp_get_num_threads();
+            ^~~~~~~~~~~~~~~~~~~
+#Strong scaling
+#NUM PROCS 1
+#NUM PROCS 24
+#NUM PROCS 48
+#NUM PROCS 72
+#NUM PROCS 96
+#Weak scaling
+#NUM PROCS 1
+#NUM PROCS 24
+#NUM PROCS 48
+#NUM PROCS 72
+#NUM PROCS 96
+mpicc -o stream_mpi stream_mpi.c -O1 -fopenmp -lnuma -lm
+#Strong scaling
+#NUM PROCS 1
+#NUM PROCS 24
+#NUM PROCS 48
+#NUM PROCS 72
+#NUM PROCS 96
+#Weak scaling
+#NUM PROCS 1
+#NUM PROCS 24
+#NUM PROCS 48
+#NUM PROCS 72
+#NUM PROCS 96
+make: 'stream_mpi' is up to date.
+#Strong scaling
+#NUM PROCS 1
+#NUM PROCS 24
+#NUM PROCS 48
+#NUM PROCS 72
+#NUM PROCS 96
+#Weak scaling
+#NUM PROCS 1
+#NUM PROCS 24
+#NUM PROCS 48
+#NUM PROCS 72
+#NUM PROCS 96
+mpicc -o numatest_mpi test3.c numatest_mpi.c numatest_mpi.h -O1 -fopenmp -lnuma -lm
+numatest_mpi.c: In function ‘numatest’:
+numatest_mpi.c:199:12: warning: implicit declaration of function ‘omp_get_num_threads’ [-Wimplicit-function-declaration]
+     numt = omp_get_num_threads();
+            ^~~~~~~~~~~~~~~~~~~
+#Strong scaling
+#NUM PROCS 1
+#NUM PROCS 24
+#NUM PROCS 48
+#NUM PROCS 72
+#NUM PROCS 96
+#Weak scaling
+#NUM PROCS 1
+#NUM PROCS 24
+#NUM PROCS 48
+#NUM PROCS 72
+#NUM PROCS 96
+make: 'numatest_mpi' is up to date.
+#Strong scaling
+#NUM PROCS 1
+#NUM PROCS 24
+#NUM PROCS 48
+#NUM PROCS 72
+#NUM PROCS 96
+#Weak scaling
+#NUM PROCS 1
+#NUM PROCS 24
+#NUM PROCS 48
+#NUM PROCS 72
+#NUM PROCS 96
+mpicc -o stream_mpi stream_mpi.c -O1 -fopenmp -lnuma -lm
+#Strong scaling
+#NUM PROCS 1
+#NUM PROCS 24
+#NUM PROCS 48
+#NUM PROCS 72
+#NUM PROCS 96
+#Weak scaling
+#NUM PROCS 1
+#NUM PROCS 24
+#NUM PROCS 48
+#NUM PROCS 72
+#NUM PROCS 96
+make: 'stream_mpi' is up to date.
+#Strong scaling
+#NUM PROCS 1
+#NUM PROCS 24
+#NUM PROCS 48
+#NUM PROCS 72
+#NUM PROCS 96
+#Weak scaling
+#NUM PROCS 1
+#NUM PROCS 24
+#NUM PROCS 48
+#NUM PROCS 72
+#NUM PROCS 96

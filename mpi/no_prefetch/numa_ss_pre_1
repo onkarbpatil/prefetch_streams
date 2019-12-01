@@ -1,0 +1,36 @@
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+#NUMA id WR-only_avg_bw 1W4R_avg_bw Str_avg_bw Rand_avg_bw LLC_avg_bw WR-only_pk_bw 1W4R_pk_bw Str_pk_bw Rand_pk_bw LLC_pk_bw WR-only_avg_lat 1W4R_avg_lat Str_avg_lat Rand_avg_lat LLC_avg_lat WR-only_min 1W4R_min Str_min Rand_min LLC_min
+0 2387.185370 12836.577974 3934.941836 290.403822 1064.690665 2393.395078 12872.363866 3941.783042 290.682871 1071.372819 8.996114 1.672948 5.457476 73.948212 20.170556 8.972541 1.668290 5.448001 73.877200 20.044224
+1 1751.244372 7981.186196 2683.425520 285.206173 832.846250 1756.623870 7986.675792 2684.354071 285.277983 837.019137 12.262933 2.690685 8.002771 75.295836 25.785021 12.225062 2.688833 8.000001 75.276880 25.656327
+2 1766.841226 4137.259897 1364.820415 168.968147 470.471837 1775.137032 4138.207270 1365.283528 169.006587 471.495148 12.155082 5.190594 15.734552 127.093995 45.645401 12.097565 5.189406 15.729214 127.065086 45.546251
+3 854.928931 3237.972553 1162.784565 139.274681 403.186175 863.819060 3238.584536 1163.234535 139.294247 403.325511 25.141528 6.632186 18.468458 154.190529 53.262832 24.860341 6.630933 18.461313 154.168868 53.244429
+0 1914.658831 5683.115706 1867.851564 209.745076 502.443283 1917.925549 5683.956879 1867.956901 209.781640 502.690263 11.216023 3.778708 11.497079 102.385415 42.740820 11.196908 3.778149 11.496430 102.367569 42.719818

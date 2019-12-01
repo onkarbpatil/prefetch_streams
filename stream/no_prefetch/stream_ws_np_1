@@ -1,3 +1,33 @@
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
 -------------------------------------------------------------
 NUMA ID: 0
 Total Aggregate Array size = 5592406 (elements)
@@ -10,10 +40,10 @@ Data is distributed across 1 MPI ranks
 -------------------------------------------------------------
 Your timer granularity/precision appears to be 1 microseconds.
 Function    Best Rate MB/s  Avg Rate MB/s   Avg time     Min time     Max time
-Copy:          13391.8      13272.6     0.006742     0.006682     0.007004
-Scale:         12673.1      12462.1     0.007180     0.007061     0.007439
-Add:           13824.0      13761.2     0.009753     0.009709     0.009856
-Triad:         13805.1      13777.2     0.009742     0.009722     0.009766
+Copy:          13509.5      13315.8     0.006720     0.006623     0.006934
+Scale:         12643.6      12503.0     0.007157     0.007077     0.007459
+Add:           13869.5      13801.6     0.009725     0.009677     0.009881
+Triad:         13871.7      13818.6     0.009713     0.009676     0.009746
 -------------------------------------------------------------
 Solution Validates: avg error less than 1.000000e-13 on all three arrays
 -------------------------------------------------------------
@@ -29,10 +59,10 @@ Data is distributed across 1 MPI ranks
 -------------------------------------------------------------
 Your timer granularity/precision appears to be 1 microseconds.
 Function    Best Rate MB/s  Avg Rate MB/s   Avg time     Min time     Max time
-Copy:           9059.2       8389.5     0.010665     0.009877     0.009958
-Scale:          8673.7       7997.2     0.011189     0.010316     0.010480
-Add:            9435.5       8748.3     0.015342     0.014225     0.014306
-Triad:          9458.8       8756.7     0.015327     0.014190     0.014370
+Copy:           9129.5       8469.3     0.010565     0.009801     0.009858
+Scale:          8752.8       8079.7     0.011074     0.010223     0.010359
+Add:            9487.7       8789.3     0.015271     0.014146     0.014244
+Triad:          9495.1       8791.2     0.015267     0.014136     0.014275
 -------------------------------------------------------------
 Solution Validates: avg error less than 1.000000e-13 on all three arrays
 -------------------------------------------------------------
@@ -48,10 +78,10 @@ Data is distributed across 1 MPI ranks
 -------------------------------------------------------------
 Your timer granularity/precision appears to be 1 microseconds.
 Function    Best Rate MB/s  Avg Rate MB/s   Avg time     Min time     Max time
-Copy:           3051.7       2910.4     0.030745     0.029320     0.030033
-Scale:          2957.3       2817.7     0.031756     0.030257     0.030924
-Add:            3625.7       3443.6     0.038976     0.037018     0.037690
-Triad:          3648.5       3465.1     0.038734     0.036787     0.037218
+Copy:           2900.6       2784.4     0.032135     0.030848     0.031266
+Scale:          2769.8       2647.6     0.033796     0.032305     0.032924
+Add:            3356.0       3202.0     0.041917     0.039994     0.040695
+Triad:          3367.2       3217.5     0.041715     0.039860     0.040302
 -------------------------------------------------------------
 Solution Validates: avg error less than 1.000000e-13 on all three arrays
 -------------------------------------------------------------
@@ -67,10 +97,10 @@ Data is distributed across 1 MPI ranks
 -------------------------------------------------------------
 Your timer granularity/precision appears to be 1 microseconds.
 Function    Best Rate MB/s  Avg Rate MB/s   Avg time     Min time     Max time
-Copy:           2583.2       2338.8     0.038258     0.034638     0.035172
-Scale:          2525.0       2285.6     0.039149     0.035437     0.035966
-Add:            3145.8       2843.1     0.047208     0.042665     0.043380
-Triad:          3163.5       2857.5     0.046970     0.042427     0.043144
+Copy:           2514.1       2270.5     0.039409     0.035591     0.036128
+Scale:          2441.2       2203.5     0.040608     0.036654     0.037286
+Add:            2987.5       2690.7     0.049882     0.044926     0.045811
+Triad:          2992.0       2704.5     0.049628     0.044859     0.045349
 -------------------------------------------------------------
 Solution Validates: avg error less than 1.000000e-13 on all three arrays
 -------------------------------------------------------------
@@ -86,10 +116,10 @@ Data is distributed across 1 MPI ranks
 -------------------------------------------------------------
 Your timer granularity/precision appears to be 1 microseconds.
 Function    Best Rate MB/s  Avg Rate MB/s   Avg time     Min time     Max time
-Copy:           6416.0       4898.4     0.018267     0.013946     0.035172
-Scale:          5997.5       4619.8     0.019368     0.014919     0.035966
-Add:            6551.8       5193.1     0.025845     0.020486     0.043380
-Triad:          6571.5       5218.3     0.025721     0.020424     0.043144
+Copy:           6426.4       4859.1     0.018415     0.013924     0.036128
+Scale:          5966.4       4571.5     0.019573     0.014997     0.037286
+Add:            6383.0       5031.7     0.026675     0.021027     0.045811
+Triad:          6401.7       5059.0     0.026531     0.020966     0.045349
 -------------------------------------------------------------
 Solution Validates: avg error less than 1.000000e-13 on all three arrays
 -------------------------------------------------------------
