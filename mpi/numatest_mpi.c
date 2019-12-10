@@ -371,7 +371,7 @@ redo1:
 			}
 			MPI_Barrier(MPI_COMM_WORLD);
 			clock_gettime( CLOCK_MONOTONIC, &begin);
-			for(j = 0;j < ((size/sizeof(double)) - wr_dist);j+=4){
+			for(j = 0;j < ((size/sizeof(double)) - wr_dist);j+=6){
 					__builtin_prefetch (&a[j+wr_dist], 1, 0);
 					__builtin_prefetch (&b[j+wr_dist], 1, 0);
 					__builtin_prefetch (&c[j+wr_dist], 1, 0);
@@ -380,7 +380,7 @@ redo1:
 					//__builtin_prefetch (&f[j+wr_dist], 1, 0);
 					//__builtin_prefetch (&g[j+wr_dist], 1, 0);
 					//__builtin_prefetch (&h[j+wr_dist], 1, 0);
-					for(inner = 0;inner<4;inner++){
+					for(inner = 0;inner<6;inner++){
 						a[j+inner] = 1.0;
 						b[j+inner] = 2.0;
 						c[j+inner] = 3.0;
@@ -779,6 +779,7 @@ redo18:
 			if(accum < str_omin)
 					str_omin = accum;
 			}
+			stride = 0;
 			MPI_Barrier(MPI_COMM_WORLD);
 			clock_gettime( CLOCK_MONOTONIC, &begin);
                         for(j =0; j < ((size/sizeof(double)) - bdist); j+=32){
@@ -839,8 +840,8 @@ redo19:
 //#pragma omp parallel for
                         for(j =0; j < rd_dist; j++){
 					__builtin_prefetch (&rand_tab[j], 0, 0);
-						}
-                        for(j =0; j < rd_dist; j++){
+			}
+                       /* for(j =0; j < rd_dist; j++){
 					__builtin_prefetch (&rand_tab[j+rd_dist], 0, 0);
 					__builtin_prefetch (&a[rand_tab[j]], 1, 0);
 					__builtin_prefetch (&b[rand_tab[j]], 0, 0);
@@ -848,6 +849,7 @@ redo19:
 					__builtin_prefetch (&d[rand_tab[j]], 0, 0);
 					__builtin_prefetch (&e[rand_tab[j]], 0, 0);
 						}
+			*/
 			MPI_Barrier(MPI_COMM_WORLD);
 			clock_gettime( CLOCK_MONOTONIC, &ostop);
 			if(rank == 0){
@@ -859,7 +861,16 @@ redo19:
 			MPI_Barrier(MPI_COMM_WORLD);
 			clock_gettime( CLOCK_MONOTONIC, &begin);
                         for(j =0; j < ((size/sizeof(double)) - (2*rd_dist)); j+=32){
-					__builtin_prefetch (&rand_tab[j+2*rd_dist], 0, 0);
+					__builtin_prefetch (&rand_tab[j+rd_dist], 0, 0);
+				//	__builtin_prefetch (&a[rand_tab[j+rd_dist]], 1, 0);
+				//	__builtin_prefetch (&b[rand_tab[j+rd_dist]], 0, 0);
+				//	__builtin_prefetch (&c[rand_tab[j+rd_dist]], 0, 0);
+				//	__builtin_prefetch (&d[rand_tab[j+rd_dist]], 0, 0);
+				//	__builtin_prefetch (&e[rand_tab[j+rd_dist]], 0, 0);
+						for(inner=0;inner<32;inner++)
+			  a[rand_tab[j+inner]] = b[rand_tab[j+inner]] + c[rand_tab[j+inner]] + d[rand_tab[j+inner]] + e[rand_tab[j+inner]];
+                        }
+                        /*for(j = ((size/sizeof(double)) - (2*rd_dist));j < ((size/sizeof(double)) - rd_dist); j+=32){
 					__builtin_prefetch (&a[rand_tab[j+rd_dist]], 1, 0);
 					__builtin_prefetch (&b[rand_tab[j+rd_dist]], 0, 0);
 					__builtin_prefetch (&c[rand_tab[j+rd_dist]], 0, 0);
@@ -867,16 +878,7 @@ redo19:
 					__builtin_prefetch (&e[rand_tab[j+rd_dist]], 0, 0);
 						for(inner=0;inner<32;inner++)
 			  a[rand_tab[j+inner]] = b[rand_tab[j+inner]] + c[rand_tab[j+inner]] + d[rand_tab[j+inner]] + e[rand_tab[j+inner]];
-                        }
-                        for(j = ((size/sizeof(double)) - (2*rd_dist));j < ((size/sizeof(double)) - rd_dist); j+=32){
-					__builtin_prefetch (&a[rand_tab[j+rd_dist]], 1, 0);
-					__builtin_prefetch (&b[rand_tab[j+rd_dist]], 0, 0);
-					__builtin_prefetch (&c[rand_tab[j+rd_dist]], 0, 0);
-					__builtin_prefetch (&d[rand_tab[j+rd_dist]], 0, 0);
-					__builtin_prefetch (&e[rand_tab[j+rd_dist]], 0, 0);
-						for(inner=0;inner<32;inner++)
-			  a[rand_tab[j+inner]] = b[rand_tab[j+inner]] + c[rand_tab[j+inner]] + d[rand_tab[j+inner]] + e[rand_tab[j+inner]];
-                        }
+                        }*/
                         for(j = ((size/sizeof(double)) - rd_dist);j < (size/sizeof(double)); j++){
 			  a[rand_tab[j]] = b[rand_tab[j]] + c[rand_tab[j]] + d[rand_tab[j]] + e[rand_tab[j]];
                         }
@@ -1173,6 +1175,7 @@ redo27:
 			if(accum < l2cache_omin)
 					l2cache_omin = accum;
 			}
+			stride = 0;
 			MPI_Barrier(MPI_COMM_WORLD);
 			clock_gettime( CLOCK_MONOTONIC, &begin);
                         for(j =0; j < (size/sizeof(double)) - bdist; j+=32){
