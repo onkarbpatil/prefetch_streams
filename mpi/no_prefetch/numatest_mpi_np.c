@@ -132,7 +132,8 @@ void write_config_file(){
 		printf("#NUMA id WR-only_avg_bw 1W4R_avg_bw Str_avg_bw Rand_avg_bw LLC_avg_bw WR-only_pk_bw 1W4R_pk_bw Str_pk_bw Rand_pk_bw LLC_pk_bw WR-only_avg_lat 1W4R_avg_lat Str_avg_lat Rand_avg_lat LLC_avg_lat WR-only_min 1W4R_min Str_min Rand_min LLC_min\n");
 	while(bw_it != NULL){	
 		fprintf(conf, "%d %s %Lf %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF\n", bw_it->numa_id, bw_it->mem_type, bw_it->wr_only_avg, bw_it->owor_avg, bw_it->owtr_avg, bw_it->owthr_avg, bw_it->owfr_avg, bw_it->twor_avg, bw_it->twtr_avg, bw_it->twthr_avg, bw_it->twfr_avg, bw_it->thwor_avg, bw_it->thwtr_avg, bw_it->thwthr_avg, bw_it->thwfr_avg, bw_it->fwor_avg, bw_it->fwtr_avg, bw_it->fwthr_avg, bw_it->fwfr_avg, bw_it->str_avg, bw_it->rand_avg, bw_it->diff_avg, bw_it->row_avg, bw_it->col_avg, bw_it->rc_avg, bw_it->t_sten_avg, bw_it->f_sten_avg, bw_it->n_sten_avg, bw_it->l2cache_avg);
-		printf("%d %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF\n", bw_it->numa_id, bw_it->wr_only_avg, bw_it->owfr_avg, bw_it->str_avg, bw_it->rand_avg, bw_it->l2cache_avg, bw_it->wr_only_min, bw_it->owfr_min, bw_it->str_min, bw_it->rand_min, bw_it->l2cache_min, bw_it->wr_only_t, bw_it->owfr_t, bw_it->str_t, bw_it->rand_t, bw_it->l2cache_t, bw_it->wr_only_tmin, bw_it->owfr_tmin, bw_it->str_tmin, bw_it->rand_tmin, bw_it->l2cache_tmin);
+		printf("%d %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF\n", bw_it->numa_id, bw_it->wr_only_avg, bw_it->owfr_avg, bw_it->str_avg, bw_it->rand_avg, bw_it->l2cache_avg, bw_it->t_sten_avg, bw_it->f_sten_avg, bw_it->s_sten_avg, bw_it->n_sten_avg, bw_it->t7_sten_avg, bw_it->wr_only_min, bw_it->owfr_min, bw_it->str_min, bw_it->rand_min, bw_it->l2cache_min,bw_it->t_sten_min, bw_it->f_sten_min, bw_it->s_sten_min, bw_it->n_sten_min, bw_it->t7_sten_min, bw_it->wr_only_t, bw_it->owfr_t, bw_it->str_t, bw_it->rand_t, bw_it->l2cache_t, bw_it->t_sten_t, bw_it->f_sten_t, bw_it->s_sten_t, bw_it->n_sten_t, bw_it->t7_sten_t, bw_it->wr_only_tmin, bw_it->owfr_tmin, bw_it->str_tmin, bw_it->rand_tmin, bw_it->l2cache_tmin, bw_it->t_sten_tmin, bw_it->f_sten_tmin, bw_it->s_sten_tmin, bw_it->n_sten_tmin, bw_it->t7_sten_tmin);
+
 		//printf("%d %s %Lf %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF\n", bw_it->numa_id, bw_it->mem_type, bw_it->wr_only_avg, bw_it->owor_avg, bw_it->owtr_avg, bw_it->owthr_avg, bw_it->owfr_avg, bw_it->twor_avg, bw_it->twtr_avg, bw_it->twthr_avg, bw_it->twfr_avg, bw_it->thwor_avg, bw_it->thwtr_avg, bw_it->thwthr_avg, bw_it->thwfr_avg, bw_it->fwor_avg, bw_it->fwtr_avg, bw_it->fwthr_avg, bw_it->fwfr_avg, bw_it->str_avg, bw_it->rand_avg, bw_it->diff_avg, bw_it->row_avg, bw_it->col_avg, bw_it->rc_avg, bw_it->t_sten_avg, bw_it->f_sten_avg, bw_it->n_sten_avg, bw_it->l2cache_avg);
 		bw_it = bw_it->next;
 	}
@@ -157,8 +158,9 @@ void numatest(int argc, char ** argv, int rank, int procs, unsigned long bytes){
 		MPI_Status stat[32768];
 	unsigned long size = bytes/procs;
 	int mbs = size/sizeof(double);
-	int r_size = 32768;
-	int c_size = 32768;
+	int ldim = (int)cbrt((double)size)+1;
+//	int r_size = 32768;
+//	int c_size = 32768;
 	if(procs != 1){
 		r_size = (32768)/(12) + 2*sizeof(double);
 		c_size = (32768)/(procs/12) + 2*sizeof(double);
@@ -228,27 +230,45 @@ void numatest(int argc, char ** argv, int rank, int procs, unsigned long bytes){
 		long double l2cache_avg = 0.0;
 		long double t_sten_avg = 0.0;
 		long double f_sten_avg = 0.0;
+		long double s_sten_avg = 0.0;
 		long double n_sten_avg = 0.0;
+		long double t7_sten_avg = 0.0;
 		long double wr_only_t = 0.0;
 		long double owfr_t = 0.0;
 		long double l2cache_t = 0.0;
 		long double str_t = 0.0;
 		long double rand_t = 0.0;
+		long double t_sten_t = 0.0;
+		long double f_sten_t = 0.0;
+		long double s_sten_t = 0.0;
+		long double n_sten_t = 0.0;
+		long double t7_sten_t = 0.0;
 		long double wr_only_tmin = 999999.9999;
 		long double owfr_tmin = 999999.9999;
 		long double l2cache_tmin = 999999.9999;
 		long double str_tmin = 999999.9999;
 		long double rand_tmin = 999999.9999;
+		long double t_sten_tmin = 999999.9999;
+		long double f_sten_tmin = 999999.9999;
+		long double s_sten_tmin = 999999.9999;
+		long double n_sten_tmin = 999999.9999;
+		long double t7_sten_tmin = 999999.9999;
 		long double wr_only_min = 0.0;
 		long double owfr_min = 0.0;
 		long double l2cache_min = 0.0;
 		long double str_min = 0.0;
 		long double rand_min = 0.0;
+		long double t_sten_min = 0.0;
+		long double f_sten_min = 0.0;
+		long double s_sten_min = 0.0;
+		long double n_sten_min = 0.0;
+		long double t7_sten_min = 0.0;
 		long double accum;
 		for( iters = 0; iters < 10; iters++)
 		{
 			int j = 0;
 			int k = 0;
+			int l = 0;
 			if(i == (total_numa_nodes-1)){
 				a = (double*)numa_alloc_onnode(size, numa_node_ids[0]);
 				b = (double*)numa_alloc_onnode(size, numa_node_ids[2]);
@@ -325,54 +345,6 @@ redo1:
 			}
 			wr_only_avg += ((5*size*procs*1.0E-06)/(long double)(accum - empty));
 			}
-/*redo2:
-			MPI_Barrier(MPI_COMM_WORLD);
-			clock_gettime( CLOCK_MONOTONIC, &begin);
-//#pragma omp parallel for
-			for(j =0; j < (size/sizeof(double)); j++){
-                            a[j] = 20 + b[j];
-                        }
-			MPI_Barrier(MPI_COMM_WORLD);
-			clock_gettime( CLOCK_MONOTONIC, &stop);
-			if(rank == 0){
-			accum = ( stop.tv_sec - begin.tv_sec ) + (long double)( stop.tv_nsec - begin.tv_nsec ) / (long double)BILLION;
-			if(accum <= empty){
-				goto redo2;
-			}
-			owor_avg += ((2*size*1.0E-06)/(long double)(accum - empty));
-			}
-redo3:
-			MPI_Barrier(MPI_COMM_WORLD);
-			clock_gettime( CLOCK_MONOTONIC, &begin);
-//#pragma omp parallel for
-			for(j =0; j < (size/sizeof(double)); j++){
-                            a[j] = c[j] + b[j];
-                        }
-			MPI_Barrier(MPI_COMM_WORLD);
-			clock_gettime( CLOCK_MONOTONIC, &stop);
-			if(rank == 0){
-			accum = ( stop.tv_sec - begin.tv_sec ) + (long double)( stop.tv_nsec - begin.tv_nsec ) / (long double)BILLION;
-			if(accum <= empty){
-				goto redo3;
-			}
-			owtr_avg += ((3*size*1.0E-06)/(long double)(accum - empty));
-			}
-redo4:
-			MPI_Barrier(MPI_COMM_WORLD);
-			clock_gettime( CLOCK_MONOTONIC, &begin);
-//#pragma omp parallel for
-			for(j =0; j < (size/sizeof(double)); j++){
-                            a[j] = c[j] + d[j] + b[j];
-                        }
-			MPI_Barrier(MPI_COMM_WORLD);
-			clock_gettime( CLOCK_MONOTONIC, &stop);
-			if(rank == 0){
-			accum = ( stop.tv_sec - begin.tv_sec ) + (long double)( stop.tv_nsec - begin.tv_nsec ) / (long double)BILLION;
-			if(accum <= empty){
-				goto redo4;
-			}
-			owthr_avg += ((4*size*1.0E-06)/(long double)(accum - empty));
-			}*/
 redo5:
 			MPI_Barrier(MPI_COMM_WORLD);
 			clock_gettime( CLOCK_MONOTONIC, &begin);
@@ -392,198 +364,6 @@ redo5:
 			}
 			owfr_avg += ((5*size*procs*1.0E-06)/(long double)(accum - empty));
 			}
-/*redo6:
-			MPI_Barrier(MPI_COMM_WORLD);
-			clock_gettime( CLOCK_MONOTONIC, &begin);
-//#pragma omp parallel for
-                        for(j =0; j < (size/sizeof(double)); j++){
-                            a[j] = c[j] = b[j];
-                        }
-			MPI_Barrier(MPI_COMM_WORLD);
-			clock_gettime( CLOCK_MONOTONIC, &stop);
-			if(rank == 0){
-			accum = ( stop.tv_sec - begin.tv_sec ) + (long double)( stop.tv_nsec - begin.tv_nsec ) / (long double)BILLION;
-			if(accum <= empty){
-				goto redo6;
-			}
-			twor_avg += ((3*size*1.0E-06)/(long double)(accum - empty));
-			}
-redo7:
-			MPI_Barrier(MPI_COMM_WORLD);
-			clock_gettime( CLOCK_MONOTONIC, &begin);
-//#pragma omp parallel for
-			for(j =0; j < (size/sizeof(double)); j++){
-                            a[j] = c[j] = d[j] + b[j];
-                        }
-			MPI_Barrier(MPI_COMM_WORLD);
-			clock_gettime( CLOCK_MONOTONIC, &stop);
-			if(rank == 0){
-			accum = ( stop.tv_sec - begin.tv_sec ) + (long double)( stop.tv_nsec - begin.tv_nsec ) / (long double)BILLION;
-			if(accum <= empty){
-				goto redo7;
-			}
-			twtr_avg += ((4*size*1.0E-06)/(long double)(accum - empty));
-			}
-redo8:
-			MPI_Barrier(MPI_COMM_WORLD);
-			clock_gettime( CLOCK_MONOTONIC, &begin);
-//#pragma omp parallel for
-			for(j =0; j < (size/sizeof(double)); j++){
-                            a[j] = c[j] = d[j] + b[j]+ e[j];
-                        }
-			MPI_Barrier(MPI_COMM_WORLD);
-			clock_gettime( CLOCK_MONOTONIC, &stop);
-			if(rank == 0){
-			accum = ( stop.tv_sec - begin.tv_sec ) + (long double)( stop.tv_nsec - begin.tv_nsec ) / (long double)BILLION;
-			if(accum <= empty){
-				goto redo8;
-			}
-			twthr_avg += ((5*size*1.0E-06)/(long double)(accum - empty));
-			}
-redo9:
-			MPI_Barrier(MPI_COMM_WORLD);
-			clock_gettime( CLOCK_MONOTONIC, &begin);
-//#pragma omp parallel for
-			for(j =0; j < (size/sizeof(double)); j++){
-                            a[j] = c[j] = d[j] + b[j]+ e[j] + f[j];
-                        }
-			MPI_Barrier(MPI_COMM_WORLD);
-			clock_gettime( CLOCK_MONOTONIC, &stop);
-			if(rank == 0){
-			accum = ( stop.tv_sec - begin.tv_sec ) + (long double)( stop.tv_nsec - begin.tv_nsec ) / (long double)BILLION;
-			if(accum <= empty){
-				goto redo9;
-			}
-			twfr_avg += ((6*size*1.0E-06)/(long double)(accum - empty));
-			}
-redo10:
-			MPI_Barrier(MPI_COMM_WORLD);
-			clock_gettime( CLOCK_MONOTONIC, &begin);
-//#pragma omp parallel for
-                        for(j =0; j < (size/sizeof(double)); j++){
-                            a[j] = c[j] = d[j] = e[j];
-                        }
-			MPI_Barrier(MPI_COMM_WORLD);
-			clock_gettime( CLOCK_MONOTONIC, &stop);
-			if(rank == 0){
-			accum = ( stop.tv_sec - begin.tv_sec ) + (long double)( stop.tv_nsec - begin.tv_nsec ) / (long double)BILLION;
-			if(accum <= empty){
-				goto redo10;
-			}
-			thwor_avg += ((4*size*1.0E-06)/(long double)(accum - empty));
-			}
-redo11:
-			MPI_Barrier(MPI_COMM_WORLD);
-			clock_gettime( CLOCK_MONOTONIC, &begin);
-//#pragma omp parallel for
-			for(j =0; j < (size/sizeof(double)); j++){
-                            a[j] = c[j] = d[j] = b[j]+ e[j];
-                        }
-			MPI_Barrier(MPI_COMM_WORLD);
-			clock_gettime( CLOCK_MONOTONIC, &stop);
-			if(rank == 0){
-			accum = ( stop.tv_sec - begin.tv_sec ) + (long double)( stop.tv_nsec - begin.tv_nsec ) / (long double)BILLION;
-			if(accum <= empty){
-				goto redo11;
-			}
-			thwtr_avg += ((5*size*1.0E-06)/(long double)(accum - empty));
-			}
-redo12:
-			MPI_Barrier(MPI_COMM_WORLD);
-			clock_gettime( CLOCK_MONOTONIC, &begin);
-//#pragma omp parallel for
-			for(j =0; j < (size/sizeof(double)); j++){
-                            a[j] = c[j] = d[j] = b[j] + e[j] +f[j];
-                        }
-			MPI_Barrier(MPI_COMM_WORLD);
-			clock_gettime( CLOCK_MONOTONIC, &stop);
-			if(rank == 0){
-			accum = ( stop.tv_sec - begin.tv_sec ) + (long double)( stop.tv_nsec - begin.tv_nsec ) / (long double)BILLION;
-			if(accum <= empty){
-				goto redo12;
-			}
-			thwthr_avg += ((6*size*1.0E-06)/(long double)(accum - empty));
-			}
-redo13:
-			MPI_Barrier(MPI_COMM_WORLD);
-			clock_gettime( CLOCK_MONOTONIC, &begin);
-//#pragma omp parallel for
-			for(j =0; j < (size/sizeof(double)); j++){
-                            a[j] = c[j] = d[j] = b[j] + e[j] + f[j] +g[j];
-                        }
-			MPI_Barrier(MPI_COMM_WORLD);
-			clock_gettime( CLOCK_MONOTONIC, &stop);
-			if(rank == 0){
-			accum = ( stop.tv_sec - begin.tv_sec ) + (long double)( stop.tv_nsec - begin.tv_nsec ) / (long double)BILLION;
-			if(accum <= empty){
-				goto redo13;
-			}
-			thwfr_avg += ((7*size*1.0E-06)/(long double)(accum - empty));
-			}
-redo14:
-			MPI_Barrier(MPI_COMM_WORLD);
-			clock_gettime( CLOCK_MONOTONIC, &begin);
-//#pragma omp parallel for
-                        for(j =0; j < (size/sizeof(double)); j++){
-                            a[j] = c[j] = d[j] = b[j] = e[j];
-                        }
-			MPI_Barrier(MPI_COMM_WORLD);
-			clock_gettime( CLOCK_MONOTONIC, &stop);
-			if(rank == 0){
-			accum = ( stop.tv_sec - begin.tv_sec ) + (long double)( stop.tv_nsec - begin.tv_nsec ) / (long double)BILLION;
-			if(accum <= empty){
-				goto redo14;
-			}
-			fwor_avg += ((5*size*1.0E-06)/(long double)(accum - empty));
-			}
-redo15:
-			MPI_Barrier(MPI_COMM_WORLD);
-			clock_gettime( CLOCK_MONOTONIC, &begin);
-//#pragma omp parallel for
-                        for(j =0; j < (size/sizeof(double)); j++){
-                            a[j] = c[j] = d[j] = b[j] = e[j] + f[j];
-                        }
-			MPI_Barrier(MPI_COMM_WORLD);
-			clock_gettime( CLOCK_MONOTONIC, &stop);
-			if(rank == 0){
-			accum = ( stop.tv_sec - begin.tv_sec ) + (long double)( stop.tv_nsec - begin.tv_nsec ) / (long double)BILLION;
-			if(accum <= empty){
-				goto redo15;
-			}
-			fwtr_avg += ((6*size*1.0E-06)/(long double)(accum - empty));
-			}
-redo16:
-			MPI_Barrier(MPI_COMM_WORLD);
-			clock_gettime( CLOCK_MONOTONIC, &begin);
-//#pragma omp parallel for
-                        for(j =0; j < (size/sizeof(double)); j++){
-                            a[j] = c[j] = d[j] = b[j] = e[j] + f[j] +g[j];
-                        }
-			MPI_Barrier(MPI_COMM_WORLD);
-			clock_gettime( CLOCK_MONOTONIC, &stop);
-			if(rank == 0){
-			accum = ( stop.tv_sec - begin.tv_sec ) + (long double)( stop.tv_nsec - begin.tv_nsec ) / (long double)BILLION;
-			if(accum <= empty){
-				goto redo16;
-			}
-			fwthr_avg += ((7*size*1.0E-06)/(long double)(accum - empty));
-			}
-redo17:
-			MPI_Barrier(MPI_COMM_WORLD);
-			clock_gettime( CLOCK_MONOTONIC, &begin);
-//#pragma omp parallel for
-                        for(j =0; j < (size/sizeof(double)); j++){
-                            a[j] = c[j] = d[j] = b[j] = e[j] + f[j] +g[j] + h[j];
-                        }
-			MPI_Barrier(MPI_COMM_WORLD);
-			clock_gettime( CLOCK_MONOTONIC, &stop);
-			if(rank == 0){
-			accum = ( stop.tv_sec - begin.tv_sec ) + (long double)( stop.tv_nsec - begin.tv_nsec ) / (long double)BILLION;
-			if(accum <= empty){
-				goto redo17;
-			}
-			fwfr_avg += ((8*size*1.0E-06)/(long double)(accum - empty));
-			}*/
 redo18:
 			stride = 0;
 			MPI_Barrier(MPI_COMM_WORLD);
@@ -613,6 +393,7 @@ redo19:
                         for(j =0; j < (size/sizeof(double)); j++){
 			  a[rand_tab[j]] = b[rand_tab[j]] + c[rand_tab[j]] + d[rand_tab[j]] + e[rand_tab[j]];
                         }
+			}
 			MPI_Barrier(MPI_COMM_WORLD);
                         clock_gettime( CLOCK_MONOTONIC, &stop);
 			if(rank == 0){
@@ -625,232 +406,6 @@ redo19:
 			}
 			rand_avg += ((5*size*procs*1.0E-06)/(long double)(accum - empty));
 			}
-/*redo20:
-			MPI_Barrier(MPI_COMM_WORLD);
-                        clock_gettime( CLOCK_MONOTONIC, &begin);
-//#pragma omp parallel for
-                        for(j =0; j < (size/sizeof(double)); j++){
-                            a[j] = e[j] + f[j] +g[j] + h[j];
-			    c[j] = e[j] + f[j] +g[j] + h[j];
-			    d[j] = e[j] + f[j] +g[j] + h[j];
-			    b[j] = e[j] + f[j] +g[j] + h[j];
-                        }
-			MPI_Barrier(MPI_COMM_WORLD);
-                        clock_gettime( CLOCK_MONOTONIC, &stop);
-			if(rank == 0){
-                        accum = ( stop.tv_sec - begin.tv_sec ) + (long double)( stop.tv_nsec - begin.tv_nsec ) / (long double)BILLION;
-			if(accum <= empty){
-				goto redo20;
-			}
-			diff_avg += ((8*size*1.0E-06)/(long double)(accum - empty));
-			}
-redo21:
-			MPI_Barrier(MPI_COMM_WORLD);
-			clock_gettime( CLOCK_MONOTONIC, &begin);
-//#pragma omp parallel for
-            for(j = 1; j < (r_size/sizeof(double*)) - 1; j++){
-				for(k = 1; k < dist; k++){
-					__builtin_prefetch (&aa[j][k], 1, 0);
-					__builtin_prefetch (&bb[j][k], 0, 0);
-					__builtin_prefetch (&cc[j][k], 0, 0);
-				}
-				for(k = 1; k < (c_size/sizeof(double)) - dist - 1; k++){
-					__builtin_prefetch (&aa[j][k+wr_dist], 1, 0);
-					__builtin_prefetch (&bb[j][k+rd_dist], 0, 0);
-					__builtin_prefetch (&cc[j][k+rd_dist], 0, 0);
-                            		aa[j][k] = bb[j][k]*cc[j][k];
-				}
-				for(k = (c_size/sizeof(double)) - dist - 1; k < (c_size/sizeof(double)) - 1; k++){
-						aa[j][k] = bb[j][k]*cc[j][k];
-				}
-            }
-			MPI_Barrier(MPI_COMM_WORLD);
-			clock_gettime( CLOCK_MONOTONIC, &stop);
-			if(rank == 0){
-			accum = ( stop.tv_sec - begin.tv_sec ) + (long double)( stop.tv_nsec - begin.tv_nsec ) / (long double)BILLION;
-			if(accum <= empty2){
-				goto redo21;
-			}
-			row_avg += ((long double)(3*(long)(r_size-2)*(c_size-2)*1.0E-06)/(long double)(accum - empty2));
-			}	
-			
-redo22:
-			MPI_Barrier(MPI_COMM_WORLD);
-			clock_gettime( CLOCK_MONOTONIC, &begin);
-//#pragma omp parallel for
-            for(j = 1; j < (c_size/sizeof(double)) - 1; j++){
-				for(k = 1; k < dist; k++){
-					__builtin_prefetch (&aa[k][j], 1, 0);
-					__builtin_prefetch (&bb[k][j], 0, 0);
-					__builtin_prefetch (&cc[k][j], 0, 0);
-				}
-				for(k = 1; k < ((r_size/sizeof(double*)) - dist - 1); k++){
-					__builtin_prefetch (&aa[k+wr_dist][j], 1, 0);
-					__builtin_prefetch (&bb[k+rd_dist][j], 0, 0);
-					__builtin_prefetch (&cc[k+rd_dist][j], 0, 0);
-                    aa[k][j] = bb[k][j]*cc[k][j];
-                }
-				for(k = (r_size/sizeof(double*)) - dist - 1; k < (r_size/sizeof(double*)) - 1; k++){
-						aa[k][j] = bb[k][j]*cc[k][j];
-				}
-			}
-			MPI_Barrier(MPI_COMM_WORLD);
-			clock_gettime( CLOCK_MONOTONIC, &stop);
-			if(rank == 0){
-			accum = ( stop.tv_sec - begin.tv_sec ) + (long double)( stop.tv_nsec - begin.tv_nsec ) / (long double)BILLION;
-			if(accum <= empty2){
-				goto redo22;
-			}
-			col_avg += ((long double)(3*(long)(r_size-2)*(c_size-2)*1.0E-06)/(long double)(accum - empty2));
-			}
-redo23:
-			MPI_Barrier(MPI_COMM_WORLD);
-			clock_gettime( CLOCK_MONOTONIC, &begin);
-//#pragma omp parallel for
-            for(j = 1; j < (r_size/sizeof(double*)) - 1; j++){
-				for(k = 1; k < dist; k++){
-					__builtin_prefetch (&aa[j][k], 1, 0);
-					__builtin_prefetch (&bb[j][k], 0, 0);
-					__builtin_prefetch (&cc[k][j], 0, 0);
-				}
-				for(k = 1; k < ((c_size/sizeof(double)) - dist - 1); k++){
-					__builtin_prefetch (&aa[j][k+wr_dist], 1, 0);
-					__builtin_prefetch (&bb[j][k+rd_dist], 0, 0);
-					__builtin_prefetch (&cc[k+rd_dist][j], 0, 0);
-                            		aa[j][k] = bb[j][k]*cc[k][j];
-                        }
-		printf("HEre: %d %d %d\n", rank, k, dist);
-		fflush(NULL);
-				for(k = ((c_size/sizeof(double)) - dist - 1); k < (c_size/sizeof(double)) - 1; k++){
-						aa[j][k] = bb[j][k]*cc[k][j];
-				}
-			}
-			MPI_Barrier(MPI_COMM_WORLD);
-			clock_gettime( CLOCK_MONOTONIC, &stop);
-			if(rank == 0){
-			accum = ( stop.tv_sec - begin.tv_sec ) + (long double)( stop.tv_nsec - begin.tv_nsec ) / (long double)BILLION;
-			if(accum <= empty2){
-				goto redo23;
-			}
-			rc_avg += ((long double)(3*(long)(r_size-2)*(c_size-2)*1.0E-06)/(long double)(accum - empty2));
-			}
-redo24:
-			MPI_Barrier(MPI_COMM_WORLD);
-			clock_gettime( CLOCK_MONOTONIC, &begin);
-//#pragma omp parallel for
-                        for(j =0; j < (r_size/sizeof(double*)); j++){
-				for(k = 0; k < (c_size/sizeof(double)); k++)
-					if((k!=0)&&(k!=((c_size/sizeof(double))-1))&&(j!=0)&&(j!=((r_size/sizeof(double*))-1)))
-                            			aa[j][k] = aa[j][k-1]+aa[j][k+1] + aa[j-1][k] + aa[j+1][k];
-                        }
-			MPI_Barrier(MPI_COMM_WORLD);
-			clock_gettime( CLOCK_MONOTONIC, &stop);
-			if(rank == 0){
-			accum = ( stop.tv_sec - begin.tv_sec ) + (long double)( stop.tv_nsec - begin.tv_nsec ) / (long double)BILLION;
-			if(accum <= empty2){
-				goto redo24;
-			}
-			f_sten_avg += 5*((long double)(((long)r_size-1)*((long)c_size-1)*1.0E-06)/(long double)(accum - empty2));
-			}
-redo25:
-			MPI_Barrier(MPI_COMM_WORLD);
-			clock_gettime( CLOCK_MONOTONIC, &begin);
-//#pragma omp parallel for
-                        for(j =0; j < (r_size/sizeof(double*)); j++){
-                                for(k = 0; k < (c_size/sizeof(double)); k++)
-                                        if((k!=0)&&(k!=((c_size/sizeof(double))-1)))
-                                                aa[j][k] = aa[j][k-1]+aa[j][k+1];
-                        }
-			MPI_Barrier(MPI_COMM_WORLD);
-                        clock_gettime( CLOCK_MONOTONIC, &stop);
-			if(rank == 0){
-                        accum = ( stop.tv_sec - begin.tv_sec ) + (long double)( stop.tv_nsec - begin.tv_nsec ) / (long double)BILLION;
-			if(accum <= empty2){
-				goto redo25;
-			}
-			t_sten_avg += 3*((long double)(((long)r_size)*(c_size)*1.0E-06)/(long double)(accum - empty2));
-			}
-redo26:
-			rs = 0;
-			MPI_Barrier(MPI_COMM_WORLD);
-			clock_gettime( CLOCK_MONOTONIC, &begin);
-			if(rank >= 12){
-				MPI_Isend(&aa[1], (c_size/sizeof(double)), MPI_DOUBLE, (rank - 12), rs, MPI_COMM_WORLD, &reqs[rs]);
-				rs++;
-			}
-			if(rank < (procs - 12)){
-				MPI_Irecv(&aa[(r_size/sizeof(double*))-1], (c_size/sizeof(double)), MPI_DOUBLE, (rank + 12), MPI_ANY_TAG, MPI_COMM_WORLD, &reqs[rs]);
-				rs++;
-			}
-			if(rank < (procs - 12)){
-				MPI_Isend(&aa[(r_size/sizeof(double*))-2], (c_size/sizeof(double)), MPI_DOUBLE, (rank + 12), rs, MPI_COMM_WORLD, &reqs[rs]);
-				rs++;
-			}
-			if(rank >= 12){
-				MPI_Irecv(&aa[0], (c_size/sizeof(double)), MPI_DOUBLE, (rank - 12), MPI_ANY_TAG , MPI_COMM_WORLD, &reqs[rs]);
-				rs++;
-			}
-			if((rank%12 < 11)){
-					for(z=1; z<(r_size/sizeof(double*))-2; z++) {
-						MPI_Isend(&aa[z][(c_size/sizeof(double)) - 2], 1, MPI_DOUBLE, (rank + 1), rs, MPI_COMM_WORLD, &reqs[rs]);
-						rs++;
-					}
-			}
-			if((rank%12 != 0)){
-					for(z=1; z<(r_size/sizeof(double*))-2; z++) {
-						MPI_Irecv(&aa[z][0], 1, MPI_DOUBLE, (rank - 1), MPI_ANY_TAG, MPI_COMM_WORLD, &reqs[rs]);
-						rs++;
-					}
-			}
-			if((rank%12 != 0)){
-					for(z=1; z<(r_size/sizeof(double*))-2; z++) {
-						MPI_Isend(&aa[z][1], 1, MPI_DOUBLE, (rank - 1), rs, MPI_COMM_WORLD, &reqs[rs]);
-						rs++;
-					}
-			}
-			if((rank%12 < 11)){
-					for(z=1; z<(r_size/sizeof(double*))-2; z++) {
-						MPI_Irecv(&aa[z][(c_size/sizeof(double)) - 1], 1, MPI_DOUBLE, (rank + 1), MPI_ANY_TAG, MPI_COMM_WORLD, &reqs[rs]);
-						rs++;
-					}
-			}
-			MPI_Waitall (rs , reqs , stat );
-			//printf("Here %d\n", rank);
-			//fflush(NULL);
-
-//#pragma omp parallel for
-                        for(j =1; j < (r_size/sizeof(double*)) -1; j++){
-					__builtin_prefetch (&aa[j-1][k-1], 0, 2);
-					__builtin_prefetch (&aa[j-1][k], 0, 2);
-					__builtin_prefetch (&aa[j][k-1], 1, 2);
-					__builtin_prefetch (&aa[j][k], 1, 2);
-					__builtin_prefetch (&aa[j+1][k-1], 1, 2);
-					__builtin_prefetch (&aa[j+1][k], 1, 2);
-                                for(k = 1; k < dist; k++){
-					__builtin_prefetch (&aa[j-1][k+1], 0, 2);
-					__builtin_prefetch (&aa[j][k+1], 1, 2);
-					__builtin_prefetch (&aa[j+1][k+1], 1, 2);
-								}
-                                for(k = 1; k < (c_size/sizeof(double))- dist - 1; k++){
-                                      //  if((k!=0)&&(k!=((c_size/sizeof(double))-1))&&(j!=0)&&(j!=((r_size/sizeof(double*))-1)))
-					__builtin_prefetch (&aa[j-1][k+1+rd_dist], 0, 2);
-					__builtin_prefetch (&aa[j][k+1+wr_dist], 1, 2);
-					__builtin_prefetch (&aa[j+1][k+1+wr_dist], 1, 2);
-                                                aa[j][k] = aa[j][k-1]+aa[j][k+1] + aa[j-1][k] + aa[j+1][k] + aa[j-1][k-1] + aa[j-1][k+1] + aa[j+1][k-1] + aa[j+1][k+1];
-                        }
-                                for(k = ((c_size/sizeof(double))- dist - 1); k < (c_size/sizeof(double))- 1; k++){
-                                                aa[j][k] = aa[j][k-1]+aa[j][k+1] + aa[j-1][k] + aa[j+1][k] + aa[j-1][k-1] + aa[j-1][k+1] + aa[j+1][k-1] + aa[j+1][k+1];
-								}
-						}
-			MPI_Barrier(MPI_COMM_WORLD);
-                        clock_gettime( CLOCK_MONOTONIC, &stop);
-			if(rank == 0){
-                        accum = ( stop.tv_sec - begin.tv_sec ) + (long double)( stop.tv_nsec - begin.tv_nsec ) / (long double)BILLION;
-			if(accum <= empty2){
-				goto redo26;
-			}
-			n_sten_avg += 9*((long double)(((long)r_size)*((long)c_size)*1.0E-06)/(long double)(accum - empty2));
-			}*/
 redo27:
 			stride = 0;
 			MPI_Barrier(MPI_COMM_WORLD);
@@ -874,6 +429,103 @@ redo27:
                                 goto redo27;
                         }
                         l2cache_avg += ((5*size*procs*1.0E-06)/(long double)(accum - empty));
+			}
+
+			stride = 0;
+			MPI_Barrier(MPI_COMM_WORLD);
+                        clock_gettime( CLOCK_MONOTONIC, &begin);
+			for(l = (ldim + 1)*(ldim + 1); l < ((ldim + 1)*(ldim + 1)*(ldim));l+=(ldim + 1)*(ldim + 1)){
+					for(j = (ldim+1); j < (i + (ldim +1)*(ldim + 1) - (ldim+1)); j += (ldim + 1)){
+							for(k = 1; k < (ldim); k++){
+									stride = l + j + k;
+									a[stride] = b[stride] + b[stride+1] + b[stride-1];
+							}
+					}
+			}
+			MPI_Barrier(MPI_COMM_WORLD);
+                        clock_gettime( CLOCK_MONOTONIC, &stop);
+			if(rank == 0){
+                        accum = ( stop.tv_sec - begin.tv_sec ) + (long double)( stop.tv_nsec - begin.tv_nsec ) / (long double)BILLION;
+			t_sten_t += accum;
+			if(accum < t_sten_tmin)
+					t_sten_tmin = accum;
+			t_sten_avg += ((4*size*procs*1.0E-06)/(long double)(accum - empty));
+			}
+			MPI_Barrier(MPI_COMM_WORLD);
+                        clock_gettime( CLOCK_MONOTONIC, &begin);
+			for(l = (ldim + 1)*(ldim + 1); l < ((ldim + 1)*(ldim + 1)*(ldim));l+=(ldim + 1)*(ldim + 1)){
+					for(j = (ldim+1); j < (i + (ldim +1)*(ldim + 1) - (ldim+1)); j += (ldim + 1)){
+							for(k = 1; k < (ldim); k++){
+									stride = l + j + k;
+									a[stride] = b[stride] + b[stride+1] + b[stride-1] + b[stride+ldim] + b[stride-ldim];
+							}
+					}
+			}
+			MPI_Barrier(MPI_COMM_WORLD);
+                        clock_gettime( CLOCK_MONOTONIC, &stop);
+			if(rank == 0){
+                        accum = ( stop.tv_sec - begin.tv_sec ) + (long double)( stop.tv_nsec - begin.tv_nsec ) / (long double)BILLION;
+			f_sten_t += accum;
+			if(accum < f_sten_tmin)
+					f_sten_tmin = accum;
+			f_sten_avg += ((6*size*procs*1.0E-06)/(long double)(accum - empty));
+			}
+			MPI_Barrier(MPI_COMM_WORLD);
+                        clock_gettime( CLOCK_MONOTONIC, &begin);
+			for(l = ldim*ldim; l < ((ldim+1)*(ldim+1)*ldim);l+=(ldim+1)*(ldim+1)){
+					for(j = ldim; j < (i + ((ldim+1)*(ldim+1)) - ldim); j += (ldim+1)){
+							for(k = 1; k < ldim; k++){
+									stride = l + j + k;
+									a[stride] = b[stride] + b[stride+1] + b[stride-1] + b[stride+ldim] + b[stride-ldim] + b[stride + ldim*ldim] + b[stride - ldim*ldim];
+							}
+					}
+			}
+			MPI_Barrier(MPI_COMM_WORLD);
+                        clock_gettime( CLOCK_MONOTONIC, &stop);
+			if(rank == 0){
+                        accum = ( stop.tv_sec - begin.tv_sec ) + (long double)( stop.tv_nsec - begin.tv_nsec ) / (long double)BILLION;
+			s_sten_t += accum;
+			if(accum < s_sten_tmin)
+					s_sten_tmin = accum;
+			s_sten_avg += ((8*size*procs*1.0E-06)/(long double)(accum - empty));
+			}
+			MPI_Barrier(MPI_COMM_WORLD);
+                        clock_gettime( CLOCK_MONOTONIC, &begin);
+			for(l = (ldim + 1)*(ldim + 1); l < ((ldim + 1)*(ldim + 1)*(ldim));l+=(ldim + 1)*(ldim + 1)){
+					for(j = (ldim+1); j < (i + (ldim +1)*(ldim + 1) - (ldim+1)); j += (ldim + 1)){
+							for(k = 1; k < (ldim); k++){
+									stride = l + j + k;
+									a[stride] = b[stride] + b[stride+1] + b[stride-1] + b[stride+ldim] + b[stride-ldim] + b[stride+ldim+1] + b[stride+ldim-1] + b[stride-(ldim+1)] + b[stride-(ldim-1)];
+							}
+					}
+			}
+			MPI_Barrier(MPI_COMM_WORLD);
+                        clock_gettime( CLOCK_MONOTONIC, &stop);
+			if(rank == 0){
+                        accum = ( stop.tv_sec - begin.tv_sec ) + (long double)( stop.tv_nsec - begin.tv_nsec ) / (long double)BILLION;
+			n_sten_t += accum;
+			if(accum < n_sten_tmin)
+					n_sten_tmin = accum;
+			n_sten_avg += ((10*size*procs*1.0E-06)/(long double)(accum - empty));
+			}
+			MPI_Barrier(MPI_COMM_WORLD);
+                        clock_gettime( CLOCK_MONOTONIC, &begin);
+			for(l = (ldim + 1)*(ldim + 1); l < ((ldim + 1)*(ldim + 1)*(ldim));l+=(ldim + 1)*(ldim + 1)){
+					for(j = (ldim+1); j < (i + (ldim +1)*(ldim + 1) - (ldim+1)); j += (ldim + 1)){
+							for(k = 1; k < (ldim); k++){
+									stride = l + j + k;
+									a[stride] = b[stride] + b[stride+1] + b[stride-1] + b[stride+ldim] + b[stride-ldim] + b[stride+ldim+1] + b[stride+ldim-1] + b[stride-(ldim+1)] + b[stride-(ldim-1)] + b[stride+(ldim*ldim)] + b[stride-(ldim*ldim)] + b[stride+(ldim*ldim)+1] + b[stride-(ldim*ldim)+1] + b[stride+(ldim*ldim)-1] + b[stride-(ldim*ldim)-1] + b[stride+(ldim*ldim)+ldim] + b[stride-(ldim*ldim)+ldim] + b[stride+(ldim*ldim)-ldim] + b[stride-(ldim*ldim)-ldim] + b[stride+(ldim*ldim)+ldim+1] + b[stride-(ldim*ldim)+ldim+1] + b[stride+(ldim*ldim)-ldim+1] + b[stride-(ldim*ldim)-ldim+1] + b[stride+(ldim*ldim)+ldim-1] + b[stride-(ldim*ldim)+ldim-1] + b[stride+(ldim*ldim)-ldim-1] + b[stride-(ldim*ldim)-ldim-1];
+							}
+					}
+			}
+			MPI_Barrier(MPI_COMM_WORLD);
+                        clock_gettime( CLOCK_MONOTONIC, &stop);
+			if(rank == 0){
+                        accum = ( stop.tv_sec - begin.tv_sec ) + (long double)( stop.tv_nsec - begin.tv_nsec ) / (long double)BILLION;
+			t7_sten_t += accum;
+			if(accum < t7_sten_tmin)
+					t7_sten_tmin = accum;
+			t7_sten_avg += ((28*size*procs*1.0E-06)/(long double)(accum - empty));
 			}
 			numa_free(a, size);
 			numa_free(b, size);
@@ -926,21 +578,38 @@ redo27:
 		node_bw->t_sten_avg = t_sten_avg/10;
 		node_bw->f_sten_avg = f_sten_avg/10;
 		node_bw->n_sten_avg = n_sten_avg/10;
+		node_bw->s_sten_avg = s_sten_avg/10;
+		node_bw->t7_sten_o = t7_sten_o/10;
 		node_bw->wr_only_t = wr_only_t/10;
 		node_bw->l2cache_t = l2cache_t/10;
 		node_bw->rand_t = rand_t/10;
 		node_bw->str_t = str_t/10;
 		node_bw->owfr_t = owfr_t/10;
+		node_bw->t_sten_t = t_sten_t/10;
+		node_bw->f_sten_t = f_sten_t/10;
+		node_bw->n_sten_t = n_sten_t/10;
+		node_bw->s_sten_t = s_sten_t/10;
+		node_bw->t7_sten_t = t7_sten_t/10;
 		node_bw->wr_only_tmin = wr_only_tmin;
 		node_bw->l2cache_tmin = l2cache_tmin;
 		node_bw->rand_tmin = rand_tmin;
 		node_bw->str_tmin = str_tmin;
 		node_bw->owfr_tmin = owfr_tmin;
+		node_bw->t_sten_tmin = t_sten_tmin;
+		node_bw->f_sten_tmin = f_sten_tmin;
+		node_bw->n_sten_tmin = n_sten_tmin;
+		node_bw->s_sten_tmin = s_sten_tmin;
+		node_bw->t7_sten_tmin = t7_sten_tmin;
 		node_bw->wr_only_min = ((5*size*procs*1.0E-06)/(long double)wr_only_tmin);
 		node_bw->l2cache_min = ((5*size*procs*1.0E-06)/(long double)l2cache_tmin);
 		node_bw->rand_min = ((5*size*procs*1.0E-06)/(long double)rand_tmin);
 		node_bw->str_min = ((5*size*procs*1.0E-06)/(long double)str_tmin);
 		node_bw->owfr_min = ((5*size*procs*1.0E-06)/(long double)owfr_tmin);
+		node_bw->t_sten_min = ((4*size*procs*1.0E-06)/(long double)t_sten_tmin);
+		node_bw->f_sten_min = ((6*size*procs*1.0E-06)/(long double)f_sten_tmin);
+		node_bw->n_sten_min = ((10*size*procs*1.0E-06)/(long double)n_sten_tmin);
+		node_bw->s_sten_min = ((8*size*procs*1.0E-06)/(long double)s_sten_tmin);
+		node_bw->t7_sten_min = ((28*size*procs*1.0E-06)/(long double)t7_sten_tmin);
 		node_bw->next = NULL;
 		if(numa_node_list == NULL){
 			numa_node_list = node_bw;

@@ -132,8 +132,7 @@ void write_config_file(){
 		printf("#NUMA id WR-only_avg_bw 1W4R_avg_bw Str_avg_bw Rand_avg_bw LLC_avg_bw WR-only_pk_bw 1W4R_pk_bw Str_pk_bw Rand_pk_bw LLC_pk_bw WR-only_avg_lat 1W4R_avg_lat Str_avg_lat Rand_avg_lat LLC_avg_lat WR-only_min 1W4R_min Str_min Rand_min LLC_min WR-only_avg_ovr 1W4R_avg_ovr Str_avg_ovr Rand_avg_ovr LLC_avg_ovr WR-only_omin 1W4R_omin Str_omin Rand_omin LLC_omin\n");
 	while(bw_it != NULL){	
 		fprintf(conf, "%d %s %Lf %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF\n", bw_it->numa_id, bw_it->mem_type, bw_it->wr_only_avg, bw_it->owor_avg, bw_it->owtr_avg, bw_it->owthr_avg, bw_it->owfr_avg, bw_it->twor_avg, bw_it->twtr_avg, bw_it->twthr_avg, bw_it->twfr_avg, bw_it->thwor_avg, bw_it->thwtr_avg, bw_it->thwthr_avg, bw_it->thwfr_avg, bw_it->fwor_avg, bw_it->fwtr_avg, bw_it->fwthr_avg, bw_it->fwfr_avg, bw_it->str_avg, bw_it->rand_avg, bw_it->diff_avg, bw_it->row_avg, bw_it->col_avg, bw_it->rc_avg, bw_it->t_sten_avg, bw_it->f_sten_avg, bw_it->n_sten_avg, bw_it->l2cache_avg);
-		printf("%d %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF\n", bw_it->numa_id, bw_it->wr_only_avg, bw_it->owfr_avg, bw_it->str_avg, bw_it->rand_avg, bw_it->l2cache_avg, bw_it->t_sten_avg, bw_it->f_sten_avg, bw_it->s_sten_avg, bw_it->n_sten_avg, bw_it->t7_sten_avg, bw_it->wr_only_min, bw_it->owfr_min, bw_it->str_min, bw_it->rand_min, bw_it->l2cache_min, bw_it->t_sten_min, bw_it->f_sten_min, bw_it->s_sten_min, bw_it->n_sten_min, bw_it->t7_sten_min, bw_it->wr_only_t, bw_it->owfr_t, bw_it->str_t, bw_it->rand_t, bw_it->l2cache_t, bw_it->t_sten_t, bw_it->f_sten_t, bw_it->s_sten_t, bw_it->n_sten_t, bw_it->t7_sten_t, bw_it->wr_only_tmin, bw_it->owfr_tmin, bw_it->str_tmin, bw_it->rand_tmin, bw_it->l2cache_tmin, bw_it->t_sten_tmin, bw_it->f_sten_tmin, bw_it->s_sten_tmin, bw_it->n_sten_tmin, bw_it->t7_sten_tmin, bw_it->wr_only_o, bw_it->owfr_o, bw_it->str_o, bw_it->rand_o, bw_it->l2cache_o, bw_it->t_sten_o, bw_it->f_sten_o, bw_it->s_sten_o, bw_it->n_sten_o, bw_it->t7_sten_o, bw_it->wr_only_omin, bw_it->owfr_omin, bw_it->str_omin, bw_it->rand_omin, bw_it->l2cache_omin, bw_it->t_sten_omin, bw_it->f_sten_omin, bw_it->s_sten_omin, bw_it->n_sten_omin, bw_it->t7_sten_omin);
-
+		printf("%d %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF\n", bw_it->numa_id, bw_it->wr_only_avg, bw_it->owfr_avg, bw_it->str_avg, bw_it->rand_avg, bw_it->l2cache_avg, bw_it->wr_only_min, bw_it->owfr_min, bw_it->str_min, bw_it->rand_min, bw_it->l2cache_min, bw_it->wr_only_t, bw_it->owfr_t, bw_it->str_t, bw_it->rand_t, bw_it->l2cache_t, bw_it->wr_only_tmin, bw_it->owfr_tmin, bw_it->str_tmin, bw_it->rand_tmin, bw_it->l2cache_tmin, bw_it->wr_only_o, bw_it->owfr_o, bw_it->str_o, bw_it->rand_o, bw_it->l2cache_o, bw_it->wr_only_omin, bw_it->owfr_omin, bw_it->str_omin, bw_it->rand_omin, bw_it->l2cache_omin);
 		//printf("%d %s %Lf %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF %LF\n", bw_it->numa_id, bw_it->mem_type, bw_it->wr_only_avg, bw_it->owor_avg, bw_it->owtr_avg, bw_it->owthr_avg, bw_it->owfr_avg, bw_it->twor_avg, bw_it->twtr_avg, bw_it->twthr_avg, bw_it->twfr_avg, bw_it->thwor_avg, bw_it->thwtr_avg, bw_it->thwthr_avg, bw_it->thwfr_avg, bw_it->fwor_avg, bw_it->fwtr_avg, bw_it->fwthr_avg, bw_it->fwfr_avg, bw_it->str_avg, bw_it->rand_avg, bw_it->diff_avg, bw_it->row_avg, bw_it->col_avg, bw_it->rc_avg, bw_it->t_sten_avg, bw_it->f_sten_avg, bw_it->n_sten_avg, bw_it->l2cache_avg);
 		bw_it = bw_it->next;
 	}
@@ -889,7 +888,7 @@ out4:
 			}
 out5:
 						if(wr_dist >= rd_dist){
-			for(l = l; l < ((ldim + 1)*(ldim + 1)*(ldim)); l+=(ldim + 1)*(ldim + 1)){
+			for(l = l; l < ((ldim + 1)*(ldim + 1)*(ldim + 1)); l+=(ldim + 1)*(ldim + 1)){
 					for(j = j; j < ((ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
 							for(k = k; k < (ldim); k+=4){
 									stride = l + j + k;
@@ -902,7 +901,7 @@ out5:
 					}
 			}
 out6:
-			for(l = l; l < ((ldim + 1)*(ldim + 1)*(ldim)); l+=(ldim + 1)*(ldim + 1)){
+			for(l = l; l < ((ldim + 1)*(ldim + 1)*(ldim + 1)); l+=(ldim + 1)*(ldim + 1)){
 					for(j = j; j < ((ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
 							for(k = k; k < (ldim); k++){
 									stride = l + j + k;
@@ -911,7 +910,7 @@ out6:
 					}
 			}
 						}else{
-			for(l = l; l < ((ldim + 1)*(ldim + 1)*(ldim)); l+=(ldim + 1)*(ldim + 1)){
+			for(l = l; l < ((ldim + 1)*(ldim + 1)*(ldim + 1)); l+=(ldim + 1)*(ldim + 1)){
 					for(j = j; j < ((ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
 							for(k = k; k < (ldim); k+=4){
 									stride = l + j + k;
@@ -924,7 +923,7 @@ out6:
 					}
 			}
 out7:
-			for(l = l; l < ((ldim + 1)*(ldim + 1)*(ldim)); l+=(ldim + 1)*(ldim + 1)){
+			for(l = l; l < ((ldim + 1)*(ldim + 1)*(ldim + 1)); l+=(ldim + 1)*(ldim + 1)){
 					for(j = j; j < ((ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
 							for(k = k; k < (ldim); k++){
 									stride = l + j + k;
@@ -1027,7 +1026,7 @@ out44:
 			}
 out55:
 						if(wr_dist >= rd_dist){
-			for(l = l; l < ((ldim + 1)*(ldim + 1)*(ldim)); l+=(ldim + 1)*(ldim + 1)){
+			for(l = l; l < ((ldim + 1)*(ldim + 1)*(ldim + 1)); l+=(ldim + 1)*(ldim + 1)){
 					for(j = j; j < ((ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
 							for(k = k; k < (ldim); k+=4){
 									stride = l + j + k;
@@ -1040,7 +1039,7 @@ out55:
 					}
 			}
 out66:
-			for(l = l; l < ((ldim + 1)*(ldim + 1)*(ldim)); l+=(ldim + 1)*(ldim + 1)){
+			for(l = l; l < ((ldim + 1)*(ldim + 1)*(ldim + 1)); l+=(ldim + 1)*(ldim + 1)){
 					for(j = j; j < ((ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
 							for(k = k; k < (ldim); k++){
 									stride = l + j + k;
@@ -1049,7 +1048,7 @@ out66:
 					}
 			}
 						}else{
-			for(l = l; l < ((ldim + 1)*(ldim + 1)*(ldim)); l+=(ldim + 1)*(ldim + 1)){
+			for(l = l; l < ((ldim + 1)*(ldim + 1)*(ldim + 1)); l+=(ldim + 1)*(ldim + 1)){
 					for(j = j; j < ((ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
 							for(k = k; k < (ldim); k+=4){
 									stride = l + j + k;
@@ -1062,7 +1061,7 @@ out66:
 					}
 			}
 out77:
-			for(l = l; l < ((ldim + 1)*(ldim + 1)*(ldim)); l+=(ldim + 1)*(ldim + 1)){
+			for(l = l; l < ((ldim + 1)*(ldim + 1)*(ldim + 1)); l+=(ldim + 1)*(ldim + 1)){
 					for(j = j; j < ((ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
 							for(k = k; k < (ldim); k++){
 									stride = l + j + k;
@@ -1161,7 +1160,7 @@ out444:
 			}
 out555:
 						if(wr_dist >= rd_dist){
-			for(l = l; l < ((ldim + 1)*(ldim + 1)*(ldim)); l+=(ldim + 1)*(ldim + 1)){
+			for(l = l; l < ((ldim + 1)*(ldim + 1)*(ldim + 1)); l+=(ldim + 1)*(ldim + 1)){
 					for(j = j; j < ((ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
 							for(k = k; k < (ldim); k+=4){
 									stride = l + j + k;
@@ -1174,7 +1173,7 @@ out555:
 					}
 			}
 out666:
-			for(l = l; l < ((ldim + 1)*(ldim + 1)*(ldim)); l+=(ldim + 1)*(ldim + 1)){
+			for(l = l; l < ((ldim + 1)*(ldim + 1)*(ldim + 1)); l+=(ldim + 1)*(ldim + 1)){
 					for(j = j; j < ((ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
 							for(k = k; k < (ldim); k++){
 									stride = l + j + k;
@@ -1183,7 +1182,7 @@ out666:
 					}
 			}
 						}else{
-			for(l = l; l < ((ldim + 1)*(ldim + 1)*(ldim)); l+=(ldim + 1)*(ldim + 1)){
+			for(l = l; l < ((ldim + 1)*(ldim + 1)*(ldim + 1)); l+=(ldim + 1)*(ldim + 1)){
 					for(j = j; j < ((ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
 							for(k = k; k < (ldim); k+=4){
 									stride = l + j + k;
@@ -1196,7 +1195,7 @@ out666:
 					}
 			}
 out777:
-			for(l = l; l < ((ldim + 1)*(ldim + 1)*(ldim)); l+=(ldim + 1)*(ldim + 1)){
+			for(l = l; l < ((ldim + 1)*(ldim + 1)*(ldim + 1)); l+=(ldim + 1)*(ldim + 1)){
 					for(j = j; j < ((ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
 							for(k = k; k < (ldim); k++){
 									stride = l + j + k;
@@ -1299,7 +1298,7 @@ out4444:
 			}
 out5555:
 						if(wr_dist >= rd_dist){
-			for(l = l; l < ((ldim + 1)*(ldim + 1)*(ldim)); l+=(ldim + 1)*(ldim + 1)){
+			for(l = l; l < ((ldim + 1)*(ldim + 1)*(ldim + 1)); l+=(ldim + 1)*(ldim + 1)){
 					for(j = j; j < ((ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
 							for(k = k; k < (ldim); k+=4){
 									stride = l + j + k;
@@ -1313,7 +1312,7 @@ out5555:
 					}
 			}
 out6666:
-			for(l = l; l < ((ldim + 1)*(ldim + 1)*(ldim)); l+=(ldim + 1)*(ldim + 1)){
+			for(l = l; l < ((ldim + 1)*(ldim + 1)*(ldim + 1)); l+=(ldim + 1)*(ldim + 1)){
 					for(j = j; j < ((ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
 							for(k = k; k < (ldim); k++){
 									stride = l + j + k;
@@ -1322,7 +1321,7 @@ out6666:
 					}
 			}
 						}else{
-			for(l = l; l < ((ldim + 1)*(ldim + 1)*(ldim)); l+=(ldim + 1)*(ldim + 1)){
+			for(l = l; l < ((ldim + 1)*(ldim + 1)*(ldim + 1)); l+=(ldim + 1)*(ldim + 1)){
 					for(j = j; j < ((ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
 							for(k = k; k < (ldim); k+=4){
 									stride = l + j + k;
@@ -1336,7 +1335,7 @@ out6666:
 					}
 			}
 out7777:
-			for(l = l; l < ((ldim + 1)*(ldim + 1)*(ldim)); l+=(ldim + 1)*(ldim + 1)){
+			for(l = l; l < ((ldim + 1)*(ldim + 1)*(ldim + 1)); l+=(ldim + 1)*(ldim + 1)){
 					for(j = j; j < ((ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
 							for(k = k; k < (ldim); k++){
 									stride = l + j + k;
@@ -1439,7 +1438,7 @@ out44444:
 			}
 out55555:
 						if(wr_dist >= rd_dist){
-			for(l = l; l < ((ldim + 1)*(ldim + 1)*(ldim)); l+=(ldim + 1)*(ldim + 1)){
+			for(l = l; l < ((ldim + 1)*(ldim + 1)*(ldim + 1)); l+=(ldim + 1)*(ldim + 1)){
 					for(j = j; j < ((ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
 							for(k = k; k < (ldim); k+=4){
 									stride = l + j + k;
@@ -1453,7 +1452,7 @@ out55555:
 					}
 			}
 out66666:
-			for(l = l; l < ((ldim + 1)*(ldim + 1)*(ldim)); l+=(ldim + 1)*(ldim + 1)){
+			for(l = l; l < ((ldim + 1)*(ldim + 1)*(ldim + 1)); l+=(ldim + 1)*(ldim + 1)){
 					for(j = j; j < ((ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
 							for(k = k; k < (ldim); k++){
 									stride = l + j + k;
@@ -1462,7 +1461,7 @@ out66666:
 					}
 			}
 						}else{
-			for(l = l; l < ((ldim + 1)*(ldim + 1)*(ldim)); l+=(ldim + 1)*(ldim + 1)){
+			for(l = l; l < ((ldim + 1)*(ldim + 1)*(ldim + 1)); l+=(ldim + 1)*(ldim + 1)){
 					for(j = j; j < ((ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
 							for(k = k; k < (ldim); k+=4){
 									stride = l + j + k;
@@ -1476,7 +1475,7 @@ out66666:
 					}
 			}
 out77777:
-			for(l = l; l < ((ldim + 1)*(ldim + 1)*(ldim)); l+=(ldim + 1)*(ldim + 1)){
+			for(l = l; l < ((ldim + 1)*(ldim + 1)*(ldim + 1)); l+=(ldim + 1)*(ldim + 1)){
 					for(j = j; j < ((ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
 							for(k = k; k < (ldim); k++){
 									stride = l + j + k;
