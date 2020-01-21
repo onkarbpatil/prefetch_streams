@@ -172,6 +172,7 @@ void numatest(int argc, char ** argv, int rank, int procs, unsigned long bytes){
 	int rd_dist, wr_dist;
 	int * rand_tab;
 	int inner = 0;
+	int ext_flg = 0;
 	rand_tab = (int*)malloc(mbs*sizeof(int));
 	double *a, *b, *c, *d, *e, *f, *g, *h;
 	double **aa, **bb, **cc;
@@ -815,53 +816,77 @@ redo27:
                         clock_gettime( CLOCK_MONOTONIC, &obegin);
 //#pragma omp parallel for
 						if(wr_dist >= rd_dist){
+			ext_flg = 0;
 			for(l = (ldim + 1)*(ldim + 1); l < (wr_dist - rd_dist); l+=(ldim + 1)*(ldim + 1)){
 					for(j = (ldim+1); j < (wr_dist - rd_dist); j += (ldim + 1)){
 							for(k = 1; k < (wr_dist - rd_dist); k++){
 									stride = l + j + k;
-									if(stride > (wr_dist - rd_dist))
-											goto out1;
+									if(stride > (wr_dist - rd_dist)){
+											ext_flg = 1;
+											break;
+									}
 									__builtin_prefetch (&a[stride], 1, 0);
 							}
+							if(ext_flg == 1)
+								break;
 					}
+							if(ext_flg == 1)
+								break;
 			}
-out1:
-			for(l = (wr_dist - rd_dist); ; l < wr_dist; l+=(ldim + 1)*(ldim + 1)){
+			ext_flg = 0;
+			for(l = (wr_dist - rd_dist); l < wr_dist; l+=(ldim + 1)*(ldim + 1)){
 					for(j = (wr_dist - rd_dist); j < wr_dist; j += (ldim + 1)){
 							for(k = (wr_dist - rd_dist); k < wr_dist; k++){
 									stride = l + j + k;
-									if(stride > (wr_dist))
-											goto out2;
+									if(stride > (wr_dist - rd_dist)){
+											ext_flg = 1;
+											break;
+									}
 					__builtin_prefetch (&a[stride], 1, 0);
 					__builtin_prefetch (&b[stride-(wr_dist - rd_dist)], 0, 0);
 							}
+							if(ext_flg == 1)
+								break;
 					}
+							if(ext_flg == 1)
+								break;
 			}
-out2:
 						}else{
+			ext_flg = 0;
 			for(l = (ldim + 1)*(ldim + 1); l < (rd_dist - wr_dist); l+=(ldim + 1)*(ldim + 1)){
 					for(j = (ldim+1); j < (rd_dist - wr_dist); j += (ldim + 1)){
 							for(k = 1; k < (rd_dist - wr_dist); k++){
 									stride = l + j + k;
-									if(stride > (rd_dist - wr_dist))
-											goto out3;
+									if(stride > (wr_dist - rd_dist)){
+											ext_flg = 1;
+											break;
+									}
 					__builtin_prefetch (&b[stride], 0, 0);
 						}
+							if(ext_flg == 1)
+								break;
 					}
+							if(ext_flg == 1)
+								break;
 			}
-out3:
-			for(l = (rd_dist - wr_dist); ; l < rd_dist; l+=(ldim + 1)*(ldim + 1)){
+			ext_flg = 0;
+			for(l = (rd_dist - wr_dist); l < rd_dist; l+=(ldim + 1)*(ldim + 1)){
 					for(j = (rd_dist - wr_dist); j < rd_dist; j += (ldim + 1)){
 							for(k = (rd_dist - wr_dist); k < rd_dist; k++){
 									stride = l + j + k;
-									if(stride > (rd_dist))
-											goto out4;
+									if(stride > (wr_dist - rd_dist)){
+											ext_flg = 1;
+											break;
+									}
 					__builtin_prefetch (&a[stride-(rd_dist - wr_dist)], 1, 0);
 					__builtin_prefetch (&b[stride], 0, 0);
 						}
+							if(ext_flg == 1)
+								break;
 					}
+							if(ext_flg == 1)
+								break;
 			}
-out4:
 						}
 			MPI_Barrier(MPI_COMM_WORLD);
 			clock_gettime( CLOCK_MONOTONIC, &ostop);
@@ -939,7 +964,7 @@ out7:
                         accum = ( stop.tv_sec - begin.tv_sec ) + (long double)( stop.tv_nsec - begin.tv_nsec ) / (long double)BILLION;
 			t_sten_t += accum;
 			if(accum < t_sten_tmin)
-					t_Sten_tmin = accum;
+					t_sten_tmin = accum;
                         if(accum <= empty){
                                 goto redo27;
                         }
@@ -949,6 +974,7 @@ out7:
 
 
 			stride = 0;
+			ext_flg = 0;
 			MPI_Barrier(MPI_COMM_WORLD);
                         clock_gettime( CLOCK_MONOTONIC, &obegin);
 //#pragma omp parallel for
@@ -957,49 +983,69 @@ out7:
 					for(j = (ldim+1); j < (wr_dist - rd_dist); j += (ldim + 1)){
 							for(k = 1; k < (wr_dist - rd_dist); k++){
 									stride = l + j + k;
-									if(stride > (wr_dist - rd_dist))
-											goto out11;
+									if(stride > (wr_dist - rd_dist)){
+											ext_flg = 1;
+											break;
+									}
 									__builtin_prefetch (&a[stride], 1, 0);
 							}
+							if(ext_flg == 1)
+								break;
 					}
+							if(ext_flg == 1)
+								break;
 			}
-out11:
-			for(l = (wr_dist - rd_dist); ; l < wr_dist; l+=(ldim + 1)*(ldim + 1)){
+			for(l = (wr_dist - rd_dist); l < wr_dist; l+=(ldim + 1)*(ldim + 1)){
 					for(j = (wr_dist - rd_dist); j < wr_dist; j += (ldim + 1)){
 							for(k = (wr_dist - rd_dist); k < wr_dist; k++){
 									stride = l + j + k;
-									if(stride > (wr_dist))
-											goto out22;
+									if(stride > (wr_dist - rd_dist)){
+											ext_flg = 1;
+											break;
+									}
 					__builtin_prefetch (&a[stride], 1, 0);
 					__builtin_prefetch (&b[stride-(wr_dist - rd_dist)], 0, 0);
 							}
+							if(ext_flg == 1)
+								break;
 					}
+							if(ext_flg == 1)
+								break;
 			}
-out22:
 						}else{
 			for(l = (ldim + 1)*(ldim + 1); l < (rd_dist - wr_dist); l+=(ldim + 1)*(ldim + 1)){
 					for(j = (ldim+1); j < (rd_dist - wr_dist); j += (ldim + 1)){
 							for(k = 1; k < (rd_dist - wr_dist); k++){
 									stride = l + j + k;
-									if(stride > (rd_dist - wr_dist))
-											goto out33;
+									if(stride > (wr_dist - rd_dist)){
+											ext_flg = 1;
+											break;
+									}
 					__builtin_prefetch (&b[stride], 0, 0);
 						}
+							if(ext_flg == 1)
+								break;
 					}
+							if(ext_flg == 1)
+								break;
 			}
-out33:
-			for(l = (rd_dist - wr_dist); ; l < rd_dist; l+=(ldim + 1)*(ldim + 1)){
+			for(l = (rd_dist - wr_dist); l < rd_dist; l+=(ldim + 1)*(ldim + 1)){
 					for(j = (rd_dist - wr_dist); j < rd_dist; j += (ldim + 1)){
 							for(k = (rd_dist - wr_dist); k < rd_dist; k++){
 									stride = l + j + k;
-									if(stride > (rd_dist))
-											goto out44;
+									if(stride > (wr_dist - rd_dist)){
+											ext_flg = 1;
+											break;
+									}
 					__builtin_prefetch (&a[stride-(rd_dist - wr_dist)], 1, 0);
 					__builtin_prefetch (&b[stride], 0, 0);
 						}
+							if(ext_flg == 1)
+								break;
 					}
+							if(ext_flg == 1)
+								break;
 			}
-out44:
 						}
 			MPI_Barrier(MPI_COMM_WORLD);
 			clock_gettime( CLOCK_MONOTONIC, &ostop);
@@ -1098,7 +1144,7 @@ out77:
 					}
 			}
 out111:
-			for(l = (wr_dist - rd_dist); ; l < wr_dist; l+=(ldim + 1)*(ldim + 1)){
+			for(l = (wr_dist - rd_dist); l < wr_dist; l+=(ldim + 1)*(ldim + 1)){
 					for(j = (wr_dist - rd_dist); j < wr_dist; j += (ldim + 1)){
 							for(k = (wr_dist - rd_dist); k < wr_dist; k++){
 									stride = l + j + k;
@@ -1122,7 +1168,7 @@ out222:
 					}
 			}
 out333:
-			for(l = (rd_dist - wr_dist); ; l < rd_dist; l+=(ldim + 1)*(ldim + 1)){
+			for(l = (rd_dist - wr_dist); l < rd_dist; l+=(ldim + 1)*(ldim + 1)){
 					for(j = (rd_dist - wr_dist); j < rd_dist; j += (ldim + 1)){
 							for(k = (rd_dist - wr_dist); k < rd_dist; k++){
 									stride = l + j + k;
@@ -1232,7 +1278,7 @@ out777:
 					}
 			}
 out1111:
-			for(l = (wr_dist - rd_dist); ; l < wr_dist; l+=(ldim + 1)*(ldim + 1)){
+			for(l = (wr_dist - rd_dist); l < wr_dist; l+=(ldim + 1)*(ldim + 1)){
 					for(j = (wr_dist - rd_dist); j < wr_dist; j += (ldim + 1)){
 							for(k = (wr_dist - rd_dist); k < wr_dist; k++){
 									stride = l + j + k;
@@ -1258,7 +1304,7 @@ out2222:
 					}
 			}
 out3333:
-			for(l = (rd_dist - wr_dist); ; l < rd_dist; l+=(ldim + 1)*(ldim + 1)){
+			for(l = (rd_dist - wr_dist); l < rd_dist; l+=(ldim + 1)*(ldim + 1)){
 					for(j = (rd_dist - wr_dist); j < rd_dist; j += (ldim + 1)){
 							for(k = (rd_dist - wr_dist); k < rd_dist; k++){
 									stride = l + j + k;
@@ -1372,7 +1418,7 @@ out7777:
 					}
 			}
 out11111:
-			for(l = (wr_dist - rd_dist); ; l < wr_dist; l+=(ldim + 1)*(ldim + 1)){
+			for(l = (wr_dist - rd_dist); l < wr_dist; l+=(ldim + 1)*(ldim + 1)){
 					for(j = (wr_dist - rd_dist); j < wr_dist; j += (ldim + 1)){
 							for(k = (wr_dist - rd_dist); k < wr_dist; k++){
 									stride = l + j + k;
@@ -1398,7 +1444,7 @@ out22222:
 					}
 			}
 out33333:
-			for(l = (rd_dist - wr_dist); ; l < rd_dist; l+=(ldim + 1)*(ldim + 1)){
+			for(l = (rd_dist - wr_dist); l < rd_dist; l+=(ldim + 1)*(ldim + 1)){
 					for(j = (rd_dist - wr_dist); j < rd_dist; j += (ldim + 1)){
 							for(k = (rd_dist - wr_dist); k < rd_dist; k++){
 									stride = l + j + k;
