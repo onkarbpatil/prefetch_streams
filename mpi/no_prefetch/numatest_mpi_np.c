@@ -154,16 +154,16 @@ void numatest(int argc, char ** argv, int rank, int procs, unsigned long bytes){
                 i++;
         }
 		total_numa_nodes++;
-		MPI_Request reqs[32768]; 
-		MPI_Status stat[32768];
+	//	MPI_Request reqs[32768]; 
+	//	MPI_Status stat[32768];
 	unsigned long size = bytes/procs;
 	int mbs = size/sizeof(double);
 	int ldim = (int)cbrt((double)size)+1;
 //	int r_size = 32768;
 //	int c_size = 32768;
 	if(procs != 1){
-		r_size = (32768)/(12) + 2*sizeof(double);
-		c_size = (32768)/(procs/12) + 2*sizeof(double);
+		//r_size = (32768)/(12) + 2*sizeof(double);
+		//c_size = (32768)/(procs/12) + 2*sizeof(double);
 	}
 	int rs = 0;
 	int z = 0;
