@@ -168,7 +168,8 @@ void numatest(int argc, char ** argv, int rank, int procs, unsigned long bytes){
 	int rs = 0;
 	int z = 0;
 	int dist = 0;
-	int rd_dist, wr_dist;
+	int rd_dist;
+			int wr_dist;
 	int * rand_tab;
 	rand_tab = (int*)malloc(mbs*sizeof(int));
 	double *a, *b, *c, *d, *e, *f, *g, *h;
