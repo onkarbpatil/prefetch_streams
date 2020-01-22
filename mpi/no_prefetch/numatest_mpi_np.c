@@ -161,10 +161,10 @@ void numatest(int argc, char ** argv, int rank, int procs, unsigned long bytes){
 	int ldim = (int)cbrt((double)size)+1;
 //	int r_size = 32768;
 //	int c_size = 32768;
-	if(procs != 1){
-		r_size = (32768)/(12) + 2*sizeof(double);
-		c_size = (32768)/(procs/12) + 2*sizeof(double);
-	}
+//	if(procs != 1){
+//		r_size = (32768)/(12) + 2*sizeof(double);
+//		c_size = (32768)/(procs/12) + 2*sizeof(double);
+//	}
 	int rs = 0;
 	int z = 0;
 	int dist = 0;
@@ -436,7 +436,7 @@ redo27:
 			MPI_Barrier(MPI_COMM_WORLD);
                         clock_gettime( CLOCK_MONOTONIC, &begin);
 			for(l = (ldim + 1)*(ldim + 1); l < ((ldim + 1)*(ldim + 1)*(ldim));l+=(ldim + 1)*(ldim + 1)){
-					for(j = (ldim+1); j < (i + (ldim +1)*(ldim + 1) - (ldim+1)); j += (ldim + 1)){
+					for(j = (ldim+1); j < ((ldim +1)*(ldim + 1) - (ldim+1)); j += (ldim + 1)){
 							for(k = 1; k < (ldim); k++){
 									stride = l + j + k;
 									a[stride] = b[stride] + b[stride+1] + b[stride-1];
@@ -455,7 +455,7 @@ redo27:
 			MPI_Barrier(MPI_COMM_WORLD);
                         clock_gettime( CLOCK_MONOTONIC, &begin);
 			for(l = (ldim + 1)*(ldim + 1); l < ((ldim + 1)*(ldim + 1)*(ldim));l+=(ldim + 1)*(ldim + 1)){
-					for(j = (ldim+1); j < (i + (ldim +1)*(ldim + 1) - (ldim+1)); j += (ldim + 1)){
+					for(j = (ldim+1); j < ((ldim +1)*(ldim + 1) - (ldim+1)); j += (ldim + 1)){
 							for(k = 1; k < (ldim); k++){
 									stride = l + j + k;
 									a[stride] = b[stride] + b[stride+1] + b[stride-1] + b[stride+ldim] + b[stride-ldim];
@@ -474,7 +474,7 @@ redo27:
 			MPI_Barrier(MPI_COMM_WORLD);
                         clock_gettime( CLOCK_MONOTONIC, &begin);
 			for(l = ldim*ldim; l < ((ldim+1)*(ldim+1)*ldim);l+=(ldim+1)*(ldim+1)){
-					for(j = ldim; j < (i + ((ldim+1)*(ldim+1)) - ldim); j += (ldim+1)){
+					for(j = ldim; j < (((ldim+1)*(ldim+1)) - ldim); j += (ldim+1)){
 							for(k = 1; k < ldim; k++){
 									stride = l + j + k;
 									a[stride] = b[stride] + b[stride+1] + b[stride-1] + b[stride+ldim] + b[stride-ldim] + b[stride + ldim*ldim] + b[stride - ldim*ldim];
@@ -493,7 +493,7 @@ redo27:
 			MPI_Barrier(MPI_COMM_WORLD);
                         clock_gettime( CLOCK_MONOTONIC, &begin);
 			for(l = (ldim + 1)*(ldim + 1); l < ((ldim + 1)*(ldim + 1)*(ldim));l+=(ldim + 1)*(ldim + 1)){
-					for(j = (ldim+1); j < (i + (ldim +1)*(ldim + 1) - (ldim+1)); j += (ldim + 1)){
+					for(j = (ldim+1); j < ((ldim +1)*(ldim + 1) - (ldim+1)); j += (ldim + 1)){
 							for(k = 1; k < (ldim); k++){
 									stride = l + j + k;
 									a[stride] = b[stride] + b[stride+1] + b[stride-1] + b[stride+ldim] + b[stride-ldim] + b[stride+ldim+1] + b[stride+ldim-1] + b[stride-(ldim+1)] + b[stride-(ldim-1)];
@@ -512,7 +512,7 @@ redo27:
 			MPI_Barrier(MPI_COMM_WORLD);
                         clock_gettime( CLOCK_MONOTONIC, &begin);
 			for(l = (ldim + 1)*(ldim + 1); l < ((ldim + 1)*(ldim + 1)*(ldim));l+=(ldim + 1)*(ldim + 1)){
-					for(j = (ldim+1); j < (i + (ldim +1)*(ldim + 1) - (ldim+1)); j += (ldim + 1)){
+					for(j = (ldim+1); j < ((ldim +1)*(ldim + 1) - (ldim+1)); j += (ldim + 1)){
 							for(k = 1; k < (ldim); k++){
 									stride = l + j + k;
 									a[stride] = b[stride] + b[stride+1] + b[stride-1] + b[stride+ldim] + b[stride-ldim] + b[stride+ldim+1] + b[stride+ldim-1] + b[stride-(ldim+1)] + b[stride-(ldim-1)] + b[stride+(ldim*ldim)] + b[stride-(ldim*ldim)] + b[stride+(ldim*ldim)+1] + b[stride-(ldim*ldim)+1] + b[stride+(ldim*ldim)-1] + b[stride-(ldim*ldim)-1] + b[stride+(ldim*ldim)+ldim] + b[stride-(ldim*ldim)+ldim] + b[stride+(ldim*ldim)-ldim] + b[stride-(ldim*ldim)-ldim] + b[stride+(ldim*ldim)+ldim+1] + b[stride-(ldim*ldim)+ldim+1] + b[stride+(ldim*ldim)-ldim+1] + b[stride-(ldim*ldim)-ldim+1] + b[stride+(ldim*ldim)+ldim-1] + b[stride-(ldim*ldim)+ldim-1] + b[stride+(ldim*ldim)-ldim-1] + b[stride-(ldim*ldim)-ldim-1];
