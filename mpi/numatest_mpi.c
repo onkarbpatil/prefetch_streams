@@ -158,7 +158,7 @@ void numatest(int argc, char ** argv, int rank, int procs, unsigned long bytes){
 		MPI_Status stat[32768];
 	unsigned long size = bytes/procs;
 	int mbs = size/sizeof(double);
-	int ldim = (int)cbrt((double)size)+1;
+	int ldim = (int)cbrt((double)size/sizeof(double))-1;
 	int n = ldim;
 //	int c_size = (int)cbrt((double)size)+1;
 	//if(procs != 1){

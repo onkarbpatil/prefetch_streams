@@ -158,7 +158,7 @@ void numatest(int argc, char ** argv, int rank, int procs, unsigned long bytes){
 	//	MPI_Status stat[32768];
 	unsigned long size = bytes/procs;
 	int mbs = size/sizeof(double);
-	int ldim = (int)cbrt((double)size)+1;
+	int ldim = (int)cbrt((double)size/sizeof(double))-1;
 //	int r_size = 32768;
 //	int c_size = 32768;
 //	if(procs != 1){
@@ -315,11 +315,12 @@ void numatest(int argc, char ** argv, int rank, int procs, unsigned long bytes){
 			}
 			long double empty=0.0;
 			long double empty2=0.0;
-
-/*			for(j =0; j < (r_size/sizeof(double*)); j++){
+/*
+			for(j =0; j < (r_size/sizeof(double*)); j++){
          		for(k = 0; k < (c_size/sizeof(double)); k++)
 					aa[j][k] = (double)rand();
 			}*/
+			
 redo1:
 			MPI_Barrier(MPI_COMM_WORLD);
 			clock_gettime( CLOCK_MONOTONIC, &begin);
@@ -394,7 +395,6 @@ redo19:
                         for(j =0; j < (size/sizeof(double)); j++){
 			  a[rand_tab[j]] = b[rand_tab[j]] + c[rand_tab[j]] + d[rand_tab[j]] + e[rand_tab[j]];
                         }
-			}
 			MPI_Barrier(MPI_COMM_WORLD);
                         clock_gettime( CLOCK_MONOTONIC, &stop);
 			if(rank == 0){
@@ -452,6 +452,8 @@ redo27:
 					t_sten_tmin = accum;
 			t_sten_avg += ((4*size*procs*1.0E-06)/(long double)(accum - empty));
 			}
+			
+			stride = 0;
 			MPI_Barrier(MPI_COMM_WORLD);
                         clock_gettime( CLOCK_MONOTONIC, &begin);
 			for(l = (ldim + 1)*(ldim + 1); l < ((ldim + 1)*(ldim + 1)*(ldim));l+=(ldim + 1)*(ldim + 1)){
@@ -471,6 +473,7 @@ redo27:
 					f_sten_tmin = accum;
 			f_sten_avg += ((6*size*procs*1.0E-06)/(long double)(accum - empty));
 			}
+			stride = 0;
 			MPI_Barrier(MPI_COMM_WORLD);
                         clock_gettime( CLOCK_MONOTONIC, &begin);
 			for(l = ldim*ldim; l < ((ldim+1)*(ldim+1)*ldim);l+=(ldim+1)*(ldim+1)){
@@ -490,6 +493,7 @@ redo27:
 					s_sten_tmin = accum;
 			s_sten_avg += ((8*size*procs*1.0E-06)/(long double)(accum - empty));
 			}
+			stride = 0;
 			MPI_Barrier(MPI_COMM_WORLD);
                         clock_gettime( CLOCK_MONOTONIC, &begin);
 			for(l = (ldim + 1)*(ldim + 1); l < ((ldim + 1)*(ldim + 1)*(ldim));l+=(ldim + 1)*(ldim + 1)){
@@ -509,6 +513,7 @@ redo27:
 					n_sten_tmin = accum;
 			n_sten_avg += ((10*size*procs*1.0E-06)/(long double)(accum - empty));
 			}
+			stride = 0;
 			MPI_Barrier(MPI_COMM_WORLD);
                         clock_gettime( CLOCK_MONOTONIC, &begin);
 			for(l = (ldim + 1)*(ldim + 1); l < ((ldim + 1)*(ldim + 1)*(ldim));l+=(ldim + 1)*(ldim + 1)){
@@ -528,6 +533,7 @@ redo27:
 					t7_sten_tmin = accum;
 			t7_sten_avg += ((28*size*procs*1.0E-06)/(long double)(accum - empty));
 			}
+			
 			numa_free(a, size);
 			numa_free(b, size);
 			numa_free(c, size);
@@ -580,7 +586,7 @@ redo27:
 		node_bw->f_sten_avg = f_sten_avg/10;
 		node_bw->n_sten_avg = n_sten_avg/10;
 		node_bw->s_sten_avg = s_sten_avg/10;
-		node_bw->t7_sten_o = t7_sten_o/10;
+		node_bw->t7_sten_o = t7_sten_avg/10;
 		node_bw->wr_only_t = wr_only_t/10;
 		node_bw->l2cache_t = l2cache_t/10;
 		node_bw->rand_t = rand_t/10;
