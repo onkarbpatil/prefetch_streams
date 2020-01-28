@@ -1,0 +1,432 @@
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+-------------------------------------------------------------
+NUMA ID: 0
+Total Aggregate Array size = 536870912 (elements)
+Total Aggregate Memory per array = 0.0 MiB (= 0.0 GiB).
+Total Aggregate memory required = 0.0 MiB (= 0.0 GiB).
+Data is distributed across 24 MPI ranks
+   Array size per MPI rank = 22369621 (elements)
+   Memory per array per MPI rank = 0.0 MiB (= 0.0 GiB).
+   Total memory per MPI rank = 0.0 MiB (= 0.0 GiB).
+-------------------------------------------------------------
+Your timer granularity/precision appears to be 1 microseconds.
+Function    Best Rate MB/s  Avg Rate MB/s   Avg time     Min time     Max time
+Copy:          30485.6      30461.3     0.281995     0.281770     0.282518
+Scale:         30567.0      30534.7     0.281317     0.281019     0.281748
+Add:           39908.2      39868.0     0.323189     0.322864     0.323859
+Triad:         39903.3      39882.7     0.323070     0.322903     0.323427
+-------------------------------------------------------------
+Solution Validates: avg error less than 1.000000e-13 on all three arrays
+-------------------------------------------------------------
+-------------------------------------------------------------
+NUMA ID: 1
+Total Aggregate Array size = 536870912 (elements)
+Total Aggregate Memory per array = 0.0 MiB (= 0.0 GiB).
+Total Aggregate memory required = 0.0 MiB (= 0.0 GiB).
+Data is distributed across 24 MPI ranks
+   Array size per MPI rank = 22369621 (elements)
+   Memory per array per MPI rank = 0.0 MiB (= 0.0 GiB).
+   Total memory per MPI rank = 0.0 MiB (= 0.0 GiB).
+-------------------------------------------------------------
+Your timer granularity/precision appears to be 1 microseconds.
+Function    Best Rate MB/s  Avg Rate MB/s   Avg time     Min time     Max time
+Copy:          30591.8      27490.2     0.312473     0.280792     0.282518
+Scale:         30677.9      27577.1     0.311488     0.280004     0.281748
+Add:           40013.5      35973.6     0.358176     0.322014     0.323859
+Triad:         40029.9      35995.0     0.357963     0.321882     0.323427
+-------------------------------------------------------------
+Solution Validates: avg error less than 1.000000e-13 on all three arrays
+-------------------------------------------------------------
+-------------------------------------------------------------
+NUMA ID: 2
+Total Aggregate Array size = 536870912 (elements)
+Total Aggregate Memory per array = 0.0 MiB (= 0.0 GiB).
+Total Aggregate memory required = 0.0 MiB (= 0.0 GiB).
+Data is distributed across 24 MPI ranks
+   Array size per MPI rank = 22369621 (elements)
+   Memory per array per MPI rank = 0.0 MiB (= 0.0 GiB).
+   Total memory per MPI rank = 0.0 MiB (= 0.0 GiB).
+-------------------------------------------------------------
+Your timer granularity/precision appears to be 1 microseconds.
+Function    Best Rate MB/s  Avg Rate MB/s   Avg time     Min time     Max time
+Copy:          30350.3      27020.5     0.317904     0.283026     0.283731
+Scale:         30503.9      27140.9     0.316494     0.281601     0.282393
+Add:           39781.6      35403.2     0.363948     0.323891     0.324835
+Triad:         39784.5      35416.4     0.363812     0.323867     0.324418
+-------------------------------------------------------------
+Solution Validates: avg error less than 1.000000e-13 on all three arrays
+-------------------------------------------------------------

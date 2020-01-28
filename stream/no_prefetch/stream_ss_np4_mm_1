@@ -1,0 +1,87 @@
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+-------------------------------------------------------------
+NUMA ID: 0
+Total Aggregate Array size = 536870912 (elements)
+Total Aggregate Memory per array = 0.0 MiB (= 0.0 GiB).
+Total Aggregate memory required = 0.0 MiB (= 0.0 GiB).
+Data is distributed across 1 MPI ranks
+   Array size per MPI rank = 536870912 (elements)
+   Memory per array per MPI rank = 0.0 MiB (= 0.0 GiB).
+   Total memory per MPI rank = 0.0 MiB (= 0.0 GiB).
+-------------------------------------------------------------
+Your timer granularity/precision appears to be 1 microseconds.
+Function    Best Rate MB/s  Avg Rate MB/s   Avg time     Min time     Max time
+Copy:          12572.9      12567.3     0.683513     0.683210     0.683770
+Scale:         11401.2      11395.0     0.753832     0.753427     0.754204
+Add:           12094.3      12089.1     1.065832     1.065369     1.066391
+Triad:         12076.3      12070.2     1.067498     1.066960     1.068045
+-------------------------------------------------------------
+Solution Validates: avg error less than 1.000000e-13 on all three arrays
+-------------------------------------------------------------
+-------------------------------------------------------------
+NUMA ID: 1
+Total Aggregate Array size = 536870912 (elements)
+Total Aggregate Memory per array = 0.0 MiB (= 0.0 GiB).
+Total Aggregate memory required = 0.0 MiB (= 0.0 GiB).
+Data is distributed across 1 MPI ranks
+   Array size per MPI rank = 536870912 (elements)
+   Memory per array per MPI rank = 0.0 MiB (= 0.0 GiB).
+   Total memory per MPI rank = 0.0 MiB (= 0.0 GiB).
+-------------------------------------------------------------
+Your timer granularity/precision appears to be 1 microseconds.
+Function    Best Rate MB/s  Avg Rate MB/s   Avg time     Min time     Max time
+Copy:           7558.2       7083.0     1.212758     1.136508     1.137076
+Scale:          7070.4       6612.4     1.299060     1.214921     1.215879
+Add:            7611.3       7112.4     1.811607     1.692867     1.693487
+Triad:          7608.6       7109.4     1.812376     1.693476     1.694110
+-------------------------------------------------------------
+Solution Validates: avg error less than 1.000000e-13 on all three arrays
+-------------------------------------------------------------
+-------------------------------------------------------------
+NUMA ID: 2
+Total Aggregate Array size = 536870912 (elements)
+Total Aggregate Memory per array = 0.0 MiB (= 0.0 GiB).
+Total Aggregate memory required = 0.0 MiB (= 0.0 GiB).
+Data is distributed across 1 MPI ranks
+   Array size per MPI rank = 536870912 (elements)
+   Memory per array per MPI rank = 0.0 MiB (= 0.0 GiB).
+   Total memory per MPI rank = 0.0 MiB (= 0.0 GiB).
+-------------------------------------------------------------
+Your timer granularity/precision appears to be 1 microseconds.
+Function    Best Rate MB/s  Avg Rate MB/s   Avg time     Min time     Max time
+Copy:          12575.1      10497.1     0.818314     0.683089     1.137076
+Scale:         11403.2       9565.5     0.898016     0.753289     1.215879
+Add:           12094.0      10169.8     1.266973     1.065392     1.693487
+Triad:         12073.1      10154.6     1.268878     1.067243     1.694110
+-------------------------------------------------------------
+Solution Validates: avg error less than 1.000000e-13 on all three arrays
+-------------------------------------------------------------

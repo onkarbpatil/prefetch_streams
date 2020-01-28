@@ -1,0 +1,34 @@
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+--------------------------------------------------------------------------
+The following command line option and corresponding MCA parameter have
+been deprecated and replaced as follows:
+
+  Command line option:
+    Deprecated:  --bind-to-core
+    Replacement: --bind-to core
+
+  Equivalent MCA parameter:
+    Deprecated:  hwloc_base_bind_to_core
+    Replacement: hwloc_base_binding_policy=core
+
+The deprecated forms *will* disappear in a future version of Open MPI.
+Please update to the new syntax.
+--------------------------------------------------------------------------
+#NUMA id WR-only_avg_bw 1W4R_avg_bw Str_avg_bw Rand_avg_bw LLC_avg_bw WR-only_pk_bw 1W4R_pk_bw Str_pk_bw Rand_pk_bw LLC_pk_bw WR-only_avg_lat 1W4R_avg_lat Str_avg_lat Rand_avg_lat LLC_avg_lat WR-only_min 1W4R_min Str_min Rand_min LLC_min
+0 2298.714521 12681.681298 3852.773902 291.616844 1046.828686 22666.588151 37073.191901 31828.581988 40450.926531 0.000000 2302.609096 12778.892629 3854.394575 291.872861 1051.856623 23062.726194 37256.578257 32123.395075 40794.126220 17426.128215 9.342175 1.693395 5.573868 73.640615 20.514431 0.757993 0.695161 1.079583 1.061818 6.902073 9.326306 1.680493 5.571520 73.575996 20.416125 0.744919 0.691685 1.069617 1.052840 6.901079
+1 1735.141855 7456.688314 2576.436936 284.132625 820.166460 14161.552211 22588.218368 21419.325598 34304.839778 0.000000 1743.056018 7469.450529 2580.214941 284.248499 824.189572 14291.597224 22857.051792 21593.585070 34513.781687 17237.391080 12.377683 2.879960 8.335098 75.580331 26.183879 1.213177 1.140869 1.604172 1.252052 6.990456 12.320222 2.875022 8.322887 75.549516 26.055700 1.202096 1.127433 1.591201 1.244421 6.976641
+0 2300.444236 12659.372560 3853.851214 291.224545 1044.615463 22605.266262 37135.554628 31686.335556 40600.071923 0.000000 2302.607173 12662.524365 3854.821752 291.386980 1051.024572 23033.511219 37239.942826 32088.075842 40802.391029 17425.234660 9.335089 1.696359 5.572306 73.739797 20.558034 0.760024 0.693969 1.084390 1.057897 6.902416 9.326314 1.695936 5.570903 73.698682 20.432288 0.745864 0.691994 1.070795 1.052626 6.901433
