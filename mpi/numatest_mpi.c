@@ -817,77 +817,60 @@ redo27:
 //#pragma omp parallel for
 						if(wr_dist >= rd_dist){
 			ext_flg = 0;
-			for(l = (ldim + 1)*(ldim + 1); l < (wr_dist - rd_dist); l+=(ldim + 1)*(ldim + 1)){
-					for(j = (ldim+1); j < (wr_dist - rd_dist); j += (ldim + 1)){
-							for(k = 1; k < (wr_dist - rd_dist); k++){
+			for(l = (ldim + 1)*(ldim + 1); l < ((ldim + 1)*(ldim + 1)*(ldim));l+=(ldim + 1)*(ldim + 1)){
+					for(j = (ldim+1); j < ( (ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
+							for(k = 1; k < (ldim); k++){
 									stride = l + j + k;
 									if(stride > (wr_dist - rd_dist)){
-											ext_flg = 1;
-											break;
+											goto out1;
 									}
 									__builtin_prefetch (&a[stride], 1, 0);
 							}
-							if(ext_flg == 1)
-								break;
 					}
-							if(ext_flg == 1)
-								break;
 			}
+out1:
 			ext_flg = 0;
-			for(l = (wr_dist - rd_dist); l < wr_dist; l+=(ldim + 1)*(ldim + 1)){
-					for(j = (wr_dist - rd_dist); j < wr_dist; j += (ldim + 1)){
-							for(k = (wr_dist - rd_dist); k < wr_dist; k++){
+			for(l = (ldim + 1)*(ldim + 1); l < ((ldim + 1)*(ldim + 1)*(ldim));l+=(ldim + 1)*(ldim + 1)){
+					for(j = (ldim+1); j < ( (ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
+							for(k = 1; k < (ldim); k++){
 									stride = l + j + k;
 									if(stride > (wr_dist)){
-											ext_flg = 1;
-											break;
+											goto out3;
 									}
 					__builtin_prefetch (&a[stride], 1, 0);
-					__builtin_prefetch (&b[stride-(wr_dist - rd_dist)], 0, 0);
+					__builtin_prefetch (&b[stride-(wr_dist - rd_dist)], 0, 1);
 							}
-							if(ext_flg == 1)
-								break;
 					}
-							if(ext_flg == 1)
-								break;
 			}
 						}else{
 			ext_flg = 0;
-			for(l = (ldim + 1)*(ldim + 1); l < (rd_dist - wr_dist); l+=(ldim + 1)*(ldim + 1)){
-					for(j = (ldim+1); j < (rd_dist - wr_dist); j += (ldim + 1)){
-							for(k = 1; k < (rd_dist - wr_dist); k++){
+			for(l = (ldim + 1)*(ldim + 1); l < ((ldim + 1)*(ldim + 1)*(ldim));l+=(ldim + 1)*(ldim + 1)){
+					for(j = (ldim+1); j < ( (ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
+							for(k = 1; k < (ldim); k++){
 									stride = l + j + k;
 									if(stride > (rd_dist - wr_dist)){
-											ext_flg = 1;
-											break;
+											goto out2;
 									}
-					__builtin_prefetch (&b[stride], 0, 0);
+					__builtin_prefetch (&b[stride], 0, 1);
 						}
-							if(ext_flg == 1)
-								break;
 					}
-							if(ext_flg == 1)
-								break;
 			}
+out2:
 			ext_flg = 0;
-			for(l = (rd_dist - wr_dist); l < rd_dist; l+=(ldim + 1)*(ldim + 1)){
-					for(j = (rd_dist - wr_dist); j < rd_dist; j += (ldim + 1)){
-							for(k = (rd_dist - wr_dist); k < rd_dist; k++){
+			for(l = (ldim + 1)*(ldim + 1); l < ((ldim + 1)*(ldim + 1)*(ldim));l+=(ldim + 1)*(ldim + 1)){
+					for(j = (ldim+1); j < ( (ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
+							for(k = 1; k < (ldim); k++){
 									stride = l + j + k;
 									if(stride > (rd_dist)){
-											ext_flg = 1;
-											break;
+											goto out3;
 									}
 					__builtin_prefetch (&a[stride-(rd_dist - wr_dist)], 1, 0);
-					__builtin_prefetch (&b[stride], 0, 0);
+					__builtin_prefetch (&b[stride], 0, 1);
 						}
-							if(ext_flg == 1)
-								break;
 					}
-							if(ext_flg == 1)
-								break;
 			}
 						}
+out3:
 			MPI_Barrier(MPI_COMM_WORLD);
 			clock_gettime( CLOCK_MONOTONIC, &ostop);
 			if(rank == 0){
@@ -900,13 +883,13 @@ redo27:
 			MPI_Barrier(MPI_COMM_WORLD);
 			clock_gettime( CLOCK_MONOTONIC, &begin);
 			for(l = (ldim + 1)*(ldim + 1); l < ((ldim + 1)*(ldim + 1)*(ldim));l+=(ldim + 1)*(ldim + 1)){
-					for(j = (ldim+1); j < ( (ldim +1)*(ldim + 1) - 2*(ldim + 1)); j += (ldim + 1)){
+					for(j = (ldim+1); j < ( (ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
 							for(k = 1; k < (ldim); k+=4){
 									stride = l + j + k;
 									if(stride > ((ldim + 1)*(ldim + 1)*(ldim)-bdist))
 											goto out5;
 								__builtin_prefetch (&a[stride+(bdist)], 1, 0);
-								__builtin_prefetch (&b[stride+bdist], 0, 0);
+								__builtin_prefetch (&b[stride+bdist], 0, 1);
 								for(inner=0;inner<4;inner++)
 									a[stride+inner] = b[stride+inner] + b[stride+1+inner] + b[stride-1+inner];
 							}
@@ -920,7 +903,7 @@ out5:
 									stride = l + j + k;
 									if(stride > ((ldim + 1)*(ldim + 1)*(ldim)-rd_dist))
 											goto out6;
-									__builtin_prefetch (&b[stride+rd_dist], 0, 0);
+									__builtin_prefetch (&b[stride+rd_dist], 0, 1);
 									for(inner=0;inner<4;inner++)
 										a[stride+inner] = b[stride+inner] + b[stride+1+inner] + b[stride-1+inner];
 							}
@@ -942,7 +925,7 @@ out6:
 									stride = l + j + k;
 									if(stride > ((ldim + 1)*(ldim + 1)*(ldim)-wr_dist))
 											goto out7;
-									__builtin_prefetch (&b[stride+wr_dist], 1, 0);
+									__builtin_prefetch (&a[stride+wr_dist], 1, 0);
 									for(inner=0;inner<4;inner++)
 										a[stride+inner] = b[stride+inner] + b[stride+1+inner] + b[stride-1+inner];
 							}
@@ -976,77 +959,60 @@ out7:
                         clock_gettime( CLOCK_MONOTONIC, &obegin);
 //#pragma omp parallel for
 						if(wr_dist >= rd_dist){
-			for(l = (ldim + 1)*(ldim + 1); l < (wr_dist - rd_dist); l+=(ldim + 1)*(ldim + 1)){
-					for(j = (ldim+1); j < (wr_dist - rd_dist); j += (ldim + 1)){
-							for(k = 1; k < (wr_dist - rd_dist); k++){
+			for(l = (ldim + 1)*(ldim + 1); l < ((ldim + 1)*(ldim + 1)*(ldim));l+=(ldim + 1)*(ldim + 1)){
+					for(j = (ldim+1); j < ( (ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
+							for(k = 1; k < (ldim); k++){
 									stride = l + j + k;
 									if(stride > (wr_dist - rd_dist)){
-											ext_flg = 1;
-											break;
+											goto out11;
 									}
 									__builtin_prefetch (&a[stride], 1, 0);
 							}
-							if(ext_flg == 1)
-								break;
 					}
-							if(ext_flg == 1)
-								break;
 			}
+out11:
 			ext_flg = 0;
-			for(l = (wr_dist - rd_dist); l < wr_dist; l+=(ldim + 1)*(ldim + 1)){
-					for(j = (wr_dist - rd_dist); j < wr_dist; j += (ldim + 1)){
-							for(k = (wr_dist - rd_dist); k < wr_dist; k++){
+			for(l = (ldim + 1)*(ldim + 1); l < ((ldim + 1)*(ldim + 1)*(ldim));l+=(ldim + 1)*(ldim + 1)){
+					for(j = (ldim+1); j < ( (ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
+							for(k = 1; k < (ldim); k++){
 									stride = l + j + k;
 									if(stride > (wr_dist)){
-											ext_flg = 1;
-											break;
+											goto out33;
 									}
 					__builtin_prefetch (&a[stride], 1, 0);
-					__builtin_prefetch (&b[stride-(wr_dist - rd_dist)], 0, 0);
+					__builtin_prefetch (&b[stride-(wr_dist - rd_dist)], 0, 1);
 							}
-							if(ext_flg == 1)
-								break;
 					}
-							if(ext_flg == 1)
-								break;
 			}
 						}else{
 			ext_flg = 0;
-			for(l = (ldim + 1)*(ldim + 1); l < (rd_dist - wr_dist); l+=(ldim + 1)*(ldim + 1)){
-					for(j = (ldim+1); j < (rd_dist - wr_dist); j += (ldim + 1)){
-							for(k = 1; k < (rd_dist - wr_dist); k++){
+			for(l = (ldim + 1)*(ldim + 1); l < ((ldim + 1)*(ldim + 1)*(ldim));l+=(ldim + 1)*(ldim + 1)){
+					for(j = (ldim+1); j < ( (ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
+							for(k = 1; k < (ldim); k++){
 									stride = l + j + k;
 									if(stride > (rd_dist - wr_dist)){
-											ext_flg = 1;
-											break;
+											goto out22;
 									}
-					__builtin_prefetch (&b[stride], 0, 0);
+					__builtin_prefetch (&b[stride], 0, 1);
 						}
-							if(ext_flg == 1)
-								break;
 					}
-							if(ext_flg == 1)
-								break;
 			}
+out22:
 			ext_flg = 0;
-			for(l = (rd_dist - wr_dist); l < rd_dist; l+=(ldim + 1)*(ldim + 1)){
-					for(j = (rd_dist - wr_dist); j < rd_dist; j += (ldim + 1)){
-							for(k = (rd_dist - wr_dist); k < rd_dist; k++){
+			for(l = (ldim + 1)*(ldim + 1); l < ((ldim + 1)*(ldim + 1)*(ldim));l+=(ldim + 1)*(ldim + 1)){
+					for(j = (ldim+1); j < ( (ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
+							for(k = 1; k < (ldim); k++){
 									stride = l + j + k;
 									if(stride > (rd_dist)){
-											ext_flg = 1;
-											break;
+											goto out33;
 									}
 					__builtin_prefetch (&a[stride-(rd_dist - wr_dist)], 1, 0);
-					__builtin_prefetch (&b[stride], 0, 0);
+					__builtin_prefetch (&b[stride], 0, 1);
 						}
-							if(ext_flg == 1)
-								break;
 					}
-							if(ext_flg == 1)
-								break;
 			}
 						}
+out33:
 			MPI_Barrier(MPI_COMM_WORLD);
 			clock_gettime( CLOCK_MONOTONIC, &ostop);
 			if(rank == 0){
@@ -1059,13 +1025,13 @@ out7:
 			MPI_Barrier(MPI_COMM_WORLD);
 			clock_gettime( CLOCK_MONOTONIC, &begin);
 			for(l = (ldim + 1)*(ldim + 1); l < ((ldim + 1)*(ldim + 1)*(ldim));l+=(ldim + 1)*(ldim + 1)){
-					for(j = (ldim+1); j < ( (ldim +1)*(ldim + 1) - 2*(ldim + 1)); j += (ldim + 1)){
+					for(j = (ldim+1); j < ( (ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
 							for(k = 1; k < (ldim); k+=4){
 									stride = l + j + k;
 									if(stride > ((ldim + 1)*(ldim + 1)*(ldim)-bdist))
 											goto out55;
 								__builtin_prefetch (&a[stride+(bdist)], 1, 0);
-								__builtin_prefetch (&b[stride+bdist], 0, 0);
+								__builtin_prefetch (&b[stride+bdist], 0, 1);
 								for(inner=0;inner<4;inner++)
 									a[stride+inner] = b[stride+inner] + b[stride+1+inner] + b[stride-1+inner] + b[stride+ldim+inner] + b[stride-ldim+inner];
 							}
@@ -1079,7 +1045,7 @@ out55:
 									stride = l + j + k;
 									if(stride > ((ldim + 1)*(ldim + 1)*(ldim)-rd_dist))
 											goto out66;
-									__builtin_prefetch (&b[stride+rd_dist], 0, 0);
+									__builtin_prefetch (&b[stride+rd_dist], 0, 1);
 									for(inner=0;inner<4;inner++)
 										a[stride+inner] = b[stride+inner] + b[stride+1+inner] + b[stride-1+inner] + b[stride+ldim+inner] + b[stride-ldim+inner];
 							}
@@ -1101,7 +1067,7 @@ out66:
 									stride = l + j + k;
 									if(stride > ((ldim + 1)*(ldim + 1)*(ldim)-wr_dist))
 											goto out77;
-									__builtin_prefetch (&b[stride+wr_dist], 1, 0);
+									__builtin_prefetch (&a[stride+wr_dist], 1, 0);
 									for(inner=0;inner<4;inner++)
 										a[stride+inner] = b[stride+inner] + b[stride+1+inner] + b[stride-1+inner] + b[stride+ldim+inner] + b[stride-ldim+inner];
 							}
@@ -1134,78 +1100,61 @@ out77:
                         clock_gettime( CLOCK_MONOTONIC, &obegin);
 //#pragma omp parallel for
 						if(wr_dist >= rd_dist){
-			for(l = (ldim + 1)*(ldim + 1); l < (wr_dist - rd_dist); l+=(ldim + 1)*(ldim + 1)){
-					for(j = (ldim+1); j < (wr_dist - rd_dist); j += (ldim + 1)){
-							for(k = 1; k < (wr_dist - rd_dist); k++){
+			for(l = (ldim + 1)*(ldim + 1); l < ((ldim + 1)*(ldim + 1)*(ldim));l+=(ldim + 1)*(ldim + 1)){
+					for(j = (ldim+1); j < ( (ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
+							for(k = 1; k < (ldim); k++){
 									stride = l + j + k;
 									if(stride > (wr_dist - rd_dist)){
-											ext_flg = 1;
-											break;
+										goto out111;
 									}
 											
 									__builtin_prefetch (&a[stride], 1, 0);
 							}
-							if(ext_flg == 1)
-									break;
 					}
-							if(ext_flg == 1)
-									break;
 			}
+out111:
 			ext_flg = 0;
-			for(l = (wr_dist - rd_dist); l < wr_dist; l+=(ldim + 1)*(ldim + 1)){
-					for(j = (wr_dist - rd_dist); j < wr_dist; j += (ldim + 1)){
-							for(k = (wr_dist - rd_dist); k < wr_dist; k++){
+			for(l = (ldim + 1)*(ldim + 1); l < ((ldim + 1)*(ldim + 1)*(ldim));l+=(ldim + 1)*(ldim + 1)){
+					for(j = (ldim+1); j < ( (ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
+							for(k = 1; k < (ldim); k++){
 									stride = l + j + k;
 									if(stride > (wr_dist)){
-											ext_flg = 1;
-											break;
+											goto out333;
 									}
 					__builtin_prefetch (&a[stride], 1, 0);
-					__builtin_prefetch (&b[stride-(wr_dist - rd_dist)], 0, 0);
+					__builtin_prefetch (&b[stride-(wr_dist - rd_dist)], 0, 1);
 							}
-							if(ext_flg == 1)
-									break;
 					}
-							if(ext_flg == 1)
-									break;
 			}
 						}else{
 			ext_flg = 0;
-			for(l = (ldim + 1)*(ldim + 1); l < (rd_dist - wr_dist); l+=(ldim + 1)*(ldim + 1)){
-					for(j = (ldim+1); j < (rd_dist - wr_dist); j += (ldim + 1)){
-							for(k = 1; k < (rd_dist - wr_dist); k++){
+			for(l = (ldim + 1)*(ldim + 1); l < ((ldim + 1)*(ldim + 1)*(ldim));l+=(ldim + 1)*(ldim + 1)){
+					for(j = (ldim+1); j < ( (ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
+							for(k = 1; k < (ldim); k++){
 									stride = l + j + k;
 									if(stride > (rd_dist - wr_dist)){
-											ext_flg = 1;
-											break;
+											goto out222;
 									}
-					__builtin_prefetch (&b[stride], 0, 0);
+					__builtin_prefetch (&b[stride], 0, 1);
 						}
-							if(ext_flg == 1)
-									break;
 					}
-							if(ext_flg == 1)
-									break;
 			}
+out222:
 			ext_flg = 0;
-			for(l = (rd_dist - wr_dist); l < rd_dist; l+=(ldim + 1)*(ldim + 1)){
-					for(j = (rd_dist - wr_dist); j < rd_dist; j += (ldim + 1)){
-							for(k = (rd_dist - wr_dist); k < rd_dist; k++){
+			for(l = (ldim + 1)*(ldim + 1); l < ((ldim + 1)*(ldim + 1)*(ldim));l+=(ldim + 1)*(ldim + 1)){
+					for(j = (ldim+1); j < ( (ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
+							for(k = 1; k < (ldim); k++){
 									stride = l + j + k;
 									if(stride > (rd_dist)){
-											ext_flg = 1;
-											break;
+											goto out333;
 									}
 					__builtin_prefetch (&a[stride-(rd_dist - wr_dist)], 1, 0);
-					__builtin_prefetch (&b[stride], 0, 0);
+					__builtin_prefetch (&b[stride], 0, 1);
 						}
-							if(ext_flg == 1)
-									break;
 					}
-							if(ext_flg == 1)
-									break;
 			}
 						}
+out333:
 			MPI_Barrier(MPI_COMM_WORLD);
 			clock_gettime( CLOCK_MONOTONIC, &ostop);
 			if(rank == 0){
@@ -1218,13 +1167,13 @@ out77:
 			MPI_Barrier(MPI_COMM_WORLD);
 			clock_gettime( CLOCK_MONOTONIC, &begin);
 			for(l = (ldim + 1)*(ldim + 1); l < ((ldim + 1)*(ldim + 1)*(ldim));l+=(ldim + 1)*(ldim + 1)){
-					for(j = (ldim+1); j < ( (ldim +1)*(ldim + 1) - 2*(ldim + 1)); j += (ldim + 1)){
+					for(j = (ldim+1); j < ( (ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
 							for(k = 1; k < (ldim); k+=4){
 									stride = l + j + k;
 									if(stride > ((ldim + 1)*(ldim + 1)*(ldim)-bdist))
 											goto out555;
 								__builtin_prefetch (&a[stride+(bdist)], 1, 0);
-								__builtin_prefetch (&b[stride+bdist], 0, 0);
+								__builtin_prefetch (&b[stride+bdist], 0, 1);
 								for(inner=0;inner<4;inner++)
 									a[stride+inner] = b[stride+inner] + b[stride+1+inner] + b[stride-1+inner] + b[stride+ldim+inner] + b[stride-ldim+inner] + b[stride+ldim+1+inner] + b[stride+ldim-1+inner] + b[stride-(ldim+1)+inner] + b[stride-(ldim-1)+inner];
 							}
@@ -1238,7 +1187,7 @@ out555:
 									stride = l + j + k;
 									if(stride > ((ldim + 1)*(ldim + 1)*(ldim)-rd_dist))
 											goto out666;
-									__builtin_prefetch (&b[stride+rd_dist], 0, 0);
+									__builtin_prefetch (&b[stride+rd_dist], 0, 1);
 									for(inner=0;inner<4;inner++)
 										a[stride+inner] = b[stride+inner] + b[stride+1+inner] + b[stride-1+inner] + b[stride+ldim+inner] + b[stride-ldim+inner] + b[stride+ldim+1+inner] + b[stride+ldim-1+inner] + b[stride-(ldim+1)+inner] + b[stride-(ldim-1)+inner];
 							}
@@ -1260,7 +1209,7 @@ out666:
 									stride = l + j + k;
 									if(stride > ((ldim + 1)*(ldim + 1)*(ldim)-wr_dist))
 											goto out777;
-									__builtin_prefetch (&b[stride+wr_dist], 1, 0);
+									__builtin_prefetch (&a[stride+wr_dist], 1, 0);
 									for(inner=0;inner<4;inner++)
 										a[stride+inner] = b[stride+inner] + b[stride+1+inner] + b[stride-1+inner] + b[stride+ldim+inner] + b[stride-ldim+inner] + b[stride+ldim+1+inner] + b[stride+ldim-1+inner] + b[stride-(ldim+1)+inner] + b[stride-(ldim-1)+inner];
 							}
@@ -1293,84 +1242,67 @@ out777:
                         clock_gettime( CLOCK_MONOTONIC, &obegin);
 //#pragma omp parallel for
 						if(wr_dist >= rd_dist){
-			for(l = (ldim + 1)*(ldim + 1); l < (wr_dist - rd_dist); l+=(ldim + 1)*(ldim + 1)){
-					for(j = (ldim+1); j < (wr_dist - rd_dist); j += (ldim + 1)){
-							for(k = 1; k < (wr_dist - rd_dist); k++){
+			for(l = (ldim + 1)*(ldim + 1); l < ((ldim + 1)*(ldim + 1)*(ldim));l+=(ldim + 1)*(ldim + 1)){
+					for(j = (ldim+1); j < ( (ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
+							for(k = 1; k < (ldim); k++){
 									stride = l + j + k;
 									if(stride > (wr_dist - rd_dist))
 									{
-											ext_flg = 1;
-											break;
+											goto out1111;
 									}
 									__builtin_prefetch (&a[stride], 1, 0);
 							}
-							if(ext_flg == 1)
-									break;
 					}
-							if(ext_flg == 1)
-									break;
 			}
+out1111:
 			ext_flg = 0;
-			for(l = (wr_dist - rd_dist); l < wr_dist; l+=(ldim + 1)*(ldim + 1)){
-					for(j = (wr_dist - rd_dist); j < wr_dist; j += (ldim + 1)){
-							for(k = (wr_dist - rd_dist); k < wr_dist; k++){
+			for(l = (ldim + 1)*(ldim + 1); l < ((ldim + 1)*(ldim + 1)*(ldim));l+=(ldim + 1)*(ldim + 1)){
+					for(j = (ldim+1); j < ( (ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
+							for(k = 1; k < (ldim); k++){
 									stride = l + j + k;
 									if(stride > (wr_dist))
 									{
-											ext_flg = 1;
-											break;
+											goto out3333;
 									}
 					__builtin_prefetch (&a[stride], 1, 0);
-					__builtin_prefetch (&b[stride-(wr_dist - rd_dist)], 0, 0);
-					__builtin_prefetch (&b[stride+(ldim*ldim)-(wr_dist - rd_dist)], 0, 0);
+					__builtin_prefetch (&b[stride-(wr_dist - rd_dist)], 0, 1);
+					__builtin_prefetch (&b[stride+(ldim*ldim)-(wr_dist - rd_dist)], 0, 1);
 							}
-							if(ext_flg == 1)
-									break;
 					}
-							if(ext_flg == 1)
-									break;
 			}
 						}else{
 			ext_flg = 0;
-			for(l = (ldim + 1)*(ldim + 1); l < (rd_dist - wr_dist); l+=(ldim + 1)*(ldim + 1)){
-					for(j = (ldim+1); j < (rd_dist - wr_dist); j += (ldim + 1)){
-							for(k = 1; k < (rd_dist - wr_dist); k++){
+			for(l = (ldim + 1)*(ldim + 1); l < ((ldim + 1)*(ldim + 1)*(ldim));l+=(ldim + 1)*(ldim + 1)){
+					for(j = (ldim+1); j < ( (ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
+							for(k = 1; k < (ldim); k++){
 									stride = l + j + k;
 									if(stride > (rd_dist - wr_dist))
 									{
-											ext_flg = 1;
-											break;
+											goto out2222;
 									}
-					__builtin_prefetch (&b[stride], 0, 0);
-					__builtin_prefetch (&b[stride+(ldim*ldim)], 0, 0);
+					__builtin_prefetch (&b[stride], 0, 1);
+					__builtin_prefetch (&b[stride+(ldim*ldim)], 0, 1);
 						}
-							if(ext_flg == 1)
-									break;
 					}
-							if(ext_flg == 1)
-									break;
 			}
+out2222:
 			ext_flg = 0;
-			for(l = (rd_dist - wr_dist); l < rd_dist; l+=(ldim + 1)*(ldim + 1)){
-					for(j = (rd_dist - wr_dist); j < rd_dist; j += (ldim + 1)){
-							for(k = (rd_dist - wr_dist); k < rd_dist; k++){
+			for(l = (ldim + 1)*(ldim + 1); l < ((ldim + 1)*(ldim + 1)*(ldim));l+=(ldim + 1)*(ldim + 1)){
+					for(j = (ldim+1); j < ( (ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
+							for(k = 1; k < (ldim); k++){
 									stride = l + j + k;
 									if(stride > (rd_dist))
 									{
-											ext_flg = 1;
-											break;
+											goto out3333;
 									}
 					__builtin_prefetch (&a[stride-(rd_dist - wr_dist)], 1, 0);
-					__builtin_prefetch (&b[stride], 0, 0);
-					__builtin_prefetch (&b[stride+(ldim*ldim)], 0, 0);
+					__builtin_prefetch (&b[stride], 0, 1);
+					__builtin_prefetch (&b[stride+(ldim*ldim)], 0, 1);
 						}
-							if(ext_flg == 1)
-									break;
 					}
-							if(ext_flg == 1)
-									break;
 			}
 						}
+out3333:
 			MPI_Barrier(MPI_COMM_WORLD);
 			clock_gettime( CLOCK_MONOTONIC, &ostop);
 			if(rank == 0){
@@ -1383,14 +1315,14 @@ out777:
 			MPI_Barrier(MPI_COMM_WORLD);
 			clock_gettime( CLOCK_MONOTONIC, &begin);
 			for(l = (ldim + 1)*(ldim + 1); l < ((ldim + 1)*(ldim + 1)*(ldim));l+=(ldim + 1)*(ldim + 1)){
-					for(j = (ldim+1); j < ( (ldim +1)*(ldim + 1) - 2*(ldim + 1)); j += (ldim + 1)){
+					for(j = (ldim+1); j < ( (ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
 							for(k = 1; k < (ldim); k+=4){
 									stride = l + j + k;
 									if(stride > ((ldim + 1)*(ldim + 1)*(ldim)-bdist))
 											goto out5555;
 								__builtin_prefetch (&a[stride+(bdist)], 1, 0);
-								__builtin_prefetch (&b[stride+bdist], 0, 0);
-								__builtin_prefetch (&b[stride+(ldim*ldim)+bdist], 0, 0);
+								__builtin_prefetch (&b[stride+bdist], 0, 1);
+								__builtin_prefetch (&b[stride+(ldim*ldim)+bdist], 0, 1);
 								for(inner=0;inner<4;inner++)
 									a[stride+inner] = b[stride+inner] + b[stride+1+inner] + b[stride-1+inner] + b[stride+ldim+inner] + b[stride-ldim+inner] + b[stride + ldim*ldim+inner] + b[stride - ldim*ldim+inner];
 							}
@@ -1404,8 +1336,8 @@ out5555:
 									stride = l + j + k;
 									if(stride > ((ldim + 1)*(ldim + 1)*(ldim)-rd_dist))
 											goto out6666;
-									__builtin_prefetch (&b[stride+rd_dist], 0, 0);
-									__builtin_prefetch (&b[stride+(ldim*ldim)+rd_dist], 0, 0);
+									__builtin_prefetch (&b[stride+rd_dist], 0, 1);
+									__builtin_prefetch (&b[stride+(ldim*ldim)+rd_dist], 0, 1);
 									for(inner=0;inner<4;inner++)
 										a[stride+inner] = b[stride+inner] + b[stride+1+inner] + b[stride-1+inner] + b[stride+ldim+inner] + b[stride-ldim+inner] + b[stride + ldim*ldim+inner] + b[stride - ldim*ldim+inner];
 							}
@@ -1427,8 +1359,7 @@ out6666:
 									stride = l + j + k;
 									if(stride > ((ldim + 1)*(ldim + 1)*(ldim)-wr_dist))
 											goto out7777;
-									__builtin_prefetch (&b[stride+wr_dist], 1, 0);
-									__builtin_prefetch (&b[stride+(ldim*ldim)+wr_dist], 0, 0);
+									__builtin_prefetch (&a[stride+wr_dist], 1, 0);
 									for(inner=0;inner<4;inner++)
 										a[stride+inner] = b[stride+inner] + b[stride+1+inner] + b[stride-1+inner] + b[stride+ldim+inner] + b[stride-ldim+inner] + b[stride + ldim*ldim+inner] + b[stride - ldim*ldim+inner];
 							}
@@ -1461,84 +1392,66 @@ out7777:
                         clock_gettime( CLOCK_MONOTONIC, &obegin);
 //#pragma omp parallel for
 						if(wr_dist >= rd_dist){
-			for(l = (ldim + 1)*(ldim + 1); l < (wr_dist - rd_dist); l+=(ldim + 1)*(ldim + 1)){
-					for(j = (ldim+1); j < (wr_dist - rd_dist); j += (ldim + 1)){
-							for(k = 1; k < (wr_dist - rd_dist); k++){
+			for(l = (ldim + 1)*(ldim + 1); l < ((ldim + 1)*(ldim + 1)*(ldim));l+=(ldim + 1)*(ldim + 1)){
+					for(j = (ldim+1); j < ( (ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
+							for(k = 1; k < (ldim); k++){
 									stride = l + j + k;
 									if(stride > (wr_dist - rd_dist))
 									{
-											ext_flg = 1;
-											break;
+											goto out11111;
 									}
 									__builtin_prefetch (&a[stride], 1, 0);
 							}
-							if(ext_flg == 1)
-									break;
 					}
-							if(ext_flg == 1)
-									break;
 			}
+out11111:
 			ext_flg = 0;
-			for(l = (wr_dist - rd_dist); l < wr_dist; l+=(ldim + 1)*(ldim + 1)){
-					for(j = (wr_dist - rd_dist); j < wr_dist; j += (ldim + 1)){
-							for(k = (wr_dist - rd_dist); k < wr_dist; k++){
+			for(l = (ldim + 1)*(ldim + 1); l < ((ldim + 1)*(ldim + 1)*(ldim));l+=(ldim + 1)*(ldim + 1)){
+					for(j = (ldim+1); j < ( (ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
+							for(k = 1; k < (ldim); k++){
 									stride = l + j + k;
 									if(stride > (wr_dist))
 									{
-											ext_flg = 1;
-											break;
+										goto out33333;
 									}
 					__builtin_prefetch (&a[stride], 1, 0);
-					__builtin_prefetch (&b[stride-(wr_dist - rd_dist)], 0, 0);
-					__builtin_prefetch (&b[stride+(ldim*ldim)-(wr_dist - rd_dist)], 0, 0);
+					__builtin_prefetch (&b[stride-(wr_dist - rd_dist)], 0, 1);
+					__builtin_prefetch (&b[stride+(ldim*ldim)-(wr_dist - rd_dist)], 0, 1);
 							}
-							if(ext_flg == 1)
-									break;
 					}
-							if(ext_flg == 1)
-									break;
 			}
 						}else{
 			ext_flg = 0;
-			for(l = (ldim + 1)*(ldim + 1); l < (rd_dist - wr_dist); l+=(ldim + 1)*(ldim + 1)){
-					for(j = (ldim+1); j < (rd_dist - wr_dist); j += (ldim + 1)){
-							for(k = 1; k < (rd_dist - wr_dist); k++){
+			for(l = (ldim + 1)*(ldim + 1); l < ((ldim + 1)*(ldim + 1)*(ldim));l+=(ldim + 1)*(ldim + 1)){
+					for(j = (ldim+1); j < ( (ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
+							for(k = 1; k < (ldim); k++){
 									stride = l + j + k;
 									if(stride > (rd_dist - wr_dist))
 									{
-											ext_flg = 1;
-											break;
+											goto out22222;
 									}
-					__builtin_prefetch (&b[stride], 0, 0);
-					__builtin_prefetch (&b[stride+(ldim*ldim)], 0, 0);
+					__builtin_prefetch (&b[stride], 0, 1);
+					__builtin_prefetch (&b[stride+(ldim*ldim)], 0, 1);
 						}
-							if(ext_flg == 1)
-									break;
 					}
-							if(ext_flg == 1)
-									break;
 			}
 			ext_flg = 0;
-			for(l = (rd_dist - wr_dist); l < rd_dist; l+=(ldim + 1)*(ldim + 1)){
-					for(j = (rd_dist - wr_dist); j < rd_dist; j += (ldim + 1)){
-							for(k = (rd_dist - wr_dist); k < rd_dist; k++){
+			for(l = (ldim + 1)*(ldim + 1); l < ((ldim + 1)*(ldim + 1)*(ldim));l+=(ldim + 1)*(ldim + 1)){
+					for(j = (ldim+1); j < ( (ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
+							for(k = 1; k < (ldim); k++){
 									stride = l + j + k;
 									if(stride > (rd_dist))
 									{
-											ext_flg = 1;
-											break;
+											goto out33333;
 									}
 					__builtin_prefetch (&a[stride-(rd_dist - wr_dist)], 1, 0);
-					__builtin_prefetch (&b[stride], 0, 0);
-					__builtin_prefetch (&b[stride+(ldim*ldim)], 0, 0);
+					__builtin_prefetch (&b[stride], 0, 1);
+					__builtin_prefetch (&b[stride+(ldim*ldim)], 0, 1);
 						}
-							if(ext_flg == 1)
-									break;
 					}
-							if(ext_flg == 1)
-									break;
 			}
 						}
+out33333:
 			MPI_Barrier(MPI_COMM_WORLD);
 			clock_gettime( CLOCK_MONOTONIC, &ostop);
 			if(rank == 0){
@@ -1551,14 +1464,14 @@ out7777:
 			MPI_Barrier(MPI_COMM_WORLD);
 			clock_gettime( CLOCK_MONOTONIC, &begin);
 			for(l = (ldim + 1)*(ldim + 1); l < ((ldim + 1)*(ldim + 1)*(ldim));l+=(ldim + 1)*(ldim + 1)){
-					for(j = (ldim+1); j < ( (ldim +1)*(ldim + 1) - 2*(ldim + 1)); j += (ldim + 1)){
+					for(j = (ldim+1); j < ( (ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
 							for(k = 1; k < (ldim); k+=4){
 									stride = l + j + k;
 									if(stride > ((ldim + 1)*(ldim + 1)*(ldim)-bdist))
 											goto out55555;
 								__builtin_prefetch (&a[stride+(bdist)], 1, 0);
-								__builtin_prefetch (&b[stride+bdist], 0, 0);
-								__builtin_prefetch (&b[stride+(ldim*ldim)+bdist], 0, 0);
+								__builtin_prefetch (&b[stride+bdist], 0, 1);
+								__builtin_prefetch (&b[stride+(ldim*ldim)+bdist], 0, 1);
 								for(inner=0;inner<4;inner++)
 									a[stride+inner] = b[stride+inner] + b[stride+inner+1] + b[stride+inner-1] + b[stride+inner+ldim] + b[stride+inner-ldim] + b[stride+inner+ldim+1] + b[stride+inner+ldim-1] + b[stride+inner-(ldim+1)] + b[stride+inner-(ldim-1)] + b[stride+inner+(ldim*ldim)] + b[stride+inner-(ldim*ldim)] + b[stride+inner+(ldim*ldim)+1] + b[stride+inner-(ldim*ldim)+1] + b[stride+inner+(ldim*ldim)-1] + b[stride+inner-(ldim*ldim)-1] + b[stride+inner+(ldim*ldim)+ldim] + b[stride+inner-(ldim*ldim)+ldim] + b[stride+inner+(ldim*ldim)-ldim] + b[stride+inner-(ldim*ldim)-ldim] + b[stride+inner+(ldim*ldim)+ldim+1] + b[stride+inner-(ldim*ldim)+ldim+1] + b[stride+inner+(ldim*ldim)-ldim+1] + b[stride+inner-(ldim*ldim)-ldim+1] + b[stride+inner+(ldim*ldim)+ldim-1] + b[stride+inner-(ldim*ldim)+ldim-1] + b[stride+inner+(ldim*ldim)-ldim-1] + b[stride+inner-(ldim*ldim)-ldim-1];
 							}
@@ -1572,8 +1485,8 @@ out55555:
 									stride = l + j + k;
 									if(stride > ((ldim + 1)*(ldim + 1)*(ldim)-rd_dist))
 											goto out66666;
-									__builtin_prefetch (&b[stride+rd_dist], 0, 0);
-									__builtin_prefetch (&b[stride+(ldim*ldim)+rd_dist], 0, 0);
+									__builtin_prefetch (&b[stride+rd_dist], 0, 1);
+									__builtin_prefetch (&b[stride+(ldim*ldim)+rd_dist], 0, 1);
 									for(inner=0;inner<4;inner++)
 										a[stride+inner] = b[stride+inner] + b[stride+inner+1] + b[stride+inner-1] + b[stride+inner+ldim] + b[stride+inner-ldim] + b[stride+inner+ldim+1] + b[stride+inner+ldim-1] + b[stride+inner-(ldim+1)] + b[stride+inner-(ldim-1)] + b[stride+inner+(ldim*ldim)] + b[stride+inner-(ldim*ldim)] + b[stride+inner+(ldim*ldim)+1] + b[stride+inner-(ldim*ldim)+1] + b[stride+inner+(ldim*ldim)-1] + b[stride+inner-(ldim*ldim)-1] + b[stride+inner+(ldim*ldim)+ldim] + b[stride+inner-(ldim*ldim)+ldim] + b[stride+inner+(ldim*ldim)-ldim] + b[stride+inner-(ldim*ldim)-ldim] + b[stride+inner+(ldim*ldim)+ldim+1] + b[stride+inner-(ldim*ldim)+ldim+1] + b[stride+inner+(ldim*ldim)-ldim+1] + b[stride+inner-(ldim*ldim)-ldim+1] + b[stride+inner+(ldim*ldim)+ldim-1] + b[stride+inner-(ldim*ldim)+ldim-1] + b[stride+inner+(ldim*ldim)-ldim-1] + b[stride+inner-(ldim*ldim)-ldim-1];
 							}
@@ -1595,8 +1508,7 @@ out66666:
 									stride = l + j + k;
 									if(stride > ((ldim + 1)*(ldim + 1)*(ldim)-wr_dist))
 											goto out77777;
-									__builtin_prefetch (&b[stride+wr_dist], 1, 0);
-									__builtin_prefetch (&b[stride+(ldim*ldim)+wr_dist], 0, 0);
+									__builtin_prefetch (&a[stride+wr_dist], 1, 0);
 									for(inner=0;inner<4;inner++)
 									a[stride+inner] = b[stride+inner] + b[stride+inner+1] + b[stride+inner-1] + b[stride+inner+ldim] + b[stride+inner-ldim] + b[stride+inner+ldim+1] + b[stride+inner+ldim-1] + b[stride+inner-(ldim+1)] + b[stride+inner-(ldim-1)] + b[stride+inner+(ldim*ldim)] + b[stride+inner-(ldim*ldim)] + b[stride+inner+(ldim*ldim)+1] + b[stride+inner-(ldim*ldim)+1] + b[stride+inner+(ldim*ldim)-1] + b[stride+inner-(ldim*ldim)-1] + b[stride+inner+(ldim*ldim)+ldim] + b[stride+inner-(ldim*ldim)+ldim] + b[stride+inner+(ldim*ldim)-ldim] + b[stride+inner-(ldim*ldim)-ldim] + b[stride+inner+(ldim*ldim)+ldim+1] + b[stride+inner-(ldim*ldim)+ldim+1] + b[stride+inner+(ldim*ldim)-ldim+1] + b[stride+inner-(ldim*ldim)-ldim+1] + b[stride+inner+(ldim*ldim)+ldim-1] + b[stride+inner-(ldim*ldim)+ldim-1] + b[stride+inner+(ldim*ldim)-ldim-1] + b[stride+inner-(ldim*ldim)-ldim-1];
 							}
