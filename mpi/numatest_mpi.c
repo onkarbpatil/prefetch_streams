@@ -948,7 +948,7 @@ out7:
 			t_sten_t += accum;
 			if(accum < t_sten_tmin)
 					t_sten_tmin = accum;
-                        t_sten_avg += ((3*size*procs*1.0E-06)/(long double)(accum - empty));
+                        t_sten_avg += ((4*size*procs*1.0E-06)/(long double)(accum - empty));
 			}
 
 
@@ -1090,7 +1090,7 @@ out77:
 				f_sten_t += accum;
 				if(accum < f_sten_tmin)
 					f_sten_tmin = accum;
-            	f_sten_avg += ((5*size*procs*1.0E-06)/(long double)(accum - empty));
+            	f_sten_avg += ((6*size*procs*1.0E-06)/(long double)(accum - empty));
 			}
 
 
@@ -1232,7 +1232,7 @@ out777:
 				n_sten_t += accum;
 				if(accum < n_sten_tmin)
 					n_sten_tmin = accum;
-            	n_sten_avg += ((9*size*procs*1.0E-06)/(long double)(accum - empty));
+            	n_sten_avg += ((10*size*procs*1.0E-06)/(long double)(accum - empty));
 			}
 
 
@@ -1382,7 +1382,7 @@ out7777:
 				s_sten_t += accum;
 				if(accum < s_sten_tmin)
 					s_sten_tmin = accum;
-            	s_sten_avg += ((7*size*procs*1.0E-06)/(long double)(accum - empty));
+            	s_sten_avg += ((8*size*procs*1.0E-06)/(long double)(accum - empty));
 			}
 
 
@@ -1531,7 +1531,7 @@ out77777:
 				t7_sten_t += accum;
 				if(accum < t7_sten_tmin)
 					t7_sten_tmin = accum;
-            	t7_sten_avg += ((27*size*procs*1.0E-06)/(long double)(accum - empty));
+            	t7_sten_avg += ((28*size*procs*1.0E-06)/(long double)(accum - empty));
 			}
 
 
