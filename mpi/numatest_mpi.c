@@ -884,13 +884,13 @@ out3:
 			clock_gettime( CLOCK_MONOTONIC, &begin);
 			for(l = (ldim + 1)*(ldim + 1); l < ((ldim + 1)*(ldim + 1)*(ldim));l+=(ldim + 1)*(ldim + 1)){
 					for(j = (ldim+1); j < ( (ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
-							for(k = 1; k < (ldim); k+=4){
+							for(k = 1; k < (ldim); k+=16){
 									stride = l + j + k;
 									if(stride > ((ldim + 1)*(ldim + 1)*(ldim)-bdist))
 											goto out5;
 								__builtin_prefetch (&a[stride+(bdist)], 1, 0);
 								__builtin_prefetch (&b[stride+bdist], 0, 1);
-								for(inner=0;inner<4;inner++)
+								for(inner=0;inner<16;inner++)
 									a[stride+inner] = b[stride+inner] + b[stride+1+inner] + b[stride-1+inner];
 							}
 					}
@@ -899,12 +899,12 @@ out5:
 						if(wr_dist >= rd_dist){
 			for(l = l; l < ((ldim + 1)*(ldim + 1)*(ldim)); l+=(ldim + 1)*(ldim + 1)){
 					for(j = j; j < ((ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
-							for(k = k; k < (ldim); k+=4){
+							for(k = k; k < (ldim); k+=16){
 									stride = l + j + k;
 									if(stride > ((ldim + 1)*(ldim + 1)*(ldim)-rd_dist))
 											goto out6;
 									__builtin_prefetch (&b[stride+rd_dist], 0, 1);
-									for(inner=0;inner<4;inner++)
+									for(inner=0;inner<16;inner++)
 										a[stride+inner] = b[stride+inner] + b[stride+1+inner] + b[stride-1+inner];
 							}
 					}
@@ -921,12 +921,12 @@ out6:
 						}else{
 			for(l = l; l < ((ldim + 1)*(ldim + 1)*(ldim)); l+=(ldim + 1)*(ldim + 1)){
 					for(j = j; j < ((ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
-							for(k = k; k < (ldim); k+=4){
+							for(k = k; k < (ldim); k+=16){
 									stride = l + j + k;
 									if(stride > ((ldim + 1)*(ldim + 1)*(ldim)-wr_dist))
 											goto out7;
 									__builtin_prefetch (&a[stride+wr_dist], 1, 0);
-									for(inner=0;inner<4;inner++)
+									for(inner=0;inner<16;inner++)
 										a[stride+inner] = b[stride+inner] + b[stride+1+inner] + b[stride-1+inner];
 							}
 					}
@@ -1026,13 +1026,13 @@ out33:
 			clock_gettime( CLOCK_MONOTONIC, &begin);
 			for(l = (ldim + 1)*(ldim + 1); l < ((ldim + 1)*(ldim + 1)*(ldim));l+=(ldim + 1)*(ldim + 1)){
 					for(j = (ldim+1); j < ( (ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
-							for(k = 1; k < (ldim); k+=4){
+							for(k = 1; k < (ldim); k+=16){
 									stride = l + j + k;
 									if(stride > ((ldim + 1)*(ldim + 1)*(ldim)-bdist))
 											goto out55;
 								__builtin_prefetch (&a[stride+(bdist)], 1, 0);
 								__builtin_prefetch (&b[stride+bdist], 0, 1);
-								for(inner=0;inner<4;inner++)
+								for(inner=0;inner<16;inner++)
 									a[stride+inner] = b[stride+inner] + b[stride+1+inner] + b[stride-1+inner] + b[stride+ldim+inner] + b[stride-ldim+inner];
 							}
 					}
@@ -1041,12 +1041,12 @@ out55:
 						if(wr_dist >= rd_dist){
 			for(l = l; l < ((ldim + 1)*(ldim + 1)*(ldim)); l+=(ldim + 1)*(ldim + 1)){
 					for(j = j; j < ((ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
-							for(k = k; k < (ldim); k+=4){
+							for(k = k; k < (ldim); k+=16){
 									stride = l + j + k;
 									if(stride > ((ldim + 1)*(ldim + 1)*(ldim)-rd_dist))
 											goto out66;
 									__builtin_prefetch (&b[stride+rd_dist], 0, 1);
-									for(inner=0;inner<4;inner++)
+									for(inner=0;inner<16;inner++)
 										a[stride+inner] = b[stride+inner] + b[stride+1+inner] + b[stride-1+inner] + b[stride+ldim+inner] + b[stride-ldim+inner];
 							}
 					}
@@ -1063,12 +1063,12 @@ out66:
 						}else{
 			for(l = l; l < ((ldim + 1)*(ldim + 1)*(ldim)); l+=(ldim + 1)*(ldim + 1)){
 					for(j = j; j < ((ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
-							for(k = k; k < (ldim); k+=4){
+							for(k = k; k < (ldim); k+=16){
 									stride = l + j + k;
 									if(stride > ((ldim + 1)*(ldim + 1)*(ldim)-wr_dist))
 											goto out77;
 									__builtin_prefetch (&a[stride+wr_dist], 1, 0);
-									for(inner=0;inner<4;inner++)
+									for(inner=0;inner<16;inner++)
 										a[stride+inner] = b[stride+inner] + b[stride+1+inner] + b[stride-1+inner] + b[stride+ldim+inner] + b[stride-ldim+inner];
 							}
 					}
@@ -1168,13 +1168,13 @@ out333:
 			clock_gettime( CLOCK_MONOTONIC, &begin);
 			for(l = (ldim + 1)*(ldim + 1); l < ((ldim + 1)*(ldim + 1)*(ldim));l+=(ldim + 1)*(ldim + 1)){
 					for(j = (ldim+1); j < ( (ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
-							for(k = 1; k < (ldim); k+=4){
+							for(k = 1; k < (ldim); k+=16){
 									stride = l + j + k;
 									if(stride > ((ldim + 1)*(ldim + 1)*(ldim)-bdist))
 											goto out555;
 								__builtin_prefetch (&a[stride+(bdist)], 1, 0);
 								__builtin_prefetch (&b[stride+bdist], 0, 1);
-								for(inner=0;inner<4;inner++)
+								for(inner=0;inner<16;inner++)
 									a[stride+inner] = b[stride+inner] + b[stride+1+inner] + b[stride-1+inner] + b[stride+ldim+inner] + b[stride-ldim+inner] + b[stride+ldim+1+inner] + b[stride+ldim-1+inner] + b[stride-(ldim+1)+inner] + b[stride-(ldim-1)+inner];
 							}
 					}
@@ -1183,12 +1183,12 @@ out555:
 						if(wr_dist >= rd_dist){
 			for(l = l; l < ((ldim + 1)*(ldim + 1)*(ldim)); l+=(ldim + 1)*(ldim + 1)){
 					for(j = j; j < ((ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
-							for(k = k; k < (ldim); k+=4){
+							for(k = k; k < (ldim); k+=16){
 									stride = l + j + k;
 									if(stride > ((ldim + 1)*(ldim + 1)*(ldim)-rd_dist))
 											goto out666;
 									__builtin_prefetch (&b[stride+rd_dist], 0, 1);
-									for(inner=0;inner<4;inner++)
+									for(inner=0;inner<16;inner++)
 										a[stride+inner] = b[stride+inner] + b[stride+1+inner] + b[stride-1+inner] + b[stride+ldim+inner] + b[stride-ldim+inner] + b[stride+ldim+1+inner] + b[stride+ldim-1+inner] + b[stride-(ldim+1)+inner] + b[stride-(ldim-1)+inner];
 							}
 					}
@@ -1205,12 +1205,12 @@ out666:
 						}else{
 			for(l = l; l < ((ldim + 1)*(ldim + 1)*(ldim)); l+=(ldim + 1)*(ldim + 1)){
 					for(j = j; j < ((ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
-							for(k = k; k < (ldim); k+=4){
+							for(k = k; k < (ldim); k+=16){
 									stride = l + j + k;
 									if(stride > ((ldim + 1)*(ldim + 1)*(ldim)-wr_dist))
 											goto out777;
 									__builtin_prefetch (&a[stride+wr_dist], 1, 0);
-									for(inner=0;inner<4;inner++)
+									for(inner=0;inner<16;inner++)
 										a[stride+inner] = b[stride+inner] + b[stride+1+inner] + b[stride-1+inner] + b[stride+ldim+inner] + b[stride-ldim+inner] + b[stride+ldim+1+inner] + b[stride+ldim-1+inner] + b[stride-(ldim+1)+inner] + b[stride-(ldim-1)+inner];
 							}
 					}
@@ -1316,14 +1316,14 @@ out3333:
 			clock_gettime( CLOCK_MONOTONIC, &begin);
 			for(l = (ldim + 1)*(ldim + 1); l < ((ldim + 1)*(ldim + 1)*(ldim));l+=(ldim + 1)*(ldim + 1)){
 					for(j = (ldim+1); j < ( (ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
-							for(k = 1; k < (ldim); k+=4){
+							for(k = 1; k < (ldim); k+=16){
 									stride = l + j + k;
 									if(stride > ((ldim + 1)*(ldim + 1)*(ldim)-bdist))
 											goto out5555;
 								__builtin_prefetch (&a[stride+(bdist)], 1, 0);
 								__builtin_prefetch (&b[stride+bdist], 0, 1);
 								__builtin_prefetch (&b[stride+(ldim*ldim)+bdist], 0, 1);
-								for(inner=0;inner<4;inner++)
+								for(inner=0;inner<16;inner++)
 									a[stride+inner] = b[stride+inner] + b[stride+1+inner] + b[stride-1+inner] + b[stride+ldim+inner] + b[stride-ldim+inner] + b[stride + ldim*ldim+inner] + b[stride - ldim*ldim+inner];
 							}
 					}
@@ -1332,13 +1332,13 @@ out5555:
 						if(wr_dist >= rd_dist){
 			for(l = l; l < ((ldim + 1)*(ldim + 1)*(ldim)); l+=(ldim + 1)*(ldim + 1)){
 					for(j = j; j < ((ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
-							for(k = k; k < (ldim); k+=4){
+							for(k = k; k < (ldim); k+=16){
 									stride = l + j + k;
 									if(stride > ((ldim + 1)*(ldim + 1)*(ldim)-rd_dist))
 											goto out6666;
 									__builtin_prefetch (&b[stride+rd_dist], 0, 1);
 									__builtin_prefetch (&b[stride+(ldim*ldim)+rd_dist], 0, 1);
-									for(inner=0;inner<4;inner++)
+									for(inner=0;inner<16;inner++)
 										a[stride+inner] = b[stride+inner] + b[stride+1+inner] + b[stride-1+inner] + b[stride+ldim+inner] + b[stride-ldim+inner] + b[stride + ldim*ldim+inner] + b[stride - ldim*ldim+inner];
 							}
 					}
@@ -1355,12 +1355,12 @@ out6666:
 						}else{
 			for(l = l; l < ((ldim + 1)*(ldim + 1)*(ldim)); l+=(ldim + 1)*(ldim + 1)){
 					for(j = j; j < ((ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
-							for(k = k; k < (ldim); k+=4){
+							for(k = k; k < (ldim); k+=16){
 									stride = l + j + k;
 									if(stride > ((ldim + 1)*(ldim + 1)*(ldim)-wr_dist))
 											goto out7777;
 									__builtin_prefetch (&a[stride+wr_dist], 1, 0);
-									for(inner=0;inner<4;inner++)
+									for(inner=0;inner<16;inner++)
 										a[stride+inner] = b[stride+inner] + b[stride+1+inner] + b[stride-1+inner] + b[stride+ldim+inner] + b[stride-ldim+inner] + b[stride + ldim*ldim+inner] + b[stride - ldim*ldim+inner];
 							}
 					}
@@ -1466,14 +1466,14 @@ out33333:
 			clock_gettime( CLOCK_MONOTONIC, &begin);
 			for(l = (ldim + 1)*(ldim + 1); l < ((ldim + 1)*(ldim + 1)*(ldim));l+=(ldim + 1)*(ldim + 1)){
 					for(j = (ldim+1); j < ( (ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
-							for(k = 1; k < (ldim); k+=4){
+							for(k = 1; k < (ldim); k+=16){
 									stride = l + j + k;
 									if(stride > ((ldim + 1)*(ldim + 1)*(ldim)-bdist))
 											goto out55555;
 								__builtin_prefetch (&a[stride+(bdist)], 1, 0);
 								__builtin_prefetch (&b[stride+bdist], 0, 1);
 								__builtin_prefetch (&b[stride+(ldim*ldim)+bdist], 0, 1);
-								for(inner=0;inner<4;inner++)
+								for(inner=0;inner<16;inner++)
 									a[stride+inner] = b[stride+inner] + b[stride+inner+1] + b[stride+inner-1] + b[stride+inner+ldim] + b[stride+inner-ldim] + b[stride+inner+ldim+1] + b[stride+inner+ldim-1] + b[stride+inner-(ldim+1)] + b[stride+inner-(ldim-1)] + b[stride+inner+(ldim*ldim)] + b[stride+inner-(ldim*ldim)] + b[stride+inner+(ldim*ldim)+1] + b[stride+inner-(ldim*ldim)+1] + b[stride+inner+(ldim*ldim)-1] + b[stride+inner-(ldim*ldim)-1] + b[stride+inner+(ldim*ldim)+ldim] + b[stride+inner-(ldim*ldim)+ldim] + b[stride+inner+(ldim*ldim)-ldim] + b[stride+inner-(ldim*ldim)-ldim] + b[stride+inner+(ldim*ldim)+ldim+1] + b[stride+inner-(ldim*ldim)+ldim+1] + b[stride+inner+(ldim*ldim)-ldim+1] + b[stride+inner-(ldim*ldim)-ldim+1] + b[stride+inner+(ldim*ldim)+ldim-1] + b[stride+inner-(ldim*ldim)+ldim-1] + b[stride+inner+(ldim*ldim)-ldim-1] + b[stride+inner-(ldim*ldim)-ldim-1];
 							}
 					}
@@ -1482,13 +1482,13 @@ out55555:
 						if(wr_dist >= rd_dist){
 			for(l = l; l < ((ldim + 1)*(ldim + 1)*(ldim)); l+=(ldim + 1)*(ldim + 1)){
 					for(j = j; j < ((ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
-							for(k = k; k < (ldim); k+=4){
+							for(k = k; k < (ldim); k+=16){
 									stride = l + j + k;
 									if(stride > ((ldim + 1)*(ldim + 1)*(ldim)-rd_dist))
 											goto out66666;
 									__builtin_prefetch (&b[stride+rd_dist], 0, 1);
 									__builtin_prefetch (&b[stride+(ldim*ldim)+rd_dist], 0, 1);
-									for(inner=0;inner<4;inner++)
+									for(inner=0;inner<16;inner++)
 										a[stride+inner] = b[stride+inner] + b[stride+inner+1] + b[stride+inner-1] + b[stride+inner+ldim] + b[stride+inner-ldim] + b[stride+inner+ldim+1] + b[stride+inner+ldim-1] + b[stride+inner-(ldim+1)] + b[stride+inner-(ldim-1)] + b[stride+inner+(ldim*ldim)] + b[stride+inner-(ldim*ldim)] + b[stride+inner+(ldim*ldim)+1] + b[stride+inner-(ldim*ldim)+1] + b[stride+inner+(ldim*ldim)-1] + b[stride+inner-(ldim*ldim)-1] + b[stride+inner+(ldim*ldim)+ldim] + b[stride+inner-(ldim*ldim)+ldim] + b[stride+inner+(ldim*ldim)-ldim] + b[stride+inner-(ldim*ldim)-ldim] + b[stride+inner+(ldim*ldim)+ldim+1] + b[stride+inner-(ldim*ldim)+ldim+1] + b[stride+inner+(ldim*ldim)-ldim+1] + b[stride+inner-(ldim*ldim)-ldim+1] + b[stride+inner+(ldim*ldim)+ldim-1] + b[stride+inner-(ldim*ldim)+ldim-1] + b[stride+inner+(ldim*ldim)-ldim-1] + b[stride+inner-(ldim*ldim)-ldim-1];
 							}
 					}
@@ -1505,7 +1505,7 @@ out66666:
 						}else{
 			for(l = l; l < ((ldim + 1)*(ldim + 1)*(ldim)); l+=(ldim + 1)*(ldim + 1)){
 					for(j = j; j < ((ldim +1)*(ldim + 1) - (ldim + 1)); j += (ldim + 1)){
-							for(k = k; k < (ldim); k+=4){
+							for(k = k; k < (ldim); k+=16){
 									stride = l + j + k;
 									if(stride > ((ldim + 1)*(ldim + 1)*(ldim)-wr_dist))
 											goto out77777;
