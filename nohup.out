@@ -1,0 +1,40 @@
+mpicc -o numatest_mpi test3.c numatest_mpi.c numatest_mpi.h -O1 -fopenmp -lnuma -lm
+numatest_mpi.c: In function ‘numatest’:
+numatest_mpi.c:1431:12: error: label ‘out22222’ used but not defined
+            goto out22222;
+            ^
+make: *** [numatest_mpi] Error 1
+#Strong scaling
+#NUM PROCS 1
+#NUM PROCS 24
+#NUM PROCS 48
+#NUM PROCS 72
+#NUM PROCS 96
+#Weak scaling
+#NUM PROCS 1
+#NUM PROCS 24
+#NUM PROCS 48
+#NUM PROCS 72
+#NUM PROCS 96
+mpicc -o numatest_mpi test3.c numatest_mpi_np.c numatest_mpi.h -O1 -fopenmp -lnuma -lm
+#Strong scaling
+#NUM PROCS 1
+#NUM PROCS 24
+#NUM PROCS 48
+make: `numatest_mpi' is up to date.
+#Strong scaling
+#NUM PROCS 1
+#NUM PROCS 24
+#NUM PROCS 48
+#NUM PROCS 72
+#NUM PROCS 96
+#Weak scaling
+#NUM PROCS 1
+#NUM PROCS 24
+#NUM PROCS 48
+#NUM PROCS 72
+#NUM PROCS 96
+make: `numatest_mpi' is up to date.
+#Strong scaling
+#NUM PROCS 1
+#NUM PROCS 24
