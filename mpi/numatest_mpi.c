@@ -1583,11 +1583,11 @@ out77777:
 		node_bw->col_avg = col_avg/10;
 		node_bw->rc_avg = rc_avg/10;
 		node_bw->l2cache_avg = l2cache_avg/10;
-		node_bw->t_sten_avg = t_sten_t/10;
-		node_bw->f_sten_avg = f_sten_t/10;
-		node_bw->n_sten_avg = n_sten_t/10;
-		node_bw->s_sten_avg = s_sten_t/10;
-		node_bw->t7_sten_avg = t7_sten_t/10;
+		node_bw->t_sten_avg = t_sten_avg/10;
+		node_bw->f_sten_avg = f_sten_avg/10;
+		node_bw->n_sten_avg = n_sten_avg/10;
+		node_bw->s_sten_avg = s_sten_avg/10;
+		node_bw->t7_sten_avg = t7_sten_avg/10;
 		node_bw->wr_only_t = wr_only_t/10;
 		node_bw->l2cache_t = l2cache_t/10;
 		node_bw->rand_t = rand_t/10;
