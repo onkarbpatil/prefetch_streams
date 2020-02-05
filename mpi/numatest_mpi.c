@@ -838,7 +838,7 @@ out1:
 											goto out3;
 									}
 					__builtin_prefetch (&a[stride], 1, 0);
-					__builtin_prefetch (&b[stride-(wr_dist - rd_dist)], 0, 1);
+					__builtin_prefetch (&b[stride-(wr_dist - rd_dist)], 0, 2);
 							}
 					}
 			}
@@ -851,7 +851,7 @@ out1:
 									if(stride > (rd_dist - wr_dist)){
 											goto out2;
 									}
-					__builtin_prefetch (&b[stride], 0, 1);
+					__builtin_prefetch (&b[stride], 0, 2);
 						}
 					}
 			}
@@ -865,7 +865,7 @@ out2:
 											goto out3;
 									}
 					__builtin_prefetch (&a[stride-(rd_dist - wr_dist)], 1, 0);
-					__builtin_prefetch (&b[stride], 0, 1);
+					__builtin_prefetch (&b[stride], 0, 2);
 						}
 					}
 			}
@@ -889,7 +889,7 @@ out3:
 									if(stride > ((ldim + 1)*(ldim + 1)*(ldim)-bdist))
 											goto out5;
 								__builtin_prefetch (&a[stride+(bdist)], 1, 0);
-								__builtin_prefetch (&b[stride+bdist], 0, 1);
+								__builtin_prefetch (&b[stride+bdist], 0, 2);
 								for(inner=0;inner<16;inner++)
 									a[stride+inner] = b[stride+inner] + b[stride+1+inner] + b[stride-1+inner];
 							}
@@ -903,7 +903,7 @@ out5:
 									stride = l + j + k;
 									if(stride > ((ldim + 1)*(ldim + 1)*(ldim)-rd_dist))
 											goto out6;
-									__builtin_prefetch (&b[stride+rd_dist], 0, 1);
+									__builtin_prefetch (&b[stride+rd_dist], 0, 2);
 									for(inner=0;inner<16;inner++)
 										a[stride+inner] = b[stride+inner] + b[stride+1+inner] + b[stride-1+inner];
 							}
@@ -980,7 +980,7 @@ out11:
 											goto out33;
 									}
 					__builtin_prefetch (&a[stride], 1, 0);
-					__builtin_prefetch (&b[stride-(wr_dist - rd_dist)], 0, 1);
+					__builtin_prefetch (&b[stride-(wr_dist - rd_dist)], 0, 2);
 							}
 					}
 			}
@@ -993,7 +993,7 @@ out11:
 									if(stride > (rd_dist - wr_dist)){
 											goto out22;
 									}
-					__builtin_prefetch (&b[stride], 0, 1);
+					__builtin_prefetch (&b[stride], 0, 2);
 						}
 					}
 			}
@@ -1007,7 +1007,7 @@ out22:
 											goto out33;
 									}
 					__builtin_prefetch (&a[stride-(rd_dist - wr_dist)], 1, 0);
-					__builtin_prefetch (&b[stride], 0, 1);
+					__builtin_prefetch (&b[stride], 0, 2);
 						}
 					}
 			}
@@ -1031,7 +1031,7 @@ out33:
 									if(stride > ((ldim + 1)*(ldim + 1)*(ldim)-bdist))
 											goto out55;
 								__builtin_prefetch (&a[stride+(bdist)], 1, 0);
-								__builtin_prefetch (&b[stride+bdist], 0, 1);
+								__builtin_prefetch (&b[stride+bdist], 0, 2);
 								for(inner=0;inner<16;inner++)
 									a[stride+inner] = b[stride+inner] + b[stride+1+inner] + b[stride-1+inner] + b[stride+ldim+inner] + b[stride-ldim+inner];
 							}
@@ -1045,7 +1045,7 @@ out55:
 									stride = l + j + k;
 									if(stride > ((ldim + 1)*(ldim + 1)*(ldim)-rd_dist))
 											goto out66;
-									__builtin_prefetch (&b[stride+rd_dist], 0, 1);
+									__builtin_prefetch (&b[stride+rd_dist], 0, 2);
 									for(inner=0;inner<16;inner++)
 										a[stride+inner] = b[stride+inner] + b[stride+1+inner] + b[stride-1+inner] + b[stride+ldim+inner] + b[stride-ldim+inner];
 							}
@@ -1122,7 +1122,7 @@ out111:
 											goto out333;
 									}
 					__builtin_prefetch (&a[stride], 1, 0);
-					__builtin_prefetch (&b[stride-(wr_dist - rd_dist)], 0, 1);
+					__builtin_prefetch (&b[stride-(wr_dist - rd_dist)], 0, 2);
 							}
 					}
 			}
@@ -1135,7 +1135,7 @@ out111:
 									if(stride > (rd_dist - wr_dist)){
 											goto out222;
 									}
-					__builtin_prefetch (&b[stride], 0, 1);
+					__builtin_prefetch (&b[stride], 0, 2);
 						}
 					}
 			}
@@ -1149,7 +1149,7 @@ out222:
 											goto out333;
 									}
 					__builtin_prefetch (&a[stride-(rd_dist - wr_dist)], 1, 0);
-					__builtin_prefetch (&b[stride], 0, 1);
+					__builtin_prefetch (&b[stride], 0, 2);
 						}
 					}
 			}
@@ -1173,7 +1173,7 @@ out333:
 									if(stride > ((ldim + 1)*(ldim + 1)*(ldim)-bdist))
 											goto out555;
 								__builtin_prefetch (&a[stride+(bdist)], 1, 0);
-								__builtin_prefetch (&b[stride+bdist], 0, 1);
+								__builtin_prefetch (&b[stride+bdist], 0, 2);
 								for(inner=0;inner<16;inner++)
 									a[stride+inner] = b[stride+inner] + b[stride+1+inner] + b[stride-1+inner] + b[stride+ldim+inner] + b[stride-ldim+inner] + b[stride+ldim+1+inner] + b[stride+ldim-1+inner] + b[stride-(ldim+1)+inner] + b[stride-(ldim-1)+inner];
 							}
@@ -1187,7 +1187,7 @@ out555:
 									stride = l + j + k;
 									if(stride > ((ldim + 1)*(ldim + 1)*(ldim)-rd_dist))
 											goto out666;
-									__builtin_prefetch (&b[stride+rd_dist], 0, 1);
+									__builtin_prefetch (&b[stride+rd_dist], 0, 2);
 									for(inner=0;inner<16;inner++)
 										a[stride+inner] = b[stride+inner] + b[stride+1+inner] + b[stride-1+inner] + b[stride+ldim+inner] + b[stride-ldim+inner] + b[stride+ldim+1+inner] + b[stride+ldim-1+inner] + b[stride-(ldim+1)+inner] + b[stride-(ldim-1)+inner];
 							}
@@ -1265,8 +1265,8 @@ out1111:
 											goto out3333;
 									}
 					__builtin_prefetch (&a[stride], 1, 0);
-					__builtin_prefetch (&b[stride-(wr_dist - rd_dist)], 0, 1);
-					__builtin_prefetch (&b[stride+(ldim*ldim)-(wr_dist - rd_dist)], 0, 1);
+					__builtin_prefetch (&b[stride-(wr_dist - rd_dist)], 0, 2);
+					__builtin_prefetch (&b[stride+(ldim*ldim)-(wr_dist - rd_dist)], 0, 2);
 							}
 					}
 			}
@@ -1280,8 +1280,8 @@ out1111:
 									{
 											goto out2222;
 									}
-					__builtin_prefetch (&b[stride], 0, 1);
-					__builtin_prefetch (&b[stride+(ldim*ldim)], 0, 1);
+					__builtin_prefetch (&b[stride], 0, 2);
+					__builtin_prefetch (&b[stride+(ldim*ldim)], 0, 2);
 						}
 					}
 			}
@@ -1296,8 +1296,8 @@ out2222:
 											goto out3333;
 									}
 					__builtin_prefetch (&a[stride-(rd_dist - wr_dist)], 1, 0);
-					__builtin_prefetch (&b[stride], 0, 1);
-					__builtin_prefetch (&b[stride+(ldim*ldim)], 0, 1);
+					__builtin_prefetch (&b[stride], 0, 2);
+					__builtin_prefetch (&b[stride+(ldim*ldim)], 0, 2);
 						}
 					}
 			}
@@ -1321,8 +1321,8 @@ out3333:
 									if(stride > ((ldim + 1)*(ldim + 1)*(ldim)-bdist))
 											goto out5555;
 								__builtin_prefetch (&a[stride+(bdist)], 1, 0);
-								__builtin_prefetch (&b[stride+bdist], 0, 1);
-								__builtin_prefetch (&b[stride+(ldim*ldim)+bdist], 0, 1);
+								__builtin_prefetch (&b[stride+bdist], 0, 2);
+								__builtin_prefetch (&b[stride+(ldim*ldim)+bdist], 0, 2);
 								for(inner=0;inner<16;inner++)
 									a[stride+inner] = b[stride+inner] + b[stride+1+inner] + b[stride-1+inner] + b[stride+ldim+inner] + b[stride-ldim+inner] + b[stride + ldim*ldim+inner] + b[stride - ldim*ldim+inner];
 							}
@@ -1336,8 +1336,8 @@ out5555:
 									stride = l + j + k;
 									if(stride > ((ldim + 1)*(ldim + 1)*(ldim)-rd_dist))
 											goto out6666;
-									__builtin_prefetch (&b[stride+rd_dist], 0, 1);
-									__builtin_prefetch (&b[stride+(ldim*ldim)+rd_dist], 0, 1);
+									__builtin_prefetch (&b[stride+rd_dist], 0, 2);
+									__builtin_prefetch (&b[stride+(ldim*ldim)+rd_dist], 0, 2);
 									for(inner=0;inner<16;inner++)
 										a[stride+inner] = b[stride+inner] + b[stride+1+inner] + b[stride-1+inner] + b[stride+ldim+inner] + b[stride-ldim+inner] + b[stride + ldim*ldim+inner] + b[stride - ldim*ldim+inner];
 							}
@@ -1415,8 +1415,8 @@ out11111:
 										goto out33333;
 									}
 					__builtin_prefetch (&a[stride], 1, 0);
-					__builtin_prefetch (&b[stride-(wr_dist - rd_dist)], 0, 1);
-					__builtin_prefetch (&b[stride+(ldim*ldim)-(wr_dist - rd_dist)], 0, 1);
+					__builtin_prefetch (&b[stride-(wr_dist - rd_dist)], 0, 2);
+					__builtin_prefetch (&b[stride+(ldim*ldim)-(wr_dist - rd_dist)], 0, 2);
 							}
 					}
 			}
@@ -1430,8 +1430,8 @@ out11111:
 									{
 											goto out22222;
 									}
-					__builtin_prefetch (&b[stride], 0, 1);
-					__builtin_prefetch (&b[stride+(ldim*ldim)], 0, 1);
+					__builtin_prefetch (&b[stride], 0, 2);
+					__builtin_prefetch (&b[stride+(ldim*ldim)], 0, 2);
 						}
 					}
 			}
@@ -1446,8 +1446,8 @@ out22222:
 											goto out33333;
 									}
 					__builtin_prefetch (&a[stride-(rd_dist - wr_dist)], 1, 0);
-					__builtin_prefetch (&b[stride], 0, 1);
-					__builtin_prefetch (&b[stride+(ldim*ldim)], 0, 1);
+					__builtin_prefetch (&b[stride], 0, 2);
+					__builtin_prefetch (&b[stride+(ldim*ldim)], 0, 2);
 						}
 					}
 			}
@@ -1471,8 +1471,8 @@ out33333:
 									if(stride > ((ldim + 1)*(ldim + 1)*(ldim)-bdist))
 											goto out55555;
 								__builtin_prefetch (&a[stride+(bdist)], 1, 0);
-								__builtin_prefetch (&b[stride+bdist], 0, 1);
-								__builtin_prefetch (&b[stride+(ldim*ldim)+bdist], 0, 1);
+								__builtin_prefetch (&b[stride+bdist], 0, 2);
+								__builtin_prefetch (&b[stride+(ldim*ldim)+bdist], 0, 2);
 								for(inner=0;inner<16;inner++)
 									a[stride+inner] = b[stride+inner] + b[stride+inner+1] + b[stride+inner-1] + b[stride+inner+ldim] + b[stride+inner-ldim] + b[stride+inner+ldim+1] + b[stride+inner+ldim-1] + b[stride+inner-(ldim+1)] + b[stride+inner-(ldim-1)] + b[stride+inner+(ldim*ldim)] + b[stride+inner-(ldim*ldim)] + b[stride+inner+(ldim*ldim)+1] + b[stride+inner-(ldim*ldim)+1] + b[stride+inner+(ldim*ldim)-1] + b[stride+inner-(ldim*ldim)-1] + b[stride+inner+(ldim*ldim)+ldim] + b[stride+inner-(ldim*ldim)+ldim] + b[stride+inner+(ldim*ldim)-ldim] + b[stride+inner-(ldim*ldim)-ldim] + b[stride+inner+(ldim*ldim)+ldim+1] + b[stride+inner-(ldim*ldim)+ldim+1] + b[stride+inner+(ldim*ldim)-ldim+1] + b[stride+inner-(ldim*ldim)-ldim+1] + b[stride+inner+(ldim*ldim)+ldim-1] + b[stride+inner-(ldim*ldim)+ldim-1] + b[stride+inner+(ldim*ldim)-ldim-1] + b[stride+inner-(ldim*ldim)-ldim-1];
 							}
@@ -1486,8 +1486,8 @@ out55555:
 									stride = l + j + k;
 									if(stride > ((ldim + 1)*(ldim + 1)*(ldim)-rd_dist))
 											goto out66666;
-									__builtin_prefetch (&b[stride+rd_dist], 0, 1);
-									__builtin_prefetch (&b[stride+(ldim*ldim)+rd_dist], 0, 1);
+									__builtin_prefetch (&b[stride+rd_dist], 0, 2);
+									__builtin_prefetch (&b[stride+(ldim*ldim)+rd_dist], 0, 2);
 									for(inner=0;inner<16;inner++)
 										a[stride+inner] = b[stride+inner] + b[stride+inner+1] + b[stride+inner-1] + b[stride+inner+ldim] + b[stride+inner-ldim] + b[stride+inner+ldim+1] + b[stride+inner+ldim-1] + b[stride+inner-(ldim+1)] + b[stride+inner-(ldim-1)] + b[stride+inner+(ldim*ldim)] + b[stride+inner-(ldim*ldim)] + b[stride+inner+(ldim*ldim)+1] + b[stride+inner-(ldim*ldim)+1] + b[stride+inner+(ldim*ldim)-1] + b[stride+inner-(ldim*ldim)-1] + b[stride+inner+(ldim*ldim)+ldim] + b[stride+inner-(ldim*ldim)+ldim] + b[stride+inner+(ldim*ldim)-ldim] + b[stride+inner-(ldim*ldim)-ldim] + b[stride+inner+(ldim*ldim)+ldim+1] + b[stride+inner-(ldim*ldim)+ldim+1] + b[stride+inner+(ldim*ldim)-ldim+1] + b[stride+inner-(ldim*ldim)-ldim+1] + b[stride+inner+(ldim*ldim)+ldim-1] + b[stride+inner-(ldim*ldim)+ldim-1] + b[stride+inner+(ldim*ldim)-ldim-1] + b[stride+inner-(ldim*ldim)-ldim-1];
 							}
