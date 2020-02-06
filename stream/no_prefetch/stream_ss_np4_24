@@ -375,96 +375,96 @@ Please update to the new syntax.
 --------------------------------------------------------------------------
 -------------------------------------------------------------
 NUMA ID: 0
-Total Aggregate Array size = 536870976 (elements)
+Total Aggregate Array size = 536870912 (elements)
 Total Aggregate Memory per array = 0.0 MiB (= 0.0 GiB).
 Total Aggregate memory required = 0.0 MiB (= 0.0 GiB).
 Data is distributed across 24 MPI ranks
-   Array size per MPI rank = 22369624 (elements)
+   Array size per MPI rank = 22369621 (elements)
    Memory per array per MPI rank = 0.0 MiB (= 0.0 GiB).
    Total memory per MPI rank = 0.0 MiB (= 0.0 GiB).
 -------------------------------------------------------------
 Your timer granularity/precision appears to be 1 microseconds.
 Function    Best Rate MB/s  Avg Rate MB/s   Avg time     Min time     Max time
-Copy:          57126.7      57027.2     0.150629     0.150366     0.150963
-Scale:         57150.0      57048.6     0.150572     0.150305     0.150819
-Add:           67043.2      66974.7     0.192385     0.192188     0.192594
-Triad:         67090.7      67036.9     0.192206     0.192052     0.192558
+Copy:          47430.6      47335.0     0.181471     0.181105     0.181663
+Scale:         47785.2      47698.7     0.180087     0.179761     0.180370
+Add:           55941.5      55913.9     0.230442     0.230328     0.230563
+Triad:         55960.1      55929.6     0.230377     0.230252     0.230561
 -------------------------------------------------------------
 Solution Validates: avg error less than 1.000000e-13 on all three arrays
 -------------------------------------------------------------
 -------------------------------------------------------------
 NUMA ID: 1
-Total Aggregate Array size = 536870976 (elements)
+Total Aggregate Array size = 536870912 (elements)
 Total Aggregate Memory per array = 0.0 MiB (= 0.0 GiB).
 Total Aggregate memory required = 0.0 MiB (= 0.0 GiB).
 Data is distributed across 24 MPI ranks
-   Array size per MPI rank = 22369624 (elements)
+   Array size per MPI rank = 22369621 (elements)
    Memory per array per MPI rank = 0.0 MiB (= 0.0 GiB).
    Total memory per MPI rank = 0.0 MiB (= 0.0 GiB).
 -------------------------------------------------------------
 Your timer granularity/precision appears to be 1 microseconds.
 Function    Best Rate MB/s  Avg Rate MB/s   Avg time     Min time     Max time
-Copy:          57174.0      51377.7     0.167192     0.150242     0.150963
-Scale:         57009.0      51280.7     0.167508     0.150677     0.151019
-Add:           67165.1      60405.3     0.213307     0.191839     0.192594
-Triad:         67220.3      60439.8     0.213186     0.191682     0.192558
+Copy:          47461.2      42638.5     0.201460     0.180989     0.181697
+Scale:         47706.1      42869.6     0.200374     0.180059     0.180799
+Add:           55859.2      50248.6     0.256423     0.230668     0.231093
+Triad:         55882.3      50269.6     0.256316     0.230572     0.230857
 -------------------------------------------------------------
 Solution Validates: avg error less than 1.000000e-13 on all three arrays
 -------------------------------------------------------------
 -------------------------------------------------------------
 NUMA ID: 2
-Total Aggregate Array size = 536870976 (elements)
+Total Aggregate Array size = 536870912 (elements)
 Total Aggregate Memory per array = 0.0 MiB (= 0.0 GiB).
 Total Aggregate memory required = 0.0 MiB (= 0.0 GiB).
 Data is distributed across 24 MPI ranks
-   Array size per MPI rank = 22369624 (elements)
+   Array size per MPI rank = 22369621 (elements)
    Memory per array per MPI rank = 0.0 MiB (= 0.0 GiB).
    Total memory per MPI rank = 0.0 MiB (= 0.0 GiB).
 -------------------------------------------------------------
 Your timer granularity/precision appears to be 1 microseconds.
 Function    Best Rate MB/s  Avg Rate MB/s   Avg time     Min time     Max time
-Copy:           2589.8       2572.3     3.339440     3.316777     3.323960
-Scale:          2595.4       2567.0     3.346239     3.309642     3.335507
-Add:            3999.4       3962.0     3.252115     3.221732     3.240768
-Triad:          4011.8       3969.6     3.245916     3.211776     3.230338
+Copy:           2303.6       2279.9     3.767759     3.728966     3.761548
+Scale:          2407.4       2373.3     3.619430     3.568210     3.624195
+Add:            3572.9       3508.0     3.672954     3.606246     3.685793
+Triad:          3563.6       3500.3     3.681060     3.615726     3.679325
 -------------------------------------------------------------
 Solution Validates: avg error less than 1.000000e-13 on all three arrays
 -------------------------------------------------------------
 -------------------------------------------------------------
 NUMA ID: 3
-Total Aggregate Array size = 536870976 (elements)
+Total Aggregate Array size = 536870912 (elements)
 Total Aggregate Memory per array = 0.0 MiB (= 0.0 GiB).
 Total Aggregate memory required = 0.0 MiB (= 0.0 GiB).
 Data is distributed across 24 MPI ranks
-   Array size per MPI rank = 22369624 (elements)
+   Array size per MPI rank = 22369621 (elements)
    Memory per array per MPI rank = 0.0 MiB (= 0.0 GiB).
    Total memory per MPI rank = 0.0 MiB (= 0.0 GiB).
 -------------------------------------------------------------
 Your timer granularity/precision appears to be 1 microseconds.
 Function    Best Rate MB/s  Avg Rate MB/s   Avg time     Min time     Max time
-Copy:           2621.0       2350.3     3.654786     3.277350     3.323960
-Scale:          2580.7       2313.3     3.713265     3.328540     3.353178
-Add:            3996.0       3587.7     3.591459     3.224469     3.240768
-Triad:          4000.8       3592.2     3.586918     3.220548     3.234242
+Copy:           2642.0       2319.5     3.703426     3.251311     3.761548
+Scale:          2710.1       2387.9     3.597264     3.169657     3.624195
+Add:            3943.5       3483.3     3.699039     3.267376     3.685793
+Triad:          3957.2       3491.7     3.690131     3.256084     3.679325
 -------------------------------------------------------------
 Solution Validates: avg error less than 1.000000e-13 on all three arrays
 -------------------------------------------------------------
 -------------------------------------------------------------
 NUMA ID: 4
-Total Aggregate Array size = 536870976 (elements)
+Total Aggregate Array size = 536870912 (elements)
 Total Aggregate Memory per array = 0.0 MiB (= 0.0 GiB).
 Total Aggregate memory required = 0.0 MiB (= 0.0 GiB).
 Data is distributed across 24 MPI ranks
-   Array size per MPI rank = 22369624 (elements)
+   Array size per MPI rank = 22369621 (elements)
    Memory per array per MPI rank = 0.0 MiB (= 0.0 GiB).
    Total memory per MPI rank = 0.0 MiB (= 0.0 GiB).
 -------------------------------------------------------------
 Your timer granularity/precision appears to be 1 microseconds.
 Function    Best Rate MB/s  Avg Rate MB/s   Avg time     Min time     Max time
-Copy:          38186.5      13605.5     0.631359     0.224947     3.323960
-Scale:         38108.5      13460.4     0.638163     0.225407     3.353178
-Add:           41722.5      18184.9     0.708548     0.308824     3.240768
-Triad:         41703.2      18205.1     0.707764     0.308967     3.234242
+Copy:          34555.5      13010.3     0.660243     0.248584     3.761548
+Scale:         34594.3      13249.2     0.648337     0.248305     3.624195
+Add:           42182.7      17953.6     0.717677     0.305454     3.685793
+Triad:         42223.8      18004.2     0.715662     0.305158     3.679325
 -------------------------------------------------------------
 Solution Validates: avg error less than 1.000000e-13 on all three arrays
 -------------------------------------------------------------
